@@ -1,5 +1,5 @@
 export type DownloadSourceName = "modelscope" | "huggingface" | "hf-mirror";
-export type View = "dashboard" | "catalog" | "loaded" | "separate" | "settings";
+export type View = "workbench" | "dashboard" | "catalog" | "loaded" | "separate" | "settings";
 export type Theme = "light" | "dark";
 export type SeparationResponseFormat = "zip" | "json";
 export type OutputAudioFormat = "wav" | "flac" | "pcm_f32le";
@@ -143,7 +143,7 @@ export interface SeparationJsonResult {
   outputs: Array<{
     stem: string;
     audio: {
-      format: Extract<OutputAudioFormat, "pcm_f32le">;
+      format: OutputAudioFormat;
       sample_rate: number;
       channels: number;
       data: string;
@@ -165,4 +165,15 @@ export interface CatalogQuery {
   local: "all" | "complete" | "missing";
   category: string;
   q: string;
+  recommendedOnly: boolean;
+  selectionMode: "scenario" | "advanced";
+  scenario: string;
+  primaryCategoryCn: string;
+  secondaryCategoryCn: string;
+  architecture: string;
+  modelType: string;
+  targetStem: string;
+  confidence: string;
+  sizeTier: string;
+  sort: "recommended" | "local" | "size_asc" | "size_desc" | "name";
 }

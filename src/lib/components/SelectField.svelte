@@ -22,7 +22,7 @@
 <div class={`grid gap-1.5 ${className}`}>
   <Label for={id}>{label}</Label>
   <Select.Root type="single" bind:value disabled={disabled} onValueChange={(next) => onValueChange(next)}>
-    <Select.Trigger {id} class="h-9 w-full text-sm">
+    <Select.Trigger {id} class="h-10 w-full text-[14px]">
       <span data-slot="select-value">{selectedLabel}</span>
     </Select.Trigger>
     <Select.Content>

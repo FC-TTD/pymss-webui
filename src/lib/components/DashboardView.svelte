@@ -23,9 +23,9 @@
   export let onSelectView: (view: View) => void;
 
   const actions = [
-    { view: "catalog" as View, label: "Browse catalog", icon: Library },
-    { view: "loaded" as View, label: "Load model", icon: SlidersHorizontal },
-    { view: "separate" as View, label: "Separate audio", icon: FileAudio },
+    { view: "catalog" as View, label: "浏览模型", icon: Library },
+    { view: "loaded" as View, label: "加载模型", icon: SlidersHorizontal },
+    { view: "separate" as View, label: "分离音频", icon: FileAudio },
   ];
 </script>
 
@@ -34,12 +34,12 @@
     <h1
       class="text-[32px] font-medium leading-tight tracking-normal sm:text-4xl"
     >
-      Model separation server
+      PYMSS Studio 分离
     </h1>
     <p class="mx-auto mt-3 max-w-xl text-base leading-7 text-muted-foreground">
       {loadedModel
         ? loadedModel.id
-        : "Load a model, then send audio from the browser for separation."}
+        : "先加载模型，再从浏览器上传音频进行分离。"}
     </p>
   </div>
 
@@ -48,11 +48,9 @@
       <div
         class="flex flex-col gap-1 font-mono text-sm sm:flex-row sm:items-center sm:justify-between"
       >
-        <span>source={downloadSource?.source ?? "-"}</span>
-        <span>device={health?.device ?? "-"}</span>
-        <span
-          >limit={formatBytes(serverInfo?.limits.max_request_bytes ?? 0)}</span
-        >
+        <span>下载源={downloadSource?.source ?? "-"}</span>
+        <span>设备={health?.device ?? "-"}</span>
+        <span>请求上限={formatBytes(serverInfo?.limits.max_request_bytes ?? 0)}</span>
       </div>
     </CardContent>
   </Card>

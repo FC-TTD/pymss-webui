@@ -1,5 +1,6 @@
 import {
   downloadCatalogModel,
+  downloadCatalogModels,
   fetchAuthenticatedData,
   fetchCatalog,
   fetchCatalogDetail,
@@ -40,7 +41,7 @@ import type {
 } from "./types";
 
 export class AppController {
-  activeView = $state<View>("dashboard");
+  activeView = $state<View>("workbench");
   token = $state("");
   theme = $state<Theme>("light");
   showTokenModal = $state(false);
@@ -48,6 +49,7 @@ export class AppController {
   busyAction = $state<string | null>(null);
   errorMessage = $state("");
   noticeMessage = $state("");
+  selectedDownloadModels = $state<string[]>([]);
 
   health = $state<HealthResponse | null>(null);
   serverInfo = $state<ServerInfo | null>(null);
@@ -67,7 +69,7 @@ export class AppController {
 
   audioFile = $state<File | null>(null);
   selectedStems = $state<string[]>([]);
-  responseFormat = $state<SeparationResponseFormat>("zip");
+  responseFormat = $state<SeparationResponseFormat>("json");
   outputAudioFormat = $state<OutputAudioFormat>("wav");
   resultUrl = $state<string | null>(null);
   resultName = $state("");
@@ -83,6 +85,7 @@ export class AppController {
     loadedModel: this.loadedModel,
     catalog: this.catalog,
     selectedCatalog: this.selectedCatalog,
+    selectedDownloadModels: this.selectedDownloadModels,
     busyAction: this.busyAction,
     selectedStems: this.selectedStems,
     resultUrl: this.resultUrl,
@@ -98,7 +101,11 @@ export class AppController {
     onApplyCatalogFilters: () => void this.applyCatalogFilters(),
     onShowCatalogDetail: (model: string) => void this.showCatalogDetail(model),
     onDownload: (model: string) => void this.performDownload(model),
+    onDownloadSelected: () => void this.performDownloadSelected(),
+    onToggleDownloadSelection: (model: string, checked: boolean) => this.toggleDownloadSelection(model, checked),
+    onSetDownloadSelection: (models: string[]) => (this.selectedDownloadModels = [...new Set(models)]),
     onSetLoadTarget: (model: string) => this.setLoadTarget(model),
+    onLoadModel: (model: string) => void this.performLoad(model),
     onCloseDetail: () => (this.selectedCatalog = null),
     onLoad: () => void this.performLoad(),
     onToggleStem: (stem: string, checked: boolean) => this.toggleStem(stem, checked),
@@ -111,9 +118,12 @@ export class AppController {
   };
 
   constructor() {
+    this.responseFormat = "json";
+    this.outputAudioFormat = "wav";
+
     $effect(() => {
-      if (this.responseFormat === "json") {
-        this.outputAudioFormat = "pcm_f32le";
+      if (this.outputAudioFormat !== "wav") {
+        this.outputAudioFormat = "wav";
       }
     });
 
@@ -165,7 +175,7 @@ export class AppController {
       this.downloadSource = update.downloadSource;
       this.downloadEndpointForm = update.downloadSource.endpoint ?? "";
       this.serverInfo = update.serverInfo;
-      this.noticeMessage = "Download source updated.";
+      this.noticeMessage = "下载源已更新。";
     });
   }
 
@@ -190,6 +200,21 @@ export class AppController {
     });
   }
 
+  async performDownloadSelected(): Promise<void> {
+    await this.runBusy("download", async () => {
+      const update = await downloadCatalogModels(this.token, this.selectedDownloadModels, this.catalogQuery);
+      this.catalog = update.catalog;
+      this.serverInfo = update.serverInfo;
+      this.noticeMessage = update.noticeMessage;
+    });
+  }
+
+  toggleDownloadSelection(model: string, checked: boolean): void {
+    this.selectedDownloadModels = checked
+      ? [...new Set([...this.selectedDownloadModels, model])]
+      : this.selectedDownloadModels.filter((item) => item !== model);
+  }
+
   setLoadTarget(model: string): void {
     this.loadModelName = model;
     this.activeView = "loaded";
@@ -198,7 +223,7 @@ export class AppController {
   async performLoad(model = this.loadModelName): Promise<void> {
     const target = model.trim();
     if (!target) {
-      this.errorMessage = "Model name is required.";
+      this.errorMessage = "请输入模型名称。";
       return;
     }
 
@@ -232,11 +257,11 @@ export class AppController {
     const model = this.loadedModel;
     const audioFile = this.audioFile;
     if (!model) {
-      this.errorMessage = "Load a model before separation.";
+      this.errorMessage = "请先加载模型，再开始分离。";
       return;
     }
     if (!audioFile) {
-      this.errorMessage = "Select an audio file.";
+      this.errorMessage = "请选择音频文件。";
       return;
     }
 
