@@ -1,9 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const root = path.resolve(import.meta.dirname, "../..");
-const catalog = JSON.parse(fs.readFileSync(path.join(root, "pymss/resources/model_catalog.json"), "utf8"));
-const indexText = fs.readFileSync(path.join(root, "pymss-webui/src/lib/model-advisory-index.ts"), "utf8");
+const uiRoot = path.resolve(import.meta.dirname, "..");
+const providerRoot = process.env.PYMSS_SOURCE_ROOT || path.resolve(uiRoot, "../pymss");
+const catalog = JSON.parse(fs.readFileSync(path.join(providerRoot, "pymss/resources/model_catalog.json"), "utf8"));
+const indexText = fs.readFileSync(path.join(uiRoot, "src/lib/model-advisory-index.ts"), "utf8");
 
 const ids = catalog.models.map((model) => model.name);
 const modelsMarker = "export const modelAdvisoryIndex = ";
