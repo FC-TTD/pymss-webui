@@ -44,3 +44,7 @@
 Worker首次加入已有attachable overlay时，Compose外部网络应使用权威名称caddy；记录完整集群ID用于核查。直接把ID当作网络模式会因本地尚未物化该overlay而启动失败，不应新建同名bridge。
 
 实际Stage worker无法解析既有caddy overlay（名称/ID均失败），未改Swarm/daemon/网关。最终使用仅绑定Stage既有100.18内网接口的17898端口及显式业务upstream，保持独立不可变前端，不把正式UI指向可变17896预览。无公网标签/认证/DNS变化。
+
+## 本次实际发布结果
+
+已按用户单独提交授权发布。有效业务源5fdbc10782c289634f7cfc8642f1259f1f365be1，首页48a4ff3168afb575c0750cf664e6f0a71eeba76f，镜像与Stage h-bd63eb3d3ceeebfe相同。实际最终方案是显式192.168.100.18:17898私有upstream（前述overlay方案未成功且未修改集群），Compose为唯一有效定义。正式默认/切换/两款零重传分离/波形/Range/ZIP与首页两字段对比均通过，详见../../design-qa.md。未push；家庭实际电脑、宿主重启及回滚演练未执行。

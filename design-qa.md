@@ -1,3 +1,21 @@
+# 正式音频分离入口发布（2026-10-25）
+
+用户已明确授权本次相关提交并继续发布。正式入口 [音频分离](http://msst/)，首页tools.msst名称“音频分离”、备注“MSST 和 PYMSS”，href仍http://msst/。默认PYMSS，顶部PYMSS/MSST单一选中导航；原MSST通过/?native=msst加载，__gradio__仍由原Hub处理。
+
+- 已推广Stage验证的h-bd63eb3d3ceeebfe，静态镜像cb9dddb8ba18d3cf16f7c738720188413936bc48f77ebdf735e7737941a04c98，本仓库128项构建输入与提交逐字节匹配。业务发布源5fdbc10782c289634f7cfc8642f1259f1f365be1，首页源48a4ff3168afb575c0750cf664e6f0a71eeba76f；全部仅本地提交，未push。
+- 新增Stage CPU容器audio-separation-entry，只读101:101/64MiB/.5CPU，复用既有10.35/24网络和API。原caddy overlay按ID、名称接入均实际失败，未更改Swarm/daemon或新建网络；最终仅绑定Stage既有192.168.100.18:17898，业务标签显式upstream，由现有多socket Caddy汇集。正式前端独立于可变17896预览。管理目录/opt/audio-separation/releases/h-bd63eb3d3ceeebfe-5fdbc10782c2/。
+- 实际Caddy私有msst路由同时包含新根/UI/StudioAPI handle及原10.0.3.200:8080 catch-all。native=msst排除于新根，公网msst-public-proxy保持原路由；原MSST Hub entry和GPU runtime ID/镜像完全未变，无GPU部署/迁移、权重、精度、offload、DNS/认证/公网变更。
+- 实际浏览器http://msst/默认PYMSS；MSST原Gradio完整加载后切回，状态保留。主页卡片真实DOM正确，点击打开新入口；模型卡片前两InstVox/BS12.97；刷新恢复1输入、两轨、波形，控制台error0。
+- 正式地址BS12.97批次9de24ab942044546ad9e2990120d99ea成功；随后浏览器切InstVox→开始分离，批次3b70c72641b741b1a758740189099be8成功。两次均uploaded_bytes0/reused_files1，canonical输入相同，无input.audio副本。2×6秒/48kHz/双声道PCM24，每轨900真实波形点及Range206通过。
+- 正式ZIP完整3456370字节、2轨、CRC通过，内容SHA与逐轨原WAV一致。生成/完整HTTP传输通过不代表浏览器实际落盘，后者仍NOT_RUN；不绕过HTTP下载安全保护。
+- 家庭路由器32.2绑定来源验证正式HTML/JS/CSS哈希、原生MSST/Gradio配置、源/结果Range通过；Stage固定10.35/24、32.214回程via100.2未变。实际家庭Mac/手机、宿主重启、回滚演练NOT_RUN。此前同镜像Stage桌面/390手机无溢出且中文≥12px结果继续有效。
+- 首页仅经现有links API修改tools.msst text/title，更新前后全量JSON对比其他字段/条目完全一致。变更前备份及正式证据位于工作区work/pymss-ui-evidence/formal-promotion/h-bd63eb3d3ceeebfe/，并保存到服务器管理目录。未部署/重启首页API。
+- 37就绪/38注册保持，原worker未变；CPU容器healthy/OOMfalse/restart0，GPU占用回基线6393/7681/11413MiB。未停止其他任务。回退仅针对新增CPU入口和本次首页两字段，原MSST catch-all可接管，保留所有输入/任务/结果；实际未回退。
+
+本次功能发布与真实业务回归通过，不声称完整三端共享、音质盲测或宿主重启/回滚验收。Stage测试链接继续http://ttd-stage:17896/ui/。
+
+---
+
 # 组合入口、试听排序与上传复用（2026-10-25）
 
 当前Stage17896 **h-bd63eb3d3ceeebfe**。用户已请求最终版本合并到原MSST入口，首页名称“音频分离”、备注“MSST 和 PYMSS”、默认PYMSS；随后要求InstVox Duality v2与BS Roformer12.97在duo前两，以及多模型比较不要重复上传。**整合/复用已Stage验证，正式MSST与首页尚未切换；用户已单独授权本次提交并继续发布；当前执行正式发布，完成状态见后续正式验收记录。未push。**

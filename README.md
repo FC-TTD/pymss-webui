@@ -1,8 +1,8 @@
 ## 音频分离组合工作台（2026-10-25）
 
-当前Stage [http://ttd-stage:17896/ui/](http://ttd-stage:17896/ui/)，release h-bd63eb3d3ceeebfe。顶部PYMSS/MSST双导航、默认PYMSS，切换保留工作台/原生界面状态。duo按用户试听把InstVox Duality v2和BS Roformer12.97置于前两。首次上传后不同模型直接复用同一NAS输入，刷新恢复已导入列表，无音频重传或复制；新旧任务有独立输出和原有ZIP/波形。
+正式入口：[音频分离](http://msst/)。首页名称“音频分离”、备注“MSST 和 PYMSS”；顶部双导航、默认PYMSS。原MSST通过独立导航保留。测试入口仍为[Stage](http://ttd-stage:17896/ui/)。
 
-两款真实6秒任务：首次1058572字节、第二次0字节；原248.56秒整曲换模型也0上传通过。正式入口合并已准备，用户已单独授权本次提交并继续发布，当前进入正式入口发布阶段；发布结果以最新QA记录为准。方案/命令见deploy/unified/README.md。无需改MSST模型/Hub租约、原GPU或权重路径。以下是历史说明。
+人声与伴奏默认前两为InstVox Duality v2、BS Roformer12.97。首次上传后换模型直接复用同一服务端音频，刷新恢复已导入列表，结果独立保存。正式地址两款真实分离均0新增上传，波形/Range/ZIP完整传输通过；实际浏览器落盘与完整三端/重启/回滚仍未验收。源码已获授权本地提交，未push。部署范围与恢复见[组合入口说明](deploy/unified/README.md)，实测见[QA](design-qa.md)。以下保留原开发及历史记录。
 
 # pymss WebUI
 
