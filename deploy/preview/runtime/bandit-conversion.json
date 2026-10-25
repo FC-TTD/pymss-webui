@@ -1,0 +1,9 @@
+{
+  "source_url": "https://zenodo.org/records/12701995/files/checkpoint-multi.ckpt?download=1",
+  "original_md5": "fea2868787551b0cff36cfcf7c3622a3",
+  "source_model_revision": "d5563d9031e95fdaa3e5a73d5020b9a0df61adb6",
+  "matched_tensors": 2946,
+  "prefix_removed": "model.",
+  "converted_sha256": "fbec3e895c70cb67ec3d47595e6ac95cbce21d399ccf0dfbc658a749ebdc8922",
+  "strict_load": true
+}

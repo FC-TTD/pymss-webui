@@ -1,0 +1,727 @@
+{
+  "models": [
+    {
+      "id": "mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/cleanup/crowd_removal/mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144.ckpt",
+          "bytes": 913096801,
+          "sha256": "ca8799531fe51c94172cc047226209ed48bf7d8c02e04671795a15d2a1c318af",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/crowd_removal/mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/cleanup/crowd_removal/mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144.yaml",
+          "bytes": 1627,
+          "sha256": "00cd5cd077860b38aa6b269550dc9f70d8bf501e2cc80260afaba04e47836909",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/crowd_removal/mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768.ckpt",
+          "bytes": 913097300,
+          "sha256": "a25e3b233722cd81e2de7b8e798a3fef29d4b9799ccacda60b0dc958a1e2a5bb",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768.yaml",
+          "bytes": 1627,
+          "sha256": "542ee2dc7d26d126f664a1ca5f18e17bb4a2071d807b707f74fc8acf5801fa8d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "denoise_mel_band_roformer_aufr33_sdr_27.9959.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_sdr_27.9959.ckpt",
+          "bytes": 913097300,
+          "sha256": "7c1c39191edc34e942ca7f2346ce6b6c0e1208a5f76349ffce6f696bd12910de",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_sdr_27.9959.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_sdr_27.9959.yaml",
+          "bytes": 1627,
+          "sha256": "542ee2dc7d26d126f664a1ca5f18e17bb4a2071d807b707f74fc8acf5801fa8d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_sdr_27.9959.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "checkpoint-cmn_state_dict.ckpt",
+      "type": "bandit_v2",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/experimental_general/checkpoint-cmn_state_dict.ckpt",
+          "bytes": 149097604,
+          "sha256": "f4099d1e87130ec930e99fd56089062a6192a4141a5a2305d2e92ededd0688c1",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/experimental_general/checkpoint-cmn_state_dict.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/experimental_general/checkpoint-cmn_state_dict.yaml",
+          "bytes": 1955,
+          "sha256": "635a58ac72823078091ae6e2c0a00b2e6a01896b40a722b260aff57edb88b29e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/experimental_general/checkpoint-cmn_state_dict.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "bs_roformer_inst_hyperacev2.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/instrumental/bs_roformer_inst_hyperacev2.ckpt",
+          "bytes": 288725646,
+          "sha256": "4d61178ef966d2b4e9ad456ffbbc6fd5b2828df07a7af32931142c1a5ff1fe6f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/instrumental/bs_roformer_inst_hyperacev2.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/instrumental/bs_roformer_inst_hyperacev2.yaml",
+          "bytes": 1632,
+          "sha256": "75979fedf4c0eaecd16b80f89746e7587851af00f91989c96c0b6b04cdb2eedd",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/instrumental/bs_roformer_inst_hyperacev2.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "bs_roformer_karaoke_anvuew.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/karaoke/bs_roformer_karaoke_anvuew.ckpt",
+          "bytes": 204486925,
+          "sha256": "206d04757cb5f75ca3b55f8a0a48f5c26aa2351d4ff3c7adbfc9affa30ea3ae4",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/bs_roformer_karaoke_anvuew.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/karaoke/bs_roformer_karaoke_anvuew.yaml",
+          "bytes": 1978,
+          "sha256": "14d6df6dcf9ddf2eb27f60aa3f26ba3e614996747e291ed46cd70bf453adf722",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/bs_roformer_karaoke_anvuew.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "mel_band_roformer_karaoke_becruily.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/karaoke/mel_band_roformer_karaoke_becruily.ckpt",
+          "bytes": 1719139254,
+          "sha256": "d3aa262ac01df870b9fc033e9c7b6cad33fe04fc9c148b6c40841326a515a0e0",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/mel_band_roformer_karaoke_becruily.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/karaoke/mel_band_roformer_karaoke_becruily.yaml",
+          "bytes": 1729,
+          "sha256": "05a249043133e969ee5eae74bb9250c818354ec15ce095a33420cf2f9ecc4a33",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/mel_band_roformer_karaoke_becruily.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "model_bandit_plus_dnr_sdr_11.47.ckpt",
+      "type": "bandit",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/dnr_stems/model_bandit_plus_dnr_sdr_11.47.ckpt",
+          "bytes": 148891175,
+          "sha256": "c48284779f7d1258a6527d3aaa18a532d45c1f506e2dcc25d5ab179a8c5e2573",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/dnr_stems/model_bandit_plus_dnr_sdr_11.47.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/music_stems/dnr_stems/model_bandit_plus_dnr_sdr_11.47.yaml",
+          "bytes": 2031,
+          "sha256": "6ee5880f7da8187c8fb27d49563755b408cf14b2f4aaef1c808e16b731fe8c80",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/dnr_stems/model_bandit_plus_dnr_sdr_11.47.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "dereverb_bs_roformer_anvuew_sdr_22.5050.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/reverb_echo_control/dereverb/dereverb_bs_roformer_anvuew_sdr_22.5050.ckpt",
+          "bytes": 204496717,
+          "sha256": "b4dfa4c4aa251c0afc303e5d512d904a1c2255e51d8d0dbfbddb18d740563d42",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/reverb_echo_control/dereverb/dereverb_bs_roformer_anvuew_sdr_22.5050.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/reverb_echo_control/dereverb/dereverb_bs_roformer_anvuew_sdr_22.5050.yaml",
+          "bytes": 1626,
+          "sha256": "3e2e8ec6b33384b089e5a6d9c80e858d7f10cfa8febbfe28d808d963df56365d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/reverb_echo_control/dereverb/dereverb_bs_roformer_anvuew_sdr_22.5050.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "aspiration_mel_band_roformer_less_aggr_sdr_18.1201.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/aspiration_breath/aspiration_mel_band_roformer_less_aggr_sdr_18.1201.ckpt",
+          "bytes": 835982664,
+          "sha256": "83bfe991cec4fbadde9f30d1f79cd5293ad0b1f936256be327bba5cbb4883374",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/aspiration_breath/aspiration_mel_band_roformer_less_aggr_sdr_18.1201.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/aspiration_breath/aspiration_mel_band_roformer_less_aggr_sdr_18.1201.yaml",
+          "bytes": 1345,
+          "sha256": "e19f3ef204329eb22a5dbc79da1e101349facbe26095fda0cdffbe2327f40a34",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/aspiration_breath/aspiration_mel_band_roformer_less_aggr_sdr_18.1201.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "aspiration_mel_band_roformer_sdr_18.9845.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/aspiration_breath/aspiration_mel_band_roformer_sdr_18.9845.ckpt",
+          "bytes": 835983746,
+          "sha256": "9e791258c866c6c8da66052693d8cc3b64f1f42c01e052dbdc570cd278380cc5",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/aspiration_breath/aspiration_mel_band_roformer_sdr_18.9845.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/aspiration_breath/aspiration_mel_band_roformer_sdr_18.9845.yaml",
+          "bytes": 1345,
+          "sha256": "e19f3ef204329eb22a5dbc79da1e101349facbe26095fda0cdffbe2327f40a34",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/aspiration_breath/aspiration_mel_band_roformer_sdr_18.9845.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "BS-Roformer-Resurrection.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/BS-Roformer-Resurrection.ckpt",
+          "bytes": 204510749,
+          "sha256": "9dbfe5cb572e4ed32a15ec727d7bd06c8d7aba97509e6fda5bc008bb1e0b2dd5",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/BS-Roformer-Resurrection.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/vocal/vocal_extraction/BS-Roformer-Resurrection.yaml",
+          "bytes": 2638,
+          "sha256": "c37556718bd7c1440a502cb4d3db093286daa51b7b92a0804f486337d283d3ae",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/BS-Roformer-Resurrection.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "bs_roformer_voc_hyperacev2.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/bs_roformer_voc_hyperacev2.ckpt",
+          "bytes": 288724430,
+          "sha256": "54cf516f621f2f460bf660ed137e244b8931bf7a2ce85ddceecff816dbc4d668",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/bs_roformer_voc_hyperacev2.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/bs_roformer_voc_hyperacev2.yaml",
+          "bytes": 1974,
+          "sha256": "18c9edecb4168e92b3aaba6b3b9c22448b3a4ebc445becc4b4ae808e57d29f7f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/bs_roformer_voc_hyperacev2.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "becruily_deux.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_instrumental_dual/becruily_deux.ckpt",
+          "bytes": 435006815,
+          "sha256": "10255c02295bf3e3865d4ee50ff752d7b19b124ed5fd93b147babc4333eda3aa",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_instrumental_dual/becruily_deux.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/vocal/vocal_instrumental_dual/becruily_deux.yaml",
+          "bytes": 1116,
+          "sha256": "9e0cb960b94d76f0308c25ac14d0ba3d88b24551b5835928fcdfbe55d2f95a40",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_instrumental_dual/becruily_deux.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "BS-Roformer-Resurrection-Inst.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_instrumental_dual/BS-Roformer-Resurrection-Inst.ckpt",
+          "bytes": 204483033,
+          "sha256": "16311025a5133ae6411760ccfe9e3e66b31a01d9d8bec0a03fa7ec4bedac7a15",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_instrumental_dual/BS-Roformer-Resurrection-Inst.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/vocal/vocal_instrumental_dual/BS-Roformer-Resurrection-Inst.yaml",
+          "bytes": 2637,
+          "sha256": "149c5c959050091fe673e733759fdbbf00a4710982e953a7079c630180501776",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_instrumental_dual/BS-Roformer-Resurrection-Inst.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "mel_band_roformer_vocals_becruily.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/mel_band_roformer_vocals_becruily.ckpt",
+          "bytes": 913107578,
+          "sha256": "a05961310cc55fbb901290c2e8be02682942f73522b6ac76bf2ec11e347ed95a",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/mel_band_roformer_vocals_becruily.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/mel_band_roformer_vocals_becruily.yaml",
+          "bytes": 1729,
+          "sha256": "a3799cefc73358ca3b6f4838f10f26cdc78c1f39eadc28092df7bdb4a3d1ef33",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/mel_band_roformer_vocals_becruily.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "mel_band_roformer_instrumental_becruily.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/instrumental/mel_band_roformer_instrumental_becruily.ckpt",
+          "bytes": 913106900,
+          "sha256": "a8da6632a1c25efb1c9be783ce9ea367d226d4b918cd6c3717c8b1d7a396041d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/instrumental/mel_band_roformer_instrumental_becruily.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss/models/instrumental/mel_band_roformer_instrumental_becruily.yaml",
+          "bytes": 1742,
+          "sha256": "a71083f7767ae742130418cc0966cf658bd7af1d4cc76f1bd65dbe12272e2db3",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/instrumental/mel_band_roformer_instrumental_becruily.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "Kim_MelBandRoformer.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/Kim_MelBandRoformer.ckpt",
+          "bytes": 913106900,
+          "sha256": "87201f4d31afb5bc79993230fc49446918425574db48c01c405e44f365c7559e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/Kim_MelBandRoformer.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/Kim_MelBandRoformer.yaml",
+          "bytes": 1333,
+          "sha256": "b00e5407944cb14e763c9d41af9e18390d0294abc85c71092c2b8b5e1e54eca1",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/Kim_MelBandRoformer.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "kimmel_unwa_ft2_bleedless.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/cleanup/noise_bleed_control/kimmel_unwa_ft2_bleedless.ckpt",
+          "bytes": 913101368,
+          "sha256": "3c450bd66a98b49dd03231fc5ebb84121eef8418236b179423c2b171d62b04d9",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/kimmel_unwa_ft2_bleedless.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/cleanup/noise_bleed_control/kimmel_unwa_ft2_bleedless.yaml",
+          "bytes": 1728,
+          "sha256": "f4c10e5f6ffe8ff2f5a6b4a5ad5820448ec9a0620e3c3c3571db3c35fae1b62e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/kimmel_unwa_ft2_bleedless.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "model_bs_roformer_ep_368_sdr_12.9628.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/model_bs_roformer_ep_368_sdr_12.9628.ckpt",
+          "bytes": 639317465,
+          "sha256": "f6c94864adfb73bbb0ca58ec14d58dd0b364549e9fb61433ae51916f3e2f8d0b",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/model_bs_roformer_ep_368_sdr_12.9628.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/vocal/vocal_extraction/model_bs_roformer_ep_368_sdr_12.9628.yaml",
+          "bytes": 2279,
+          "sha256": "3dae086b481bc6adecccb6bdfd2386ffd78708e11c221876a146972cab5b2afe",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/model_bs_roformer_ep_368_sdr_12.9628.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "melband_roformer_instvox_duality_v2.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_instrumental_dual/melband_roformer_instvox_duality_v2.ckpt",
+          "bytes": 1719116358,
+          "sha256": "b4a69558708f2857e36ac86a0e03ed95c4e3d8b9c5b8113963987d0d7df7e20f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_instrumental_dual/melband_roformer_instvox_duality_v2.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_instrumental_dual/melband_roformer_instvox_duality_v2.yaml",
+          "bytes": 917,
+          "sha256": "0e2eee6184bee6eda469d35d19e798f1fe428aebbb1efc6086a5d64db5eb0e53",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_instrumental_dual/melband_roformer_instvox_duality_v2.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "mel_band_roformer_instrumental_bleedless_v2_gabox.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/cleanup/noise_bleed_control/mel_band_roformer_instrumental_bleedless_v2_gabox.ckpt",
+          "bytes": 913026650,
+          "sha256": "6109687febb8f18cd5a45207fee35f18ba8b9467b18a4b2e982a3b7dc04a9d72",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/mel_band_roformer_instrumental_bleedless_v2_gabox.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/cleanup/noise_bleed_control/mel_band_roformer_instrumental_bleedless_v2_gabox.yaml",
+          "bytes": 926,
+          "sha256": "4e9b6dd2944e1f598e762f5c6813ac3594e22f7bbacf52651b8e7637b6ca9e28",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/mel_band_roformer_instrumental_bleedless_v2_gabox.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "bs_roformer_vocals_gabox.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/bs_roformer_vocals_gabox.ckpt",
+          "bytes": 639254584,
+          "sha256": "18d58efe5e949e70fab11b875329af6d06ef11ccc29574bfe943fb57cc827f38",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/bs_roformer_vocals_gabox.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/vocal/vocal_extraction/bs_roformer_vocals_gabox.yaml",
+          "bytes": 2279,
+          "sha256": "3dae086b481bc6adecccb6bdfd2386ffd78708e11c221876a146972cab5b2afe",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/bs_roformer_vocals_gabox.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "HTDemucs4.th",
+      "type": "htdemucs",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/four_stem/HTDemucs4.th",
+          "bytes": 84141911,
+          "sha256": "8726e21a993978c7ba086d3872e7608d7d5bfca646ca4aca459ffda844faa8b4",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/four_stem/HTDemucs4.th"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/four_stem/HTDemucs4.yaml",
+          "bytes": 1826,
+          "sha256": "340cd3f1f00f75f521a38235f7689d95a9e820738439561ca79818e54bc8863a",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/four_stem/HTDemucs4.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "HTDemucs4_6stems.th",
+      "type": "htdemucs",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/six_stem/HTDemucs4_6stems.th",
+          "bytes": 54996327,
+          "sha256": "34c22ccb381c6f9fdbf324f04e1e2fe21aaaf293f5ded163a162697ff9a02ddd",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/six_stem/HTDemucs4_6stems.th"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/music_stems/six_stem/HTDemucs4_6stems.yaml",
+          "bytes": 2024,
+          "sha256": "077134694bd069ee3343106e45427288669e8f27e727819b3e38e9e9bc7b7bc9",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/six_stem/HTDemucs4_6stems.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "BS-Roformer-SW.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/six_stem/BS-Roformer-SW.ckpt",
+          "bytes": 699412152,
+          "sha256": "24e7d35ee9c64415673d3fd33e06a67cac2c103c5df6267ba1576459c775916e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/six_stem/BS-Roformer-SW.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/music_stems/six_stem/BS-Roformer-SW.yaml",
+          "bytes": 4658,
+          "sha256": "f76111edc8ffa6fdf4f7f777b0826a052e551b855d976086d7f20bcecde73c89",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/six_stem/BS-Roformer-SW.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "mel_band_roformer_4stems_xl_ver1.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/four_stem/mel_band_roformer_4stems_xl_ver1.ckpt",
+          "bytes": 6411087858,
+          "sha256": "ca5f7c78543d84c369319f226b7337a6cc0b2e1a75d20409fc3ebde32686e94b",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/four_stem/mel_band_roformer_4stems_xl_ver1.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/four_stem/mel_band_roformer_4stems_xl_ver1.yaml",
+          "bytes": 3542,
+          "sha256": "2d426f17b3eb32ad43ce6e8f077cee38dc9e69ca99399bc3489b4166875f73bf",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/four_stem/mel_band_roformer_4stems_xl_ver1.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "gilliaan_drumsV1.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/drum_stems/gilliaan_drumsV1.ckpt",
+          "bytes": 303490678,
+          "sha256": "f60c4370257257301922dec9c6528cfab1b82b02d772ae0a0090cb566d4c4ca7",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/drum_stems/gilliaan_drumsV1.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/music_stems/drum_stems/gilliaan_drumsV1.yaml",
+          "bytes": 2643,
+          "sha256": "ee20ad01f6353365911d10897307733fedc18eeb811442885c389d251c50599c",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/drum_stems/gilliaan_drumsV1.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "becruily_guitar.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/single_instrument/guitar/becruily_guitar.ckpt",
+          "bytes": 45142183,
+          "sha256": "83472bbf125774af5282d2e0b86df89eaf2dd45e8a4ec8d68e820ebf3e42a83c",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/single_instrument/guitar/becruily_guitar.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/single_instrument/guitar/becruily_guitar.yaml",
+          "bytes": 1351,
+          "sha256": "ecb1ab7127ca0ca09a6cb8b50685d08f62e1a2c9576e26b3cbcf553412dbe402",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/single_instrument/guitar/becruily_guitar.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "gilliaan_bowedstrings_bs_v1.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/single_instrument/strings/gilliaan_bowedstrings_bs_v1.ckpt",
+          "bytes": 303490678,
+          "sha256": "282fabc28fb106edcc5e5e8383ea36559602fe53d0c406c736e08f58d66710fc",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/single_instrument/strings/gilliaan_bowedstrings_bs_v1.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/single_instrument/strings/gilliaan_bowedstrings_bs_v1.yaml",
+          "bytes": 1795,
+          "sha256": "d36e5f5522941d29ce8d309d817c34847b720fd85c0ed819eb16c3d46330b828",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/single_instrument/strings/gilliaan_bowedstrings_bs_v1.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "bs_mega_53stem_piano_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_piano_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "8e58ad544386136028ec1f5764bb95a235235492144112d94782ff1333905fe9",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_piano_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/music_stems/mega_53_stems/bs_mega_53stem_piano_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "989a18c9ac6b31cc779ed4004bbc61f921ad3f5f1d18467562c0e47f2d06414b",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_piano_mvsep.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "bs_mega_53stem_bass_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_bass_mvsep.ckpt",
+          "bytes": 77616219,
+          "sha256": "b17600dd1c2027a72ab34180ff6191d3bdeb786db9fbb13c58337c33fc10163c",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_bass_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/music_stems/mega_53_stems/bs_mega_53stem_bass_mvsep.yaml",
+          "bytes": 1567,
+          "sha256": "6dbc16d12aadb3aa02e267f628cd628fb6eacfd0b0d0a2236161c026f30fe369",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_bass_mvsep.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "speech_bs_roformer_AliceN_sdr_20.4440.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/speech_vocal/speech_bs_roformer_AliceN_sdr_20.4440.ckpt",
+          "bytes": 102387933,
+          "sha256": "f4300ef0b230bf308fc8a606bbdcf38cd5002856b6dbe625b73576257f8641ae",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/speech_vocal/speech_bs_roformer_AliceN_sdr_20.4440.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/vocal/speech_vocal/speech_bs_roformer_AliceN_sdr_20.4440.yaml",
+          "bytes": 1874,
+          "sha256": "14774a40f78841695ff52f20bbccebc35f50f3bac1bf94d743e6916ae82c6a3a",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/speech_vocal/speech_bs_roformer_AliceN_sdr_20.4440.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "speech_mel_roformer_AliceN_sdr_16.5716.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/speech_vocal/speech_mel_roformer_AliceN_sdr_16.5716.ckpt",
+          "bytes": 435091173,
+          "sha256": "f2bd58827042b372f010d9e0a6bcae025e37b4f256f329066cf160c315558137",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/speech_vocal/speech_mel_roformer_AliceN_sdr_16.5716.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/vocal/speech_vocal/speech_mel_roformer_AliceN_sdr_16.5716.yaml",
+          "bytes": 1112,
+          "sha256": "9e9377d8c02935dedab574bcd1e68514e8bbce7203333578007c247b2b33ba3a",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/speech_vocal/speech_mel_roformer_AliceN_sdr_16.5716.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "bs_leap_xe_voc.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/leap-xe/bs_leap_xe_voc.ckpt",
+          "bytes": 267796851,
+          "sha256": "b739c1d2d87a81cd3dd3844ed9ad0bd678708c7a0a761a03a1aaff9af79a096d",
+          "source": "https://huggingface.co/pcunwa/BS-Roformer-Leap/resolve/4e47d6662ae82eaa8b4ac4329fe66099a843b48e/Xe/bs_leap_xe_voc.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/leap-xe/leap_xe_config_voc.yaml",
+          "bytes": 2190,
+          "sha256": "d3cb8c84be2e9bcbc64c1086e2256dc097ab5addebc5ce507818e90ff8cbdc25",
+          "source": "https://huggingface.co/pcunwa/BS-Roformer-Leap/resolve/4e47d6662ae82eaa8b4ac4329fe66099a843b48e/Xe/leap_xe_config_voc.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "bs_leap_xe_inst.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/leap-xe/bs_leap_xe_inst.ckpt",
+          "bytes": 267798769,
+          "sha256": "33ee9415f491d257fa7a79f6e92a80d647bc71ed622bfef9a137b6e4250307d3",
+          "source": "https://huggingface.co/pcunwa/BS-Roformer-Leap/resolve/4e47d6662ae82eaa8b4ac4329fe66099a843b48e/Xe/bs_leap_xe_inst.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/leap-xe/leap_xe_config_inst.yaml",
+          "bytes": 2189,
+          "sha256": "bc188276085e07840757e5117285ead7ec5631f94329c1c6f5f0aff385adea4d",
+          "source": "https://huggingface.co/pcunwa/BS-Roformer-Leap/resolve/4e47d6662ae82eaa8b4ac4329fe66099a843b48e/Xe/leap_xe_config_inst.yaml"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "DBS-TIGER-DnR",
+      "type": "dbs_tiger",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/dbs-tiger/model.safetensors",
+          "bytes": 4111836,
+          "sha256": "3d8205743f2a6f5a6704f5d4104d7cf5bf7bf02dab2fd728da31f4c69225cadb",
+          "source": "https://huggingface.co/JusperLee/DBS-TIGER-DnR/resolve/22da7d4cd3ea63f9365181008bff1c0d2ab6fb2b/model.safetensors"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/dbs-tiger/config.json",
+          "bytes": 957,
+          "sha256": "c7f7893323e78f9b99747a13090558a13c4f4b77383a38acb9979709fd04d1d8",
+          "source": "https://huggingface.co/JusperLee/DBS-TIGER-DnR/resolve/22da7d4cd3ea63f9365181008bff1c0d2ab6fb2b/config.json"
+        }
+      ],
+      "downloaded": true
+    },
+    {
+      "id": "bandit_v2_multi.ckpt",
+      "type": "bandit_v2",
+      "downloaded": true,
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/bandit-multi/bandit_v2_multi.ckpt",
+          "bytes": 148847109,
+          "sha256": "fbec3e895c70cb67ec3d47595e6ac95cbce21d399ccf0dfbc658a749ebdc8922",
+          "source": "https://zenodo.org/records/12701995/files/checkpoint-multi.ckpt?download=1",
+          "original_md5": "fea2868787551b0cff36cfcf7c3622a3"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/experimental_general/checkpoint-cmn_state_dict.yaml",
+          "bytes": 1955,
+          "sha256": "635a58ac72823078091ae6e2c0a00b2e6a01896b40a722b260aff57edb88b29e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/experimental_general/checkpoint-cmn_state_dict.yaml"
+        }
+      ]
+    }
+  ]
+}

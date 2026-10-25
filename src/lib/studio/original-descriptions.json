@@ -1,0 +1,21 @@
+{
+  "becruily_deux.ckpt": "同时获得人声与伴奏，适合先做一版试听。",
+  "bs_leap_xe_voc.ckpt": "提取歌曲中的人声，伴奏作为独立音轨输出。",
+  "bs_roformer_voc_hyperacev2.ckpt": "通用人声提取，可与 Deux 使用同一片段比较。",
+  "bs_leap_xe_inst.ckpt": "提取伴奏，适合制作翻唱底轨与检查人声残留。",
+  "bs_roformer_inst_hyperacev2.ckpt": "侧重伴奏提取，适合检查人声残留和乐器细节。",
+  "BS-Roformer-Resurrection.ckpt": "已有的通用人声模型，保留作为试听对照。",
+  "BS-Roformer-Resurrection-Inst.ckpt": "已有伴奏分离模型，便于与其他方案对照。",
+  "bandit_v2_multi.ckpt": "官方多语种影视三轨模型，分离对白、配乐与音效。",
+  "checkpoint-cmn_state_dict.ckpt": "对白、配乐、音效三轨，适合中文影视素材先做试听。",
+  "model_bandit_plus_dnr_sdr_11.47.ckpt": "保留现有影视三轨模型，作为同素材对照。",
+  "DBS-TIGER-DnR": "2026 年公开的影视三轨模型，原生单声道。",
+  "mel_band_roformer_karaoke_becruily.ckpt": "主唱与伴唱分离候选，实际角色以短片段试听为准。",
+  "bs_roformer_karaoke_anvuew.ckpt": "主唱、伴唱拆分的另一种选择。",
+  "denoise_mel_band_roformer_aufr33_sdr_27.9959.ckpt": "先从标准降噪开始，检查对白细节是否保留。",
+  "denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768.ckpt": "更强的清理候选，建议和标准版对比试听。",
+  "mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144.ckpt": "分离背景人群声和其余声音，保留前景需按素材判断。",
+  "dereverb_bs_roformer_anvuew_sdr_22.5050.ckpt": "减少混响和空间印记，适合对白、人声清理。",
+  "aspiration_mel_band_roformer_sdr_18.9845.ckpt": "分离呼吸气声，便于后期单独调节。",
+  "aspiration_mel_band_roformer_less_aggr_sdr_18.1201.ckpt": "较温和的气声分离候选，适合先保留人声细节。"
+}

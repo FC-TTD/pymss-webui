@@ -1,0 +1,96 @@
+{
+  "_id": "6a2cce728514bfa5f098749b",
+  "id": "pcunwa/BS-Roformer-Leap",
+  "private": false,
+  "tags": [
+    "region:us"
+  ],
+  "downloads": 0,
+  "likes": 31,
+  "modelId": "pcunwa/BS-Roformer-Leap",
+  "author": "pcunwa",
+  "sha": "4e47d6662ae82eaa8b4ac4329fe66099a843b48e",
+  "lastModified": "2026-06-30T12:48:14.000Z",
+  "gated": false,
+  "disabled": false,
+  "config": {},
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "blobId": "a6344aac8c09253b3b630fb776ae94478aa0275b",
+      "size": 1519
+    },
+    {
+      "rfilename": "README.md",
+      "blobId": "e5f8f3f92fdb383ac7f0e4ca4b1c32ffdda92bde",
+      "size": 41
+    },
+    {
+      "rfilename": "Xe/bs_leap_xe_inst.ckpt",
+      "blobId": "81de1121ac4310575778c00bcf7296bff1670767",
+      "size": 267798769,
+      "lfs": {
+        "sha256": "33ee9415f491d257fa7a79f6e92a80d647bc71ed622bfef9a137b6e4250307d3",
+        "size": 267798769,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "Xe/bs_leap_xe_voc.ckpt",
+      "blobId": "ecb8c23e18c602011cc9bc902e815fc32f3fb406",
+      "size": 267796851,
+      "lfs": {
+        "sha256": "b739c1d2d87a81cd3dd3844ed9ad0bd678708c7a0a761a03a1aaff9af79a096d",
+        "size": 267796851,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "Xe/leap_xe_config_inst.yaml",
+      "blobId": "f99bd8da66ecbf658b2817b7d6651057f8a13e3b",
+      "size": 2189
+    },
+    {
+      "rfilename": "Xe/leap_xe_config_voc.yaml",
+      "blobId": "dacf4b01f0639d17cf61be1624e41be786258508",
+      "size": 2190
+    },
+    {
+      "rfilename": "bs_leap_inst_conf.yaml",
+      "blobId": "db2d1a0bc5a3cc3e838e3319c5f593cdf5d1fb5c",
+      "size": 1960
+    },
+    {
+      "rfilename": "bs_leap_voc_conf.yaml",
+      "blobId": "6e2d28aa5c04215d260e0e4fde4ced2ecec853ba",
+      "size": 1961
+    },
+    {
+      "rfilename": "bs_roformer_leap_inst.ckpt",
+      "blobId": "b8d7b9d5a5daf722964234d9263a42cd9420dccf",
+      "size": 238212233,
+      "lfs": {
+        "sha256": "1459b5eb70d7e1a805d8d080cb0d1abfcd06dc3931daedecad59944a8f7a0a57",
+        "size": 238212233,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "bs_roformer_leap_voc.ckpt",
+      "blobId": "12ac745e0b50448f7f6dbee8ad90d760eb0a8b3e",
+      "size": 238220459,
+      "lfs": {
+        "sha256": "8c0e4bfff6be150a12582a7c236379aa42102b7f43831900df5b2addf924da7c",
+        "size": 238220459,
+        "pointerSize": 134
+      }
+    }
+  ],
+  "spaces": [
+    "hugging-apps/bs-roformer-leap-audio-separator",
+    "mason369/music-to-midi",
+    "modulsx/bs-roformer-leap-audio-separator"
+  ],
+  "createdAt": "2026-06-13T03:28:50.000Z",
+  "usedStorage": 1012028312
+}

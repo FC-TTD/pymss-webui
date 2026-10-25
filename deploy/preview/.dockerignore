@@ -1,0 +1,15 @@
+*
+!Dockerfile
+!nginx.conf
+!release.json
+!dist-design/
+!dist-design/**
+!Dockerfile.runtime
+!provider/
+!provider/**
+!dbs-source/
+!dbs-source/**
+!runtime-wheels/
+!runtime-wheels/**
+!runtime/
+!runtime/**
