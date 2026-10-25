@@ -7,7 +7,7 @@
 - `FC-TTD/pymss-webui` 拥有组合页面、明显的 PYMSS/MSST 导航、PYMSS 工作台、音频复用 API 和本入口的业务 Caddy 标签。
 - 原 `msst-hub-entry`、MSST 原生界面、租约和 admission 路径保持；MSST 页通过 `http://msst/?native=msst` 加载，API 的 `__gradio__` 路径继续由原 Hub 入口处理。
 - 首页卡片由 `FC-TTD/ttd-file/file/index.links.json` 及其现有 `/index-api/links` API 管理。本次仅改 `tools.msst` 的 text/title，保留原 `http://msst/` 链接。
-- 不修改平台 Caddy 全局配置，不创建域名/DNS/认证/公网路由，不迁移或新建 GPU runtime。新的正式组件仅为64MiB/.5CPU无端口静态入口；复用现有 PYMSS 后端网络和已经验证的 Stage API、GPU、NAS 数据。
+- 不修改平台 Caddy 全局配置，不创建域名/DNS/认证/公网路由，不迁移或新建 GPU runtime。新的正式组件仅为64MiB/.5CPU只读静态入口；复用现有 PYMSS 后端网络和已经验证的 Stage API、GPU、NAS 数据。
 
 ## 源码提交授权门禁
 
@@ -24,7 +24,7 @@
 
    `python3 deploy/unified/publish.py <verified-release> <pymss-webui-commit>`
 
-3. 检查通过且发布仍在授权范围时，加 `--apply`。同一 Stage 上复用已测试的不可变静态镜像 ID，新的 CPU 入口加入已有 `pymss-ui-preview_default` 与集群现有 caddy overlay，不创建默认桥接网段。原后端和 MSST 容器均不重启。
+3. 检查通过且发布仍在授权范围时，加 `--apply`。同一 Stage 上复用已测试的不可变静态镜像 ID，新的 CPU 入口加入已有 `pymss-ui-preview_default`，仅绑定既有内网地址192.168.100.18:17898，由业务标签提供明确upstream，不创建新网络或默认桥接网段。原后端和 MSST 容器均不重启。
 4. Caddy 把本入口的私有 `/`、`/ui`、`/ui/*`、`/api/studio/*` handle 合并到既有 `msst` 站点；`/?native=msst` 排除在新根路径之外。原 catch-all 继续处理 MSST。`msst-public-proxy` 及公网入口不变。
 5. 检查实际 Caddy 合并结果、主页默认 PYMSS、MSST 切换、文件引用/真实分离、Range 和家庭方向资源。`merged-route.Caddyfile` 仅为适配验证 fixture，不能加载为平台全局配置。
 6. 再在 `ttd-file` 仓库运行：
@@ -42,3 +42,5 @@
 回退只针对本次新增 CPU 入口及本次首页字段：使用记录的上一 CPU 镜像/配置；首次发布可在明确授权回退后停止新增入口，使原 MSST catch-all 继续接管。不要停止 MSST/PYMSS GPU 服务，不回滚或删除原始音频、结果、批次或资源峰值档案。实际回滚未执行。
 
 Worker首次加入已有attachable overlay时，Compose外部网络应使用权威名称caddy；记录完整集群ID用于核查。直接把ID当作网络模式会因本地尚未物化该overlay而启动失败，不应新建同名bridge。
+
+实际Stage worker无法解析既有caddy overlay（名称/ID均失败），未改Swarm/daemon/网关。最终使用仅绑定Stage既有100.18内网接口的17898端口及显式业务upstream，保持独立不可变前端，不把正式UI指向可变17896预览。无公网标签/认证/DNS变化。

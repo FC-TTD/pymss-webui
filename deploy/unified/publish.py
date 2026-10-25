@@ -56,7 +56,7 @@ caddy_id = ssh('ttd-edge', 'docker network inspect caddy --format '+shlex.quote(
 assert re.fullmatch(r'[a-z0-9]{20,32}', caddy_id)
 promotion = dict(source_commit=args.source_commit, release=args.release, ui_image=image,
                  verified_committed_ui_inputs=verified, backend_release=runtime_release,
-                 caddy_network=caddy_id, caddy_network_name='caddy', private_origin='http://msst/', native='http://msst/?native=msst',
+                 observed_caddy_network=caddy_id, private_upstream='192.168.100.18:17898', private_origin='http://msst/', native='http://msst/?native=msst',
                  runtime_policy='Existing PYMSS Stage backend and original Hub MSST entry unchanged; no GPU deployment/migration.')
 print(json.dumps(promotion, ensure_ascii=False, indent=2), flush=True)
 if not args.apply:
@@ -68,7 +68,7 @@ with tempfile.TemporaryDirectory() as directory:
     folder = Path(directory)
     (folder / 'compose.yaml').write_bytes(compose)
     (folder / 'promotion-source.json').write_text(json.dumps(promotion, ensure_ascii=False, indent=2)+'\n')
-    (folder / '.env').write_text(f'AUDIO_UI_IMAGE={image}\nAUDIO_SOURCE_COMMIT={args.source_commit}\nAUDIO_RELEASE={args.release}\nCADDY_NETWORK_ID={caddy_id}\n')
+    (folder / '.env').write_text(f'AUDIO_UI_IMAGE={image}\nAUDIO_SOURCE_COMMIT={args.source_commit}\nAUDIO_RELEASE={args.release}\n')
     subprocess.run(['scp', '-q', str(folder/'compose.yaml'), str(folder/'.env'), str(folder/'promotion-source.json'), 'root@ttd-stage:'+remote+'/'], check=True)
 command = shlex.join(['bash', '-s', '--', remote])
 subprocess.run(['ssh', '-o', 'BatchMode=yes', 'root@ttd-stage', command], input=r'''

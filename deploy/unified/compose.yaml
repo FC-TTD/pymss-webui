@@ -12,7 +12,8 @@ services:
     mem_limit: 64m
     cpus: 0.5
     pids_limit: 64
-    networks: [pymss_backend, caddy]
+    networks: [pymss_backend]
+    ports: ["192.168.100.18:17898:8080"]
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
       interval: 15s
@@ -23,20 +24,16 @@ services:
       ttd.audio.source: ${AUDIO_SOURCE_COMMIT:?Record the authorized source commit}
       ttd.audio.release: ${AUDIO_RELEASE:?Record the verified release}
       caddy: http://msst
-      caddy_ingress_network: caddy
       caddy.@audio_home.path: /
       caddy.@audio_home.not.query: native=msst
       caddy.handle_0: "@audio_home"
-      caddy.handle_0.reverse_proxy: "{{upstreams 8080}}"
+      caddy.handle_0.reverse_proxy: "192.168.100.18:17898"
       caddy.@audio_ui.path: /ui /ui/*
       caddy.handle_1: "@audio_ui"
-      caddy.handle_1.reverse_proxy: "{{upstreams 8080}}"
+      caddy.handle_1.reverse_proxy: "192.168.100.18:17898"
       caddy.handle_2: /api/studio/*
-      caddy.handle_2.reverse_proxy: "{{upstreams 8080}}"
+      caddy.handle_2.reverse_proxy: "192.168.100.18:17898"
 networks:
   pymss_backend:
     external: true
     name: pymss-ui-preview_default
-  caddy:
-    external: true
-    name: caddy
