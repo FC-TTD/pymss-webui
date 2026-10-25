@@ -56,7 +56,7 @@ caddy_id = ssh('ttd-edge', 'docker network inspect caddy --format '+shlex.quote(
 assert re.fullmatch(r'[a-z0-9]{20,32}', caddy_id)
 promotion = dict(source_commit=args.source_commit, release=args.release, ui_image=image,
                  verified_committed_ui_inputs=verified, backend_release=runtime_release,
-                 caddy_network=caddy_id, private_origin='http://msst/', native='http://msst/?native=msst',
+                 caddy_network=caddy_id, caddy_network_name='caddy', private_origin='http://msst/', native='http://msst/?native=msst',
                  runtime_policy='Existing PYMSS Stage backend and original Hub MSST entry unchanged; no GPU deployment/migration.')
 print(json.dumps(promotion, ensure_ascii=False, indent=2), flush=True)
 if not args.apply:

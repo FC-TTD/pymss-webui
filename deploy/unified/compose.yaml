@@ -39,4 +39,4 @@ networks:
     name: pymss-ui-preview_default
   caddy:
     external: true
-    name: ${CADDY_NETWORK_ID:?Use the existing cluster caddy network ID}
+    name: caddy
