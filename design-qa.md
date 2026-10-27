@@ -186,3 +186,18 @@ Stage http://ttd-stage:17896/ui/，release h-e92556e09ea24f95；未提交/推送
 ## 2026-10-27 正式入口推广准备
 
 正式msst仍旧版，未执行运行配置写入。新版h-fa900232858e1f41的UI128/语音85/Ying29/chain4输入、实际镜像/管理目录、全静态资源SHA核对通过；新增speech/ym/chain业务路由的Compose校验与Caddy adapt通过。Svelte零错警、目录336及单选/筛选检查通过。现有整首Ying三轨与国际声后二次music/sfx输出Range、派生来源SHA复核通过，未新启GPU。家庭router32绑定32.2方向页面SHA一致；实际同事质量试听NOT_RUN。准备、路由和LAN证据见../pymss-ui-evidence/formal-entry-20261027/，提交授权待答复；不把Stage验收当正式域名发布后验收。
+
+## 2026-10-27 正式发布完成
+
+用户单独授权本轮三个仓库本地提交并继续发布，未授权push。正式入口 **http://msst/ui/**，默认PYMSS，顶部MSST切换保留；局域网同事可使用自己素材测试质量。首页原“音频分离 / MSST 和 PYMSS”已正确，本轮未改首页。
+
+- 推广已验证Stage h-fa900232858e1f41不可变CPU镜像9ff491b3b085ad165c0417b81bc1d92201db458548f0039227b59482e81ce048。正式容器79840b09489bf1426a69ad058d51bb1b187d62044c4d60dd08df6c806f7dd016，healthy/restart0。发布源UI10ed67982276794463018dd80f0d0c1fa59fd921；ClearVoice e14252cde8de8b1730794c3c37ee631593af705b；YingMusic49435fa45ac2bfbc34349c509c3ad1e32ea3e470。各候选构建输入逐字节与commit一致，未重新构建或重启GPU模型。
+- 正式管理 /opt/audio-separation/releases/h-fa900232858e1f41-10ed67982276/，含promotion-source.json、compose.yaml、previous-container.json、rollback.sh。正式镜像与Stage相同，静态资源11项完整SHA一致。后端仍为共享PYMSS5e7c82a2/h-bd、ClearVoicebfd1/h-7eeb、Yingb2f4/h-c2fe、CPUchaina504/h-df4，管理路径/源码/挂载分别记录，容器ID与发布前一致。不是Hub GPU生命周期纳管或后端隔离，不改变原30911/MSST。
+- 已增加私有speech/ym/chain三组路由，保留studio、根/UI和原MSST catch-all。实际Caddy srv1私有7条path包含新路径，msst-public-proxy完整JSON与旧发布记录一致；没有公网/认证/DNS或平台配置修改。首次postcheck碰到CDP异步收敛404；等待后路由全部生效，无手工Caddy热写/依赖重启。后续publisher已修正为等待完整页面+模型接口+原MSST契约收敛，避免只等UI造成误报；此工具修订与发布后文档单独提交，运行构建输入不变。
+- 正式真实任务：旧InstVox人声→Ying三轨 batch ym-cb745391be8343b4b4283aa5f90a674d/job ym-1f3552d741b846aa84827d19819fc6c4；该主唱→ClearVoice48k batch cv-47c89c6acbc942b29602b0d60bd8cb09/job cv-85edaba4c1f14538b1cf8a639b1b55ee；原Deux国际声→BandIt多语种music+sfx batch f3658cccda794c2b845e1fdb1b6556e9。均真实成功，uploaded_bytes0/reused_files1，母输出SHA=本轮输入SHA，来源可回看，原结果保留。prepared刷新后同批启动已实际浏览器验证。
+- 所有新输出均48kHz/24bit/6s，逐轨900非零峰值和1024字节Range206；新三轨ZIP CRC通过。原官方35.761625s完整三轨ZIP30,898,678B在正式地址完整传输，SHA b243b52a29ddf914f96843f92afe0d8b5793c166b5ba75cf04eac2d40dac00cd 与Stage逐字节相同；各音频DOM无媒体错误。真实浏览器生成ZIP链接、波形键盘定位、MSST原Gradio加载/切回保留结果通过。
+- 正式UI419×693无横溢、中文小于12px项0；1280×900无横溢，三模型切换唯一选中且卡片绝对位置完全不变。原MSST iframe自带非交互tab warning，未改原UI；不把它记成PYMSS回归错误或宣称全页面零warning。PYMSS处理链路无新业务错误。
+- 家庭router32绑定192.168.32.2来源正式HTML/JS/CSS及完整30MB ZIP SHA均一致；Stage/edge回程仍100.2/100.1，原10.35/10.41/10.42网络保留。实际家庭电脑/同事盲听/三Mac、浏览器下载保存落盘、宿主重启和回滚演练NOT_RUN。这里证明功能和访问路径，不代替同事的业务质量评价。
+- 仅本轮CPU入口重建；原共享PYMSS、Stage预览Web、chain、ClearVoice、Ying、原MSST两容器及Stage原30911均保持原ID/image。没有停止其他工作负载、改精度/offload、删除输入/输出/权重或推送Git。
+
+证据：formal-verification.json、home-formal.json、runtime-after.json、committed-preflight.json、caddy-audio-routes.json、commits.json、formal-waveforms.png；原Stage完整矩阵 yingmusic-chain-20261026/verification.json。回退使用上述管理目录已保存rollback.sh恢复旧CPU入口配置/镜像，保留新旧所有NAS数据；实际未回退。

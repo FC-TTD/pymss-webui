@@ -183,19 +183,23 @@ docker compose --env-file .env -f compose.yaml up -d --no-build --pull never
 ip route get 192.168.32.214 > home-route-after.txt
 ''', text=True, check=True)
 
-for _ in range(30):
+# Docker discovery is asynchronous: the old /ui route can already serve the new
+# image while new API handles have not converged. Wait for the complete contract.
+deadline = time.monotonic() + 90
+last_error = ''
+while time.monotonic() < deadline:
     try:
         data = urllib.request.urlopen('http://msst/ui/', timeout=3).read()
-        if sha(data) == manifest['artifact']['index.html']:
-            break
-    except Exception:
-        pass
+        assert sha(data) == manifest['artifact']['index.html'], 'UI artifact mismatch'
+        for prefix, count in [('studio', 37), ('speech', 5), ('ym', 1)]:
+            assert sum(m['available'] for m in get_json(f'http://msst/api/{prefix}/models')['models']) == count, prefix
+        assert b'window.gradio_config' in urllib.request.urlopen('http://msst/?native=msst', timeout=10).read()
+        break
+    except Exception as exc:
+        last_error = str(exc)
     time.sleep(2)
 else:
-    raise SystemExit('Formal UI differs from verified artifact; inspect private Caddy. No shared runtime was altered.')
-assert b'window.gradio_config' in urllib.request.urlopen('http://msst/?native=msst', timeout=20).read()
-for prefix, count in [('studio', 37), ('speech', 5), ('ym', 1)]:
-    assert sum(m['available'] for m in get_json(f'http://msst/api/{prefix}/models')['models']) == count
+    raise SystemExit('Private entry contract did not converge: ' + last_error + '. No shared runtime was altered.')
 assert inspect('ttd-stage', 'pymss-preview-runtime')['Id'] == backend['Id']
 for dependency in dependencies.values():
     assert inspect(dependency['host'], dependency['container'])['Id'] == dependency['container_id']

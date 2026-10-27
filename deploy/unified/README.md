@@ -74,3 +74,11 @@ python3 deploy/unified/publish.py h-fa900232858e1f41 <ui-commit> --speech-commit
 发布脚本在写入前再次核对入口/后端/依赖容器身份，避免并行部署覆盖。CPU 入口管理目录沿用 `/opt/audio-separation/releases/<release>-<source-prefix>`；保存上一容器记录及具体 `rollback.sh`，恢复只涉及旧入口配置/镜像，不回滚音频、结果、批次或派生来源。回退本身须按实际授权执行，不自动触发。
 
 发布后的验收须在正式域名重跑：最新资源 SHA、两套导航、模型可用目录、旧批次恢复、实际新任务/二次处理、波形/Range/ZIP和适用家庭来源。Stage 上既有通过证据为 `work/pymss-ui-evidence/yingmusic-chain-20261026/verification.json`。同事实际试听、三台 Mac、宿主重启及完整回滚演练均尚未执行；质量评价由实际业务素材对比确认，不能从健康检查推断。
+
+## 2026-10-27 已发布
+
+已收到本轮独立提交授权并完成三个仓库本地提交，未push。正式http://msst/ui/已运行h-fa900232858e1f41（与Stage完全相同不可变镜像），管理目录/opt/audio-separation/releases/h-fa900232858e1f41-10ed67982276。发布源UI10ed679/ClearVoice e14252c/Ying49435fa；后续仅发布工具和验收文档提交不改变运行镜像输入。
+
+实际CDP异步刷新先页面后接口，首次脚本postcheck404，路由随后全部自动收敛；已改后续工具等待完整页面+模型+MSST契约。实际Caddy在srv1，不能固定假设srv0；私有speech/ym/chain全部验证，public-proxy与旧JSON一致。未手写平台全局配置。
+
+正式三条真实链路（PN人声→Ying三轨→ClearVoice48k，以及Deux国际声→BandIt音乐音效）均成功，无浏览器重传；完整30MB ZIP/Range/波形/来源SHA、prepared刷新与MSST导航通过。正式源与Stage全11资源SHA一致；家庭router32绑定32.2来源页面/JS/CSS/整ZIP一致。原MSST/30911及所有共享依赖ID不变，正式CPU入口healthy/restart0；回退文件已保存，未演练。证据../../..的work/pymss-ui-evidence/formal-entry-20261027/DEPLOYMENT_REPORT.md。同事质量试听及实际家庭电脑仍NOT_RUN。
