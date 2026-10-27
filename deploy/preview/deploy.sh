@@ -6,7 +6,7 @@ cd "$project_root"
 npm run build:design
 bundle_path="$(python3 - <<'PY'
 from pathlib import Path
-import hashlib,json,shutil,subprocess,tarfile
+import hashlib,json,shutil,subprocess,tarfile,os
 root=Path.cwd()
 paths=[p for p in (root/'src').rglob('*') if p.is_file()]
 paths += [root/p for p in ['package.json','package-lock.json','index.html','tsconfig.json','vite.config.ts','svelte.config.js']]
@@ -23,6 +23,29 @@ artifact={str(p.relative_to(root/'dist-design')):sha(p) for p in sorted((root/'d
 base=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
 provider_base=subprocess.check_output(['git','-C',str(provider.parent),'rev-parse','HEAD'],text=True).strip()
 identity={'source':source,'artifact':artifact,'provider_base_commit':provider_base,'base_commit':base,'scope':'real-separation-preview'}
+if os.environ.get('PREVIEW_WEB_ONLY')=='1':
+ info=json.loads(subprocess.check_output(['ssh','-o','BatchMode=yes','root@ttd-stage','docker inspect pymss-preview-runtime'],text=True))[0]
+ backend=info['Config']['Labels']['ttd.preview.release']
+ baseline=json.loads((root.parent/'pymss-ui-evidence/stage-releases'/backend/'input-manifest.json').read_text())
+ for name,value in source.items():
+  if name.startswith(('deploy/preview/runtime/','provider/','dbs-source/','runtime-wheels/')):
+   assert baseline['source'].get(name)==value, 'Web-only preview cannot change shared runtime inputs: '+name
+ identity.update(backend_release=backend,runtime_image=info['Image'],scope='web-only-preview')
+if "cv:MossFormer2_SS_16K" in (root/'src/lib/studio/models.ts').read_text():
+ speech=json.loads(subprocess.check_output(['ssh','-o','BatchMode=yes','root@ttd-edge','docker inspect clearvoice-audio-preview'],text=True))[0]
+ assert speech['Config']['Labels'].get('ttd.preview.owner')=='ClearerVoice-Studio'
+ ready=json.loads(subprocess.check_output(['curl','-fsS','--max-time','10','http://192.168.100.15:17902/api/speech/models']))['models']
+ assert len(ready)==5 and all(m['available'] for m in ready), 'ClearVoice real-model verification is incomplete.'
+ identity['speech_backend']={'release':speech['Config']['Labels']['ttd.preview.release'],'image':speech['Image'],'source':'FC-TTD/ClearerVoice-Studio','native_commit':'6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61'}
+if "ym:yingmusic_bs_roformer" in (root/'src/lib/studio/models.ts').read_text():
+ ying=json.loads(subprocess.check_output(['ssh','-o','BatchMode=yes','root@ttd-edge','docker inspect yingmusic-audio-preview'],text=True))[0]
+ assert ying['Config']['Labels'].get('ttd.preview.owner')=='YingMusic-SVC'
+ ready=json.loads(subprocess.check_output(['curl','-fsS','--max-time','10','http://192.168.100.15:17903/api/ym/models']))['models']
+ assert len(ready)==1 and ready[0]['available'], 'YingMusic real-model verification is incomplete.'
+ chain=json.loads(subprocess.check_output(['ssh','-o','BatchMode=yes','root@ttd-stage','docker inspect pymss-chain-preview'],text=True))[0]
+ assert chain['Config']['Labels'].get('ttd.preview.owner')=='pymss-webui'
+ identity['ying_backend']={'release':ying['Config']['Labels']['ttd.preview.release'],'image':ying['Image'],'source':'FC-TTD/YingMusic-SVC','native_commit':'4974a80c6044c4557059548409379f6365129f88'}
+ identity['chain_backend']={'release':chain['Config']['Labels']['ttd.preview.release'],'image':chain['Image'],'source':'FC-TTD/pymss-webui'}
 raw=json.dumps(identity,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
 release='h-'+hashlib.sha256(raw).hexdigest()[:16]
 out=root.parent/'pymss-ui-evidence'/'stage-releases'/release
@@ -109,8 +132,22 @@ else
 fi
 docker image inspect nginx@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 >/dev/null
 docker build --pull=false --network none --build-arg "PREVIEW_RELEASE=$release" -t "pymss-ui-preview:$release" . > build.log 2>&1
-docker build --pull=false --network none -f Dockerfile.runtime -t "pymss-preview-runtime:$release" . > runtime-build.log 2>&1
-docker compose --env-file .env -f compose.yaml config --quiet
+compose_files=(-f compose.yaml)
+web_only="$(python3 -c 'import json; print(int(json.load(open("input-manifest.json")).get("scope")=="web-only-preview"))')"
+if test "$web_only" = 1; then
+  python3 - <<'PYOVERRIDE'
+import json,subprocess
+from pathlib import Path
+m=json.loads(Path('input-manifest.json').read_text())
+current=json.loads(subprocess.check_output(['docker','inspect','pymss-preview-runtime']))[0]
+assert current['Image']==m['runtime_image'] and current['Config']['Labels']['ttd.preview.release']==m['backend_release']
+Path('web-only.json').write_text(json.dumps({'services':{'runtime':{'image':m['runtime_image'],'labels':{'ttd.preview.release':m['backend_release']}}}}))
+PYOVERRIDE
+  compose_files+=(-f web-only.json)
+else
+  docker build --pull=false --network none -f Dockerfile.runtime -t "pymss-preview-runtime:$release" . > runtime-build.log 2>&1
+fi
+docker compose --env-file .env "${compose_files[@]}" config --quiet
 if docker network inspect pymss-ui-preview_default >/dev/null 2>&1; then
   existing_subnet="$(docker network inspect pymss-ui-preview_default --format '{{range .IPAM.Config}}{{.Subnet}}{{end}}')"
   if test "$existing_subnet" != '10.35.0.0/24'; then
@@ -125,7 +162,11 @@ if docker network inspect pymss-ui-preview_default >/dev/null 2>&1; then
     docker compose --env-file "$(dirname "$previous_compose")/.env" -f "$previous_compose" down --timeout 20
   fi
 fi
-docker compose --env-file .env -f compose.yaml up -d --no-build --pull never
+if test "$web_only" = 1; then
+  docker compose --env-file .env "${compose_files[@]}" up -d --no-build --pull never --no-deps web
+else
+  docker compose --env-file .env "${compose_files[@]}" up -d --no-build --pull never
+fi
 docker network inspect pymss-ui-preview_default > network-after.json
 ip route get 192.168.32.214 > home-route-after.txt
 docker inspect pymss-ui-preview-web --format '{{.Id}} {{.Image}} {{json .NetworkSettings.Ports}}'

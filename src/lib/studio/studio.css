@@ -355,3 +355,10 @@
 .export-track-choice{padding-top:12px;}
 .export-track .waveform-track{padding-top:5px;}
 @media(max-width:580px){.export-actions{gap:8px;}.result-file-heading{align-items:flex-start;}.result-file-heading>label{padding-bottom:8px;}.input-list{max-height:210px;}}
+
+.continue-track{margin:8px 0 0;font-size:12px;color:var(--st-muted)}
+.continue-track summary{cursor:pointer;color:#315ee8;min-height:28px;display:list-item;list-style-position:inside}
+.continue-options{display:flex;flex-wrap:wrap;gap:8px;padding:8px 0}
+.continue-options button{font-size:12px;border:1px solid #dbe3ef;border-radius:6px;padding:7px 10px;background:var(--st-surface);color:var(--st-text)}
+.continue-options button:disabled{opacity:.5;cursor:not-allowed}
+.input-origin{font-size:12px;color:#64748b;margin:8px 0}.input-origin a{color:#315ee8}

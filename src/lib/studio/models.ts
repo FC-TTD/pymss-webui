@@ -5,22 +5,24 @@ import { stemChineseLabel } from '../stem-labels';
 
 export interface Stem { id: string; label: string }
 export interface StudioModel {
-  id: string; title: string; description: string; originalDescription?: string; classic?: boolean; scenarios: string[];
+  id: string; title: string; description: string; originalDescription?: string; classic?: boolean; hidden?: boolean; scenarios: string[];
   tag: string; state: 'ready' | 'downloaded' | 'missing' | 'planned'; stems: Stem[];
   source: string; caution: string; size: number; curated: boolean;
 }
 export const scenarios = [
   { id: 'duo', label: '人声与伴奏', description: '把歌曲拆成人声与伴奏，方便翻唱、混音和配乐。' },
-  { id: 'vocal', label: '人声分离', description: '优先选择擅长提取人声的模型，同时保留其余声音。' },
-  { id: 'instrumental', label: '伴奏分离', description: '优先选择擅长保留伴奏细节、抑制人声残留的模型。' },
-  { id: 'dme', label: '影视分离 DME', description: '支持对白/其余声音双轨，以及对白/配乐/音效三轨，按实际模型输出。' },
+  { id: 'vocal', label: '歌曲人声分离', description: '优先选择擅长提取人声的模型，同时保留其余声音。' },
+  { id: 'instrumental', label: '歌曲伴奏分离', description: '优先选择擅长保留伴奏细节、抑制人声残留的模型。' },
+  { id: 'dme', label: '影视分离 DME', description: '优先保留国际声（配乐、音效和环境声）；双轨分离人声与国际声，三轨可再拆开配乐和音效。' },
+  { id: 'speakers', label: '双人对白分离', description: '把两个人同时说话的叠音拆成两条说话人轨；不用于歌曲主唱与和声。' },
+  { id: 'denoise', label: '人声降噪', description: '输入已有的对白或人声，降低风扇声、嘶声等背景底噪。' },
+  { id: 'superres', label: '音质提升', description: '用模型补充低带宽对白的高频细节；有噪声时可先降噪，再做超分。' },
   { id: 'karaoke', label: '主唱与和声', description: '进一步分离主唱与伴唱，建议先对短片段试听。' },
-  { id: 'cleanup', label: '对白清理', description: '按素材需要选择降噪、去人群声、气声或去混响。' },
+  { id: 'cleanup', label: '提取对白', description: '从有配乐或音效的混音中提取讲话声；与给现有人声去底噪不同。' },
   { id: 'dereverb', label: '去混响', description: '减少空间混响，提取干声并保留残差。' },
-  { id: 'breath', label: '呼吸声', description: '分离气声与其余声音，不保证去除喷麦或口水音。' },
+  { id: 'breath', label: '气声分离', description: '分离气声与其余声音，不保证去除喷麦或口水音。' },
   { id: 'stems', label: '乐器分轨', description: '按模型能力输出多条乐器轨或指定乐器。' },
-  { id: 'denoise', label: '降噪', description: '降低持续底噪，比较细节保留与噪声抑制。' },
-  { id: 'crowd', label: '人群声', description: '分离人群喧哗与其余声音，方便独立调整群杂声。' },
+  { id: 'crowd', label: '去人群声', description: '分离人群喧哗与其余声音，方便独立调整群杂声。' },
   { id: 'four', label: '四轨分离', description: '输出人声、鼓、贝斯与其他乐器。' },
   { id: 'six', label: '六轨分离', description: '进一步独立输出吉他与钢琴，适合多轨混音。' },
   { id: 'drums', label: '鼓', description: '提取鼓组，便于单独调整节奏层。' },
@@ -35,6 +37,13 @@ const stems = (...items: string[]): Stem[] => items.map(item => {
 const two = stems('Vocals:人声', 'Instrumental:伴奏');
 type Curated = Omit<Partial<StudioModel>, 'id'> & { id: string; title: string; description: string; scenarios: string[] };
 const curated: Curated[] = [
+  {id:'ym:yingmusic_bs_roformer',title:'YingMusic 主唱与和声三轨',scenarios:['karaoke'],size:1295074954,tag:'2026 新收录',description:'分别提取主唱、和声与伴奏，适合歌曲叠唱细节的独立精修。',stems:stems('vocals:主唱','backing_vocal:和声','instrumental:伴奏'),source:'https://huggingface.co/GiantAILab/YingMusic-SVC/blob/main/bs_roformer.ckpt'},
+  {id:'cv:MossFormer2_SS_16K',size:670353295,title:'ClearVoice 双人对白',scenarios:['speakers'],description:'分开同时说话的两个人，输出两条16kHz原生说话人轨供单独精修。',stems:stems('Speaker1:说话人 A','Speaker2:说话人 B'),tag:'2026 新收录',caution:'A/B编号不代表固定身份；面向两人对白，不用于主唱与和声。',source:'https://huggingface.co/alibabasglab/MossFormer2_SS_16K'},
+  {id:'cv:MossFormer2_SR_48K',size:439184643,title:'ClearVoice 人声超分',scenarios:['superres'],description:'用模型为低带宽对白补充高频细节，适合16kHz及以上音源的音质提升。',stems:stems('Enhanced:音质提升后人声'),tag:'2026 新收录',caution:'原生48kHz模型；补充细节不等于找回丢失原音，不用于整段音乐混音。',source:'https://huggingface.co/alibabasglab/MossFormer2_SR_48K'},
+  {id:'cv:MossFormer2_SE_48K',size:221552043,title:'ClearVoice 48k 降噪',scenarios:['denoise'],description:'降低背景噪声并保留宽频人声细节，适合对白精修。',stems:stems('Clean:降噪后人声'),tag:'2026 新收录',source:'https://huggingface.co/alibabasglab/MossFormer2_SE_48K'},
+  {id:'cv:FRCRN_SE_16K',size:161053775,title:'ClearVoice FRCRN 降噪',scenarios:['denoise'],description:'降低语音中的持续噪声，适合16kHz对白的清晰度处理。',stems:stems('Clean:降噪后人声'),tag:'2026 新收录',source:'https://huggingface.co/alibabasglab/FRCRN_SE_16K'},
+  {id:'cv:MossFormerGAN_SE_16K',size:38845617,title:'ClearVoice GAN 降噪',scenarios:['denoise'],description:'减少人声背景噪声，适合与其他降噪模型对照语音自然度。',stems:stems('Clean:降噪后人声'),tag:'2026 新收录',source:'https://huggingface.co/alibabasglab/MossFormerGAN_SE_16K'},
+
   { id: 'becruily_deux.ckpt', title: 'Deux 双轨', scenarios: ['duo'], description: '兼顾人声与伴奏的完整度，适合两条音轨都要保留的混音。', stems: two, source: 'https://huggingface.co/becruily/mel-band-roformer-deux', caution: '作者权重许可为 CC BY-NC 4.0；商用前需确认授权。' },
   { id: 'bs_leap_xe_voc.ckpt', title: 'Leap XE 人声', scenarios: ['duo'], description: '侧重减少伴奏串入，适合提取清晰、独立的人声。', stems: stems('vocals:人声', 'other:其余声音'), state: 'planned', tag: '2026 新收录', source: 'https://huggingface.co/pcunwa/BS-Roformer-Leap/tree/main/Xe' },
   { id: 'bs_roformer_voc_hyperacev2.ckpt', title: 'HyperACE v2 人声', scenarios: ['duo'], description: '兼顾人声厚度与串音抑制，适合保留演唱层次和细节。', stems: stems('vocals:人声', 'other:其余声音'), source: 'https://huggingface.co/pcunwa/BS-Roformer-HyperACE' },
@@ -43,7 +52,7 @@ const curated: Curated[] = [
   { id: 'BS-Roformer-Resurrection.ckpt', classic:true, tag:'经典精选', title: 'Resurrection 人声', scenarios: ['duo'], description: '适合保留人声的中低频质感，可用于细节与伪影的对照试听。', stems: stems('vocals:人声', 'other:其余声音'), source: 'https://huggingface.co/pcunwa/BS-Roformer-Resurrection', caution: '名称不表示具有音质修复能力；有损音源表现需实测。' },
   { id: 'BS-Roformer-Resurrection-Inst.ckpt', classic:true, tag:'经典精选', title: 'Resurrection 伴奏', scenarios: ['duo'], description: '适合钢琴与吉他等中低频较丰富的伴奏，可检查乐器质感。', stems: stems('vocals:人声', 'other:伴奏残差'), source: 'https://huggingface.co/pcunwa/BS-Roformer-Resurrection' },
   { id: 'bandit_v2_multi.ckpt', title: 'BandIt v2 多语种', scenarios: ['dme'], description: '面向多语种影视混音，独立输出对白、配乐与音效立体声轨。', tag:'2026 新收录', stems: stems('speech:对白','music:配乐','sfx:音效'), source:'https://zenodo.org/records/12701995' },
-  { id: 'checkpoint-cmn_state_dict.ckpt', classic:true, tag:'经典精选', title: 'BandIt v2 中文', scenarios: ['dme'], description: '针对中文影视对白训练，适合中文配音前的对白与国际声拆分。', stems: stems('speech:对白', 'music:配乐', 'effects:音效'), source: 'https://github.com/kwatcharasupat/bandit-v2', caution: '保留现有中文权重；多语种版需确认可用权重和兼容配置。' },
+  { id: 'checkpoint-cmn_state_dict.ckpt', hidden:true, classic:true, tag:'经典精选', title: 'BandIt v2 中文', scenarios: ['cleanup'], description: '针对中文影视对白训练，适合中文配音前的对白与国际声拆分。', stems: stems('speech:对白', 'music:配乐', 'effects:音效'), source: 'https://github.com/kwatcharasupat/bandit-v2', caution: '保留现有中文权重；多语种版需确认可用权重和兼容配置。' },
   { id: 'model_bandit_plus_dnr_sdr_11.47.ckpt', classic:true, tag:'经典精选', title: 'BandIt Plus', scenarios: ['dme'], description: '适合常规影视混音三轨拆分，便于独立调整对白、配乐与环境音。', stems: stems('Speech:对白', 'Music:配乐', 'Effects:音效'), source: 'https://github.com/kwatcharasupat/bandit' },
   { id: 'DBS-TIGER-DnR', title: 'DBS-TIGER DnR', scenarios: ['dme'], description: '面向复杂重叠的对白、配乐与音效，适合单声道影视混音拆分。', state: 'planned', tag: '2026 新模型', stems: stems('speech:对白', 'music:配乐', 'sfx:音效'), source: 'https://huggingface.co/JusperLee/DBS-TIGER-DnR', caution: '原生 44.1 kHz 单声道，输出为单声道 WAV。' },
   { id: 'mel_band_roformer_karaoke_becruily.ckpt', classic:true, tag:'经典精选', title: 'Becruily 主唱 / 和声', scenarios: ['karaoke'], description: '侧重区分多层人声，适合主唱、叠唱与和声的精修。', stems: stems('Vocals:主唱目标', 'Instrumental:其余声音'), source: 'https://huggingface.co/becruily/mel-band-roformer-karaoke' },
@@ -67,7 +76,7 @@ const legacy: Curated[] = [
 ].map(model=>({...model,classic:true,tag:'经典精选',source:'https://github.com/ZFTurbo/Music-Source-Separation-Training/blob/main/docs/pretrained_models.md'}));
 const instrumentModels:Curated[] = [
   {id:'HTDemucs4.th',title:'HTDemucs 四轨',scenarios:['stems','four'],description:'经典四轨分离，独立调整鼓、贝斯、人声与其他乐器。'},
-  {id:'HTDemucs4_6stems.th',title:'HTDemucs 六轨',scenarios:['stems','six'],description:'在四轨之外独立提取吉他与钢琴，适合多轨精修。'},
+  {id:'HTDemucs4_6stems.th',title:'HTDemucs 六轨',tag:'经典精选',scenarios:['stems','six'],description:'一次拆出人声、鼓、贝斯、吉他、钢琴等六轨，适合多声部精修。'},
   {id:'BS-Roformer-SW.ckpt',title:'BS Roformer SW 六轨',scenarios:['stems','six'],description:'同时输出六类声部，适合独立处理吉他与钢琴。'},
   {id:'mel_band_roformer_4stems_xl_ver1.ckpt',title:'MelBand XL 四轨',scenarios:['stems','four'],description:'分离鼓、贝斯、人声与其他乐器，适合细致混音。'},
   {id:'gilliaan_drumsV1.ckpt',title:'Gilliaan 鼓组',scenarios:['stems','drums'],description:'独立提取鼓组和其余声音，适合节奏层精修。'},
@@ -77,18 +86,21 @@ const instrumentModels:Curated[] = [
   {id:'bs_mega_53stem_bass_mvsep.ckpt',title:'MVSEP 贝斯',scenarios:['stems','bass'],description:'针对贝斯声部提取，适合检查低频线条与演奏。'},
 ].map(model=>({...model,classic:true,tag:'经典模型',source:'https://github.com/ZFTurbo/Music-Source-Separation-Training/blob/main/docs/pretrained_models.md'}));
 const speechModels:Curated[] = [
- {id:'speech_bs_roformer_AliceN_sdr_20.4440.ckpt',title:'AliceN BS 对白',classic:true,tag:'对白双轨',scenarios:['dme','cleanup'],description:'针对语音提取，分离对白与其余声音，适合影视对白精修。'},
+ {id:'speech_bs_roformer_AliceN_sdr_20.4440.ckpt',hidden:true,title:'AliceN BS 对白',classic:true,tag:'对白双轨',scenarios:['cleanup'],description:'针对语音提取，分离对白与其余声音，适合影视对白精修。'},
  {id:'speech_mel_roformer_AliceN_sdr_16.5716.ckpt',title:'AliceN Mel 对白',classic:true,tag:'对白双轨',scenarios:['dme','cleanup'],description:'针对对白与背景声音拆分，适合同素材对照试听。'},
 ];
 export const vocalModelIds=['bs_leap_xe_voc.ckpt','becruily_deux.ckpt','bs_roformer_voc_hyperacev2.ckpt','BS-Roformer-Resurrection.ckpt','mel_band_roformer_vocals_becruily.ckpt','kimmel_unwa_ft2_bleedless.ckpt','Kim_MelBandRoformer.ckpt','bs_roformer_vocals_gabox.ckpt','model_bs_roformer_ep_368_sdr_12.9628.ckpt','melband_roformer_instvox_duality_v2.ckpt'];
 export const instrumentalModelIds=['becruily_deux.ckpt','bs_roformer_inst_hyperacev2.ckpt','bs_leap_xe_inst.ckpt','BS-Roformer-Resurrection-Inst.ckpt','mel_band_roformer_instrumental_becruily.ckpt','melband_roformer_instvox_duality_v2.ckpt','kimmel_unwa_ft2_bleedless.ckpt','mel_band_roformer_instrumental_bleedless_v2_gabox.ckpt'];
-const cinemaDualIds=new Set([...vocalModelIds,...speechModels.map(m=>m.id)]);
+const cinemaExcludedIds=new Set(['speech_bs_roformer_AliceN_sdr_20.4440.ckpt','checkpoint-cmn_state_dict.ckpt']);
+const cinemaDualIds=new Set([...vocalModelIds,...instrumentalModelIds,...speechModels.map(m=>m.id)].filter(id=>!cinemaExcludedIds.has(id)));
 function modelScenarios(id:string,base:string[]):string[]{
+ if(base.includes('duo') || base.some(s=>['denoise','dereverb','breath','crowd'].includes(s)))base=base.filter(s=>s!=='cleanup');
  const original=getAdvisory(id)?.scenarios || [];
  return [...new Set([...base,...((base.includes('duo') && original.includes('vocal'))||vocalModelIds.includes(id)?['vocal']:[]),...((base.includes('duo') && original.includes('instrumental'))||instrumentalModelIds.includes(id)?['instrumental']:[]),...(cinemaDualIds.has(id)?['dme']:[])])];
 }
 const curatedMap = new Map([...curated,...legacy,...instrumentModels,...speechModels].map(model => [model.id, model]));
 
+export const speechDetailScenarios=['cleanup','dereverb','breath','crowd'];
 export const instrumentScenarios = ['four','six','drums','bass','guitar','piano','strings'];
 
 function fallbackScenarios(id: string): string[] {
@@ -102,7 +114,8 @@ function fallbackScenarios(id: string): string[] {
     if(['mega_53','single_instrument','choir'].includes(s))return ['stems',...['guitar','piano','bass','strings'].filter(key=>target.includes(key))];
     if(s==='denoise')return ['cleanup',target.includes('crowd')?'crowd':'denoise'];
     if(['vocal','instrumental'].includes(s))return ['duo',s];
-    if(['speech','restoration','spatial'].includes(s))return ['cleanup'];
+    if(s==='speech')return ['cleanup'];
+    if(['restoration','spatial'].includes(s))return ['other'];
     return [s];
   });
   return [...new Set(expanded)];
@@ -111,14 +124,31 @@ function declaredStems(target:string):Stem[] {
   return [...new Set(target.split(/[\/,|+]/).map(s=>s.trim()).filter(s=>s && !['unknown','none','null'].includes(s.toLowerCase())))].map(id=>({id,label:stemChineseLabel(id)}));
 }
 export function outputStems(model:StudioModel,purpose?:string):Stem[]{
- return purpose==='dme' && cinemaDualIds.has(model.id) ? model.stems.map(stem=>['other','instrument','instrumental'].includes(stem.id.toLowerCase())?{...stem,label:'其余声音'}:stem) : model.stems;
+ if(purpose!=='dme')return model.stems;
+ return model.stems.map(stem=>['other','instrument','instrumental'].includes(stem.id.toLowerCase())?{...stem,label:'国际声（其余声音）'}:['vocals','vocal','speech'].includes(stem.id.toLowerCase())?{...stem,label:'人声（对白）'}:stem);
+}
+// These descriptions apply only to the film workflow; familiar music copy stays intact.
+const cinemaDescriptions:Record<string,string>={
+ 'becruily_deux.ckpt':'优先试听国际声的配乐与音效完整度，同时保留独立人声。',
+ 'melband_roformer_instvox_duality_v2.ckpt':'同时保留人声与国际声，适合对照背景声音的完整度。',
+ 'model_bs_roformer_ep_368_sdr_12.9628.ckpt':'经典人声与国际声双轨方案，适合对照人声残留与背景细节。',
+ 'bs_leap_xe_voc.ckpt':'侧重人声提取，可对照国际声中的对白残留与背景细节。',
+ 'bs_roformer_voc_hyperacev2.ckpt':'侧重保留人声层次，国际声可用于对照对白残留与背景细节。',
+ 'bandit_v2_multi.ckpt':'人声、配乐、音效分别导出，适合多语种影视的音乐与音效分轨。',
+ 'model_bandit_plus_dnr_sdr_11.47.ckpt':'人声、配乐、音效分别处理，适合单独保留配乐或环境音效。',
+ 'DBS-TIGER-DnR':'人声、配乐、音效分别导出，适合单声道影视素材分轨。',
+ 'speech_mel_roformer_AliceN_sdr_16.5716.ckpt':'侧重对白提取，国际声可用于检查对白残留与背景完整度。',
+};
+export function modelDescription(model:StudioModel,purpose?:string):string {
+ if(purpose!=='dme')return model.description;
+ return cinemaDescriptions[model.id] || (instrumentalModelIds.includes(model.id)?'侧重保留国际声细节，适合检查配乐、音效与人声残留。':'分离人声与国际声，适合对照配乐、音效与环境声的保留情况。');
 }
 export function capabilityText(model:StudioModel,purpose?:string):string {
  const actual=outputStems(model,purpose);return actual.length ? actual.map(stem=>stem.label).join(' · ') : '接入后确认';
 }
 const baseModels: StudioModel[] = snapshot.data.map(item => {
   const c = curatedMap.get(item.id); const a = getAdvisory(item.id);
-  return { id: item.id, classic:c?.classic || false, title: c?.title || item.id.replace(/\.(ckpt|pth|th)$/i, '').replace(/_/g, ' '),
+  return { id: item.id, hidden:c?.hidden || false, classic:c?.classic || false, title: c?.title || item.id.replace(/\.(ckpt|pth|th)$/i, '').replace(/_/g, ' '),
     description: c?.description || (a?.note.usage?.split(/[。！？]/)[0] || '按模型目标提取对应音轨，适合专项分离与对照试听')+'。',
     originalDescription: a?.note.usage || originalDescriptions[item.id as keyof typeof originalDescriptions] || '',
     scenarios: modelScenarios(item.id,c?.scenarios || fallbackScenarios(item.id)), tag: c?.tag || (c ? '2026 精选' : ''),
@@ -129,7 +159,7 @@ const baseModels: StudioModel[] = snapshot.data.map(item => {
 const plannedModels: StudioModel[] = curated.filter(c => !baseModels.some(m => m.id === c.id)).map(c => ({
   id: c.id, title: c.title, description: c.description, originalDescription: originalDescriptions[c.id as keyof typeof originalDescriptions] || '', scenarios: modelScenarios(c.id,c.scenarios),
   tag: c.tag || '2026 新收录', state: 'planned', stems: c.stems || [], source: c.source || '',
-  caution: c.caution || '', size: 0, curated: true,
+  caution: c.caution || '', size: c.size || 0, curated: true,
 }));
 export const models = [...baseModels, ...plannedModels].sort((a,b) => {
   const ai = curated.findIndex(c => c.id === a.id), bi = curated.findIndex(c => c.id === b.id);
@@ -138,8 +168,8 @@ export const models = [...baseModels, ...plannedModels].sort((a,b) => {
 export const statusLabel = (model: StudioModel) => ({ ready:'可使用', downloaded: '已下载', missing: '未安装', planned: '尚未接入' }[model.state]);
 export function matchesModel(model: StudioModel, query: string, scenario = 'all', filter = 'all'): boolean {
   const words = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  return (scenario === 'all' || model.scenarios.includes(scenario)) &&
+  return !model.hidden && (scenario === 'all' || model.scenarios.includes(scenario)) &&
     (filter === 'all' || filter==='pinned' || (filter === 'curated' ? model.curated : filter==='downloaded' ? ['downloaded','ready'].includes(model.state) : filter === model.state)) &&
     words.every(word => [model.title, model.id, model.description, model.originalDescription || '', model.tag, model.source, ...model.scenarios.map(s=> scenarios.find(x=>x.id===s)?.label || s)].join(' ').toLowerCase().includes(word));
 }
-export function fileSize(bytes: number): string { return bytes ? bytes>=1024**3 ? `${(bytes/1024**3).toFixed(2)} GB` : `${(bytes/1024/1024).toFixed(0)} MB` : '大小待确认'; }
+export function fileSize(bytes: number): string { return bytes ? bytes>=1024**3 ? `${(bytes/1024**3).toFixed(2)} GB` : bytes<1024**2 ? `${Math.max(1,Math.round(bytes/1024))} KB` : `${(bytes/1024/1024).toFixed(0)} MB` : '大小待确认'; }

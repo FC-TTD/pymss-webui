@@ -1,0 +1,31 @@
+name: pymss-chain-preview
+services:
+  chain:
+    image: pymss-chain-preview:${CHAIN_RELEASE:?Use immutable release}
+    container_name: pymss-chain-preview
+    init: true
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:rw,nosuid,size=16m"]
+    mem_limit: 512m
+    cpus: 1
+    pids_limit: 64
+    volumes:
+      - /mnt/TTD/04_应用/pymss-chain-preview:/data
+    healthcheck:
+      test: ["CMD","python","-c","import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+      interval: 15s
+      timeout: 4s
+      retries: 3
+    labels:
+      ttd.preview.owner: pymss-webui
+      ttd.preview.release: ${CHAIN_RELEASE}
+    networks:
+      default:
+        aliases: [chain]
+networks:
+  default:
+    external: true
+    name: pymss-ui-preview_default

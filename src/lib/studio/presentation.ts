@@ -2,7 +2,7 @@ import type { StudioModel } from './models';
 
 // Selection must never change positions or evict a previously revealed card.
 export function baseModelCards<T extends StudioModel>(ordered:T[],purpose?:string):T[] {
-  if(purpose==='dme'){const ids=new Set([...ordered.filter(m=>m.stems.length===2).slice(0,3),...ordered.filter(m=>m.stems.length>=3).slice(0,2)].map(m=>m.id));return ordered.filter(m=>ids.has(m.id));}
+  if(purpose==='dme'){const ids=new Set([...ordered.filter(m=>m.stems.length===2).slice(0,3),...ordered.filter(m=>m.stems.length>=3).slice(0,3)].map(m=>m.id));return ordered.filter(m=>ids.has(m.id));}
   const ids=new Set([...ordered.filter(m=>!m.classic).slice(0,2),...ordered.filter(m=>m.classic).slice(0,3)].map(m=>m.id));
   return ordered.filter(m=>ids.has(m.id));
 }

@@ -1,3 +1,44 @@
+## 主推荐模型与结果二次处理（2026-10-26—27，当前17896）
+
+- 用户确认将两个工具对应模型加主推荐，并要求人声→和声、国际声→音乐/音效二次分离。按已说明范围：Stemdeck原生htdemucs_6s对应现有HTDemucs六轨，提升stems/six默认首位；YingMusic专用BS-RoFormer加入karaoke默认首位，置顶仍优先、duo前两Instvox/BS12.97不变。不是把Stemdeck的可选UVR-MDX Karaoke2接入；那款本轮未接。
+- Stage最终Web **h-fa900232858e1f41 / sha256:9ff491b3b085ad165c0417b81bc1d92201db458548f0039227b59482e81ce048**，管理/opt/pymss-ui-preview/releases/h-fa900232858e1f41。仅web更新；共享PYMSS8ff9aa43/5e7c82a2/h-bd63eb3d3ceeebfe、正式msst cb9dddb8、原30911 yingmusic-svc c5535e4e/ff3cb7cf及ClearVoice bfd1保持。今日无commit/push/正式发布/原30911替换。
+- 原30911能开网页但health当前cuda_available=false，不能直接以页面作为可用证明。新增独立edge YingMusic native provider **h-c2feb0194eb722fb / sha256:b2f4e6dfa5337fdf2afdf19bcc716ce51bd0e04174972711f3d288f6c7b67cd1**，/opt/yingmusic-audio-preview/releases/h-c2feb0194eb722fb，私有100.15:17903→Stage/api/ym。源FC-TTD/YingMusic-SVC4974a80c6044c4557059548409379f6365129f88，新副本work/yingmusic-audio-api，未改原部署。复用NAS只读官方bs_roformer.ckpt1295074954bytes/SHA364964794b0c82c843c53099d80b6ecfee852cf2bf42f098515276c779623bb6，不加载SVC-full变声模型。
+- edge GPU0 UUID5dda4827，native44.1k立体声/8s分块/overlap2/batch4/use_amp原配置，严格1195tensor匹配；每job独立CUDA子进程退出释放，资源预检等待，不CPU/offload/降精度。基于既有cu128缓存镜像ff9a2418，只新增原需求beartype0.14.1官方校验wheel，无多GB基础层重拉。直接执行锁定原生BSRoformer及从原utils AST原样提取demix/window/prefer函数，排除训练依赖导入，不改算法源码。6s/24s/官方35.761625s文件真实3轨均成功；48kPCM24导出。原30911用mix-lead覆盖instrumental；本provider保留三路原生预测，避免把带和声残差称纯伴奏。
+- 新CPU链路服务 **h-df4d5149651815e8 / sha256:a504443d9abffbcb2dd3e85f9f6daa8dbde2bcf0406a50cbc0ecee94f936b5ac**，/opt/pymss-chain-preview/releases/h-df4d5149651815e8，自有NAS /mnt/TTD/04_应用/pymss-chain-preview，复用既有10.35外部网，无新宿主端口/GPU。消费者代码归pymss-webui/deploy/chain，不改PYMSSworker。/api/chain/inputs只接受合法job_id/stem，从已完成PN/CV/YM输出白名单取原WAV，服务器流式导入中央不可变asset一次并SHA校验；同源重复选择幂等复用，无浏览器上传/解码。不接受任意URL/路径。输出及原输入不改，不自动删除。
+- 每轨“继续处理这条音轨”→主唱和声/音乐音效/降噪/其他用途；只准备新一轮，不自动跑GPU。保存目标preparing批次及输入引用，刷新恢复选择；新开始可直接启动同批。输入显示来源和查看上一轮链接；链路元数据持久JSON，断线重试先检查pool批次避免二次导入。音乐音效默认选真实三轨模型，仅勾配乐/音效；旧影视结果按purpose显示国际声。所有结果保留，跨provider输出可再用。
+- 真业务：HT6 batch f703a11bfe0d45b086ccc42c1228702c输出6轨；Deux影视 f6522d7168174b86bd138a4759b2c400；其余声/国际声→BandIt music+sfx batch85a899140dcd49efb08d179e11034f5d成功2轨；PN人声→Ying ym-bc5b378481fb4053b1891c8496b5f715成功3轨，prepared刷新→相同批次开始已浏览器验证；以上处理任务uploaded_bytes0。母轨输出SHA=派生输入SHA、重复使用asset ID相同，母轨保留。CVclean及YMbacking→中央输入也通过。原始file仍只上传一次；派生WAV首次服务器内部登记不等同零磁盘复制。
+- 官方全35.76s source YMbatch ym-66880364a37e44e5aae2f03c865619e5成功，每轨10299398bytes，全部48k/24bit/2ch、900真实峰值、Range206。ZIP30898678bytes（三轨，>16MiB），CRC与每轨WAV SHA完全一致，家庭router32.2绑定来源全包SHA同；浏览器保存落盘NOT_RUN。首次测试6s母素材适合协议，不作为和声音质判断；官方完整样本补真实可见人声/和声。
+- Svelte0/0、336唯一元数据/334可选目录、推荐及卡片稳定/过滤/设计检查/build/diff/Python语法通过。实际桌面1280×900与390×844菜单展开无横溢，中文>=12；Ying优先/HT6优先、波形键盘定位、prepared恢复、两个二次流程及ZIP按钮/控制台0通过。最终HTML/JS/CSS家路32.2来源SHA一致；10.35/24、edge10.42/24、CV10.41/24及家庭回程Stage100.2/edge100.1保持。GPU回Stage6393/7681/11413、edge4/15641/12750 MiB基线。
+- 证据work/pymss-ui-evidence/yingmusic-chain-20261026/。原生日志在/tmp/yingmusic-native*和providerNASsmoke/verified-model；部署输入在两个/opt管理目录，原源码完整锁定。实际家庭Mac/手机、用户音质盲测/固定长段身份、宿主重启/完整回滚、浏览器落盘NOT_RUN。所有新增均为preview，未作为Hub admission，正式路由尚未纳入/ym及/chain；以后正式推广须源码提交授权、依赖纳管及路由/真实业务回归，不能直接拿旧publisher发布本轮候选。
+- 回退仅Web到前h-af473c0073ecb820，固定原10.35和共享runtime；新增Ying/chain可保留供恢复旧结果，不删任何NAS输入/任务/输出/模型。实际未回滚、未停其他服务。
+
+---
+
+## 分类澄清与 ClearVoice Stage 候选（2026-10-26）
+
+测试入口：http://ttd-stage:17896/ui/ 。最终Web h-af473c0073ecb820 / sha256:5f84a1c943da86b08a3ec7720bc6450deb90c3cbde46d4e1fc5a73299d6af53d；/opt/pymss-ui-preview/releases/h-af473c0073ecb820。正式msst仍h-bd63eb3d3ceeebfe/cb9dddb8，原PYMSS容器8ff9aa43与5e7c82a2镜像未变。今日无commit/push/正式推广；等待用户实际素材测试。
+
+- 用途明确区分歌曲人声/伴奏、影视国际声、双人对白分离、人声降噪、音质提升；“对白清理”更名“提取对白”，与去混响/气声分离/去人群声归入“更多人声处理”点击延展。乐器细类继续对应父按钮。选中用途一句解释，单模型不显示空的更多下拉。
+- AliceN BS98MB和BandIt v2中文从所有新选择中隐藏，原元数据/权重/历史结果保留（取代本日较早仅移出影视的规则）。影视Deux优先，平铺3双轨+3真实三轨，能单独输出配乐和音效；背景国际声为估计，不能保证等同原始M&E。原模型说明仍保留。
+- 新增5款ClearVoice：MOSS双人对白16k、MOSS超分48k、MOSS降噪48k、FRCRN16k、GAN16k。模型大小按锁定权重展示，2026为新收录年份。独立provider FC-TTD/ClearerVoice-Studio native6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61；新工作副本work/clearvoice-audio-api，未改旧July脏工作副本或原clearervoice服务。
+- 独立edge preview h-7eeb8d0d97f78e3f / sha256:bfd1b25c21f10468f149ec1e736376e060c54bd86a15db1f21049886784e0fa3，私有192.168.100.15:17902，Stage相对/api/speech代理；GPU0 UUID5dda4827，原生精度/CUDA，无offload/CPU替代。5模型真实推理及严格tensor匹配通过；每job子进程释放显存，等待资源/任务保留/失败续跑。模型NAS独立只读，结果独立目录；PYMSS原始输入只读引用，不复制或重传。
+- 首次ClearVoice导入先上传至既有PYMSS不可变输入池，pool batch保持preparing且不启动；CV新job只引用canonical asset。真实浏览器SS 12秒2轨 cv-333d86a470d74e049e5a224a3ca28be4；SR cv-e22d0e32411341f8b4906a07e43e824c → SE cv-49cdc17aafa341a19dfbe66d5d7e331a → 经典Instvox 0b1434b686d947d5bee259bfa085ed24 均成功，后3同asset15dcec316cb5469387e07969508f82c6，uploaded_bytes0。刷新恢复输入/结果，播放器时间真实推进；全部输出waveform及Range206通过。ZIP2轨CRC及每轨SHA与WAV完全一致，未声明浏览器保存落盘。
+- SS原生默认短2秒分块跨段易乱序，改8秒上下文/6秒步长+2秒重叠相关匹配及交叠重建。12秒自建可追溯双源fixture：有效叠音前6秒SI-SDR10.314dB、全段3.098dB、较混音提升2.958dB；不等于中文真实对白或长段身份验收。SR输入按hop上下文补齐后实际模型输出裁至原时长，无输出尾部补零；2.3976875秒正确115089帧，模型高频与纯重采样不同，不保证找回丢失细节。人耳质量/长段A/B固定身份NOT_RUN。
+- Svelte0错误0警告、335唯一元数据/333可选目录、质量排序/稳定卡片/电影3轨检查及构建通过。5模型CUDA冒烟和CPU协议/数量/路径/恢复/导出检查通过。实际IAB1280×900/390×844无横溢、可见中文>=12px；菜单点击、单选不重排、库使用按钮直达且保留输入、控制台warn/error0。证据work/pymss-ui-evidence/clearvoice-20261026/；provider测量在NAS结果smoke-report/objective-smoke/verified-models。
+- 家庭路由器32.2绑定来源：最终HTML/JS/CSS SHA一致；Stage固定10.35/24/家庭32.214经100.2，edge固定10.41/24/家庭经100.1均与部署前相同。原GPU占用Stage6393/7681/11413、edge4/15641/12750 MiB恢复基线，健康/重启0。实际家庭Mac/手机、宿主重启/回滚、浏览器落盘和真人音质验收NOT_RUN。
+- 回退仅Stage Web到h-bd（固定现有10.35网络和共享runtime），不删任务/输入/结果；ClearVoice可保持独立preview以保留结果。未执行回滚。正式发布需用户确认本轮候选后按现有源码/业务发布规则执行，不能仅将原生MSST或ClearVoice视为已纳管Hub能力。
+
+---
+
+# 影视国际声与配乐音效（2026-10-26）
+
+- Stage17896 static-only h-fc7a77da506af035 / sha256:2028d03ca0feb0df28dd12caa6617f3103decfb5c81cc31f714abe2e9b6845f8; backend remains h-bd63eb3d3ceeebfe/5e7c82a2, formal msst UI cb9dddb8 unchanged. No commit/push/formal update, source pending user Stage test.
+- Film excludes AliceN BS98MB and BandIt v2中文 (metadata/weights/history preserved, classifiedcleanup); Deux first. Film descriptions distinguish human speech/estimated international background and optional separate music/SFX, preserve original/music wording. Added existing accompaniment models for international focus. Default3dual+3true3stem cards:Deux,Instvox,BS12.97,BandItmulti,Plus,DBSTIGER;single selectionstable/pinspriority retained.
+- Official BandIt/DBS capabilities plus current37-readyregistry confirmed. IAB real BandItmulti chooseonlymusic+sfx; batch015cfb3f26704a3aa66002a2dd12f182 succeeded, reuse0upload,2x6sec/48kstereoPCM24/900peaks/Range206. Not film quality acceptance.
+- deploy.sh PREVIEW_WEB_ONLY pins sharedruntimeimage/release and fails on backend input changes; --no-deps web only, no runtime rebuild/restart. Publisher understands backend_release for future approved promotion. Svelte0/0/source330checks/build/bash/Python/diff passed. Desktop1280x900/mobile390x844 nooverflow/Han<12px0;consoleclear. Home32.2bound3resourcesSHApass,10.35/24andhomevia100.2 unchanged; actualhomeMac/filmquality/restart/rollbackNOT_RUN. Evidence/tmp/pymss-cinema-20261026/.
+
+---
+
 # 正式音频分离入口发布（2026-10-25）
 
 用户已明确授权本次相关提交并继续发布。正式入口 [音频分离](http://msst/)，首页tools.msst名称“音频分离”、备注“MSST 和 PYMSS”，href仍http://msst/。默认PYMSS，顶部PYMSS/MSST单一选中导航；原MSST通过/?native=msst加载，__gradio__仍由原Hub处理。
@@ -141,3 +182,7 @@ Stage http://ttd-stage:17896/ui/，release h-e92556e09ea24f95；未提交/推送
 波形是实时音频数据的峰值视图，不是演示/随机图，也没有改写原WAV。38注册模型中37功能可用，XL4显存不足不冒充完成。6秒功能验证不替代用户电影素材专业音质评审。此前Chrome HTTP直接WAV下载拦截仍未解决/未绕过；本轮未声称下载、实际家庭Mac/手机、完整三端、宿主重启或回滚已验收。Hub继续等待用户确认。
 
 结论：本轮分类/层级/卡片稳定/真实波形与目的标签通过；完整共享/下载仍partial。
+
+## 2026-10-27 正式入口推广准备
+
+正式msst仍旧版，未执行运行配置写入。新版h-fa900232858e1f41的UI128/语音85/Ying29/chain4输入、实际镜像/管理目录、全静态资源SHA核对通过；新增speech/ym/chain业务路由的Compose校验与Caddy adapt通过。Svelte零错警、目录336及单选/筛选检查通过。现有整首Ying三轨与国际声后二次music/sfx输出Range、派生来源SHA复核通过，未新启GPU。家庭router32绑定32.2方向页面SHA一致；实际同事质量试听NOT_RUN。准备、路由和LAN证据见../pymss-ui-evidence/formal-entry-20261027/，提交授权待答复；不把Stage验收当正式域名发布后验收。

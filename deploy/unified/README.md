@@ -48,3 +48,29 @@
 已按用户单独提交授权发布。有效业务源5fdbc10782c289634f7cfc8642f1259f1f365be1，首页48a4ff3168afb575c0750cf664e6f0a71eeba76f，镜像与Stage h-bd63eb3d3ceeebfe相同。实际最终方案是显式192.168.100.18:17898私有upstream（前述overlay方案未成功且未修改集群），Compose为唯一有效定义。正式默认/切换/两款零重传分离/波形/Range/ZIP与首页两字段对比均通过，详见../../design-qa.md。未push；家庭实际电脑、宿主重启及回滚演练未执行。
 
 正式入口当前依赖同一Stage后端和NAS数据；后续Stage运行时升级须先考虑正式msst调用，不能当作只有预览用户的服务。前端容器已独立，不代表后端隔离。
+
+## 最新候选入口推广准备（2026-10-27）
+
+用户要求先把新版放回 `http://msst/ui/`，供局域网同事试听模型质量。本节取代旧版命令对新增能力的遗漏；本轮尚待独立提交授权，不能将准备记录当作正式发布完成。
+
+- 已验证候选为 `h-fa900232858e1f41`，静态镜像 `sha256:9ff491b3b085ad165c0417b81bc1d92201db458548f0039227b59482e81ce048`。只推广 CPU 入口，不重建模型。原首页名称/备注已经正确，不再更新。
+- 新入口补齐 `/api/speech/*`、`/api/ym/*`、`/api/chain/*`，保留 `/api/studio/*`、默认 PYMSS、`?native=msst` 及原 MSST catch-all。只改私有业务标签，无公网/域名/认证变化。
+- 外部共享依赖：原 PYMSS 后端 h-bd63eb3d3ceeebfe；edge ClearVoice h-7eeb8d0d97f78e3f；edge YingMusic h-c2feb0194eb722fb；Stage CPU chain h-df4d5149651815e8。它们保留原受管理 Compose/容器/NAS 和固定镜像，不在本次入口更新中重启。正式入口依赖这些服务后，后续预览升级也必须纳入正式调用方影响检查；不能宣称后端隔离或已纳入 Hub GPU 生命周期管理。
+- `publish.py --prepare` 对当前工作树做只读检查：候选完整 UI 资源 SHA、128 个 UI 输入、85 个 ClearVoice 输入、29 个 Ying 输入、4 个 chain 输入，以及实际 Compose 管理路径、镜像、健康/可用模型。缺失本仓库输入不能跳过。
+- 正式执行要求三个仓库的独立授权提交，逐文件从 commit 读取并与候选 manifest 比对。`promotion-source.json` 记录依赖源码提交、镜像、管理目录、挂载及上一入口配置。推送不在授权范围。
+
+准备检查：
+
+```sh
+python3 deploy/unified/publish.py h-fa900232858e1f41 --prepare
+```
+
+取得本轮提交授权并完成提交后，先运行不带 `--apply` 的同一命令，检查输出，再按已有入口发布授权执行：
+
+```sh
+python3 deploy/unified/publish.py h-fa900232858e1f41 <ui-commit> --speech-commit <clearvoice-commit> --ying-commit <ying-commit> --apply
+```
+
+发布脚本在写入前再次核对入口/后端/依赖容器身份，避免并行部署覆盖。CPU 入口管理目录沿用 `/opt/audio-separation/releases/<release>-<source-prefix>`；保存上一容器记录及具体 `rollback.sh`，恢复只涉及旧入口配置/镜像，不回滚音频、结果、批次或派生来源。回退本身须按实际授权执行，不自动触发。
+
+发布后的验收须在正式域名重跑：最新资源 SHA、两套导航、模型可用目录、旧批次恢复、实际新任务/二次处理、波形/Range/ZIP和适用家庭来源。Stage 上既有通过证据为 `work/pymss-ui-evidence/yingmusic-chain-20261026/verification.json`。同事实际试听、三台 Mac、宿主重启及完整回滚演练均尚未执行；质量评价由实际业务素材对比确认，不能从健康检查推断。

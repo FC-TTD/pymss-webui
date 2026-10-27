@@ -20,10 +20,10 @@ try {
  const {groupLibraryModels}=await vite.ssrLoadModule('/src/lib/studio/library.ts');
  const runtimeCatalog=models.map(m=>({...m,available:m.curated,state:m.curated?'ready':'missing'}));
  const groups=groupLibraryModels(runtimeCatalog,'','all',[]);const flat=groups.flatMap(g=>g.models);
- assert.equal(flat.length,models.length);assert.equal(new Set(flat.map(m=>m.id)).size,models.length);
+ assert.equal(flat.length,models.filter(m=>!m.hidden).length);assert.equal(new Set(flat.map(m=>m.id)).size,models.filter(m=>!m.hidden).length);
  assert(groups.find(g=>g.id==='breath').models.some(m=>m.id==='aspiration_mel_band_roformer_sdr_18.9845.ckpt'));
- assert(!groups.find(g=>g.id==='cleanup').models.some(m=>m.id==='aspiration_mel_band_roformer_sdr_18.9845.ckpt'));
- assert.equal(groupLibraryModels(runtimeCatalog,'','ready',[]).flatMap(g=>g.models).length,38);
+ assert(!groups.find(g=>g.id==='cleanup')?.models.some(m=>m.id==='aspiration_mel_band_roformer_sdr_18.9845.ckpt'));
+ assert.equal(groupLibraryModels(runtimeCatalog,'','ready',[]).flatMap(g=>g.models).length,42);
  assert(groupLibraryModels(runtimeCatalog,'推荐依据','all',[]).flatMap(g=>g.models).length>0);
  assert(models.find(m=>m.id==='aspiration_mel_band_roformer_sdr_18.9845.ckpt').originalDescription.includes('呼吸声目标模型'));
  const {capabilityText,fileSize}=await vite.ssrLoadModule('/src/lib/studio/models.ts');
@@ -32,6 +32,17 @@ try {
  assert(models.find(m=>m.id==='BS-Roformer-Resurrection.ckpt').classic);
  assert.equal(fileSize(2*1024**3),'2.00 GB');
  const {baseModelCards,stableModelCards}=await vite.ssrLoadModule('/src/lib/studio/presentation.ts');
+ const film=runtimeCatalog.filter(m=>m.scenarios.includes('dme')).sort((a,b)=>compareQuality(a,b,'dme'));
+ assert.equal(film[0].id,'becruily_deux.ckpt');
+ assert(!film.some(m=>['speech_bs_roformer_AliceN_sdr_20.4440.ckpt','checkpoint-cmn_state_dict.ckpt'].includes(m.id)));
+ const filmCards=baseModelCards(film,'dme');
+ for(const id of ['bandit_v2_multi.ckpt','model_bandit_plus_dnr_sdr_11.47.ckpt','DBS-TIGER-DnR']){
+  const model=filmCards.find(m=>m.id===id);assert(model && capabilityText(model,'dme').includes('配乐') && capabilityText(model,'dme').includes('音效'));
+ }
+ assert(capabilityText(film[0],'dme').includes('国际声'));
+ assert(!capabilityText(film[0],'duo').includes('国际声'));
+ const musicSix=runtimeCatalog.filter(m=>m.scenarios.includes('six')).sort((a,b)=>compareQuality(a,b,'six'));assert.equal(musicSix[0].id,'HTDemucs4_6stems.th');assert.equal(baseModelCards(musicSix,'six')[0].id,'HTDemucs4_6stems.th');
+ const harmony=runtimeCatalog.filter(m=>m.scenarios.includes('karaoke')).sort((a,b)=>compareQuality(a,b,'karaoke'));assert.equal(harmony[0].id,'ym:yingmusic_bs_roformer');
  const topDuo=baseModelCards(duo,'duo');assert.deepEqual(topDuo.slice(0,2).map(m=>m.id),duo.slice(0,2).map(m=>m.id));
  const ordered=runtimeCatalog.filter(m=>m.scenarios.includes('vocal')).sort((a,b)=>compareQuality(a,b,'vocal'));
  const base=baseModelCards(ordered).map(m=>m.id);const extra=ordered.find(m=>!base.includes(m.id));assert(extra);

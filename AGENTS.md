@@ -39,3 +39,25 @@
 - 用户本次试听指定duo默认前两为InstVox Duality v2、BS Roformer12.97，置顶仍优先；不恢复旧Leap第一默认。
 - 同一输入换模型不得重新上传或复制。以服务端input_asset_id归一到原NAS输入，不能按文件名猜测身份；新job仅引用同源并独立写输出。刷新恢复已导入列表，删除输入前必须确认其他job引用，当前不自动清理。
 - 发布CPU入口前核对相对Location，禁止让内部8080端口进入用户跳转；native=msst保留MSST原根、__gradio__仍走原Hub入口。正式入口与Stage候选前端应独立，已有后端数据不迁移。
+
+## 影视国际声补充（2026-10-26）
+
+- 影视业务优先取人声外的国际声，Deux双轨默认优先；AliceN BS98MB与BandIt v2中文移出影视分类，保留历史元数据与权重。三轨仍必须可直接找到，展示能独立导出人声/配乐/音效的真实能力，DBS标明单声道。双轨背景是模型估计，不声称等同原版国际声。音乐用途文案与原有说明保留。
+- 正式msst与Stage当前共享后端；纯界面预览使用PREVIEW_WEB_ONLY=1，只更新web，核对后端输入未变并固定其镜像/release，禁止无故重建/重启共享GPUruntime。
+
+## 对白与降噪分类（2026-10-26）
+
+- 提取对白指从配乐/音效混音中分出讲话，人声降噪指给现有对白去底噪；双人对白分离指两人叠音，音质提升指对白超分。不能把这些或歌曲主唱/和声混为一类。提取对白与去混响/气声/群杂归更多人声处理父项点击延展。
+- AliceN BS98MB及BandIt v2中文不再提供新选择，保留历史元数据/结果，不删权重。此规则替代较早仅移出影视的处理。
+- cv:模型/cv-任务走独立ClearVoice provider，输入canonical asset仍归既有PYMSS池，首次只上传一次；原输入只读跨provider引用，未来自动清理必须检查所有引用。5款已验证权重原生推理，改worker/native/权重锁须重新验证。模型年份指收录年份，不冒称新发行。
+- Stage及正式入口相互独立；本轮ClearVoice为preview而非Hub admission。纯web修订固定原共享PYMSS runtime，不重启它；原始ClearVoice/原MSST不改。
+
+## 推荐与二次处理（2026-10-26）
+
+- 用户提供的Stemdeck六轨=HTDemucs六轨，stems/six默认第一；YingMusic官方三轨BS-RoFormer为karaoke默认第一，置顶仍优先，duo Instvox/BS12.97前两不改。Ying ym:yingmusic_bs_roformer/ym-任务独立provider；不得当成SVC变声或UVR-MDX Karaoke2。
+- 每条结果可继续处理：服务器对合法已完成job/stem白名单流式导入中央派生asset一次，SHA与母轨相同、重复选择幂等；不浏览器重传、覆写母结果或删除。保留来源/上一轮链接，准备目标批次后刷新能恢复，不自动启动GPU。原音频引用继续用canonical asset，不因切模型复制。
+- 消费者二次处理部署归deploy/chain，无GPU且复用既有10.35网络；Ying原生推理归FC-TTD/YingMusic-SVC独立edge provider。两个新provider均preview，原30911/ClearVoice/sharedPYMSS/正式入口不改。正式推广前必须补依赖纳管、ym/chain路由和提交授权，旧publisher不能直接用于这版。
+
+## 正式入口本轮授权（2026-10-27）
+
+用户已单独授权本轮三个仓库本地提交并继续发布msst/ui供局域网测试，不含push。推广CPU入口须从已提交源码校验全部候选输入，并记录现有共享PYMSS/ClearVoice/Ying/chain镜像与管理状态；不重启这些依赖、不改原30911/MSST或GPU Hub生命周期。后续其他聊天可能接管共享provider，实际发布前必须重新核对容器/源码/镜像漂移，不能凭历史记录覆盖。

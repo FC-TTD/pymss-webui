@@ -33,6 +33,12 @@ services:
       caddy.handle_1.reverse_proxy: "192.168.100.18:17898"
       caddy.handle_2: /api/studio/*
       caddy.handle_2.reverse_proxy: "192.168.100.18:17898"
+      caddy.handle_3: /api/speech/*
+      caddy.handle_3.reverse_proxy: "192.168.100.18:17898"
+      caddy.handle_4: /api/ym/*
+      caddy.handle_4.reverse_proxy: "192.168.100.18:17898"
+      caddy.handle_5: /api/chain/*
+      caddy.handle_5.reverse_proxy: "192.168.100.18:17898"
 networks:
   pymss_backend:
     external: true
