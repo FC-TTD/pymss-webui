@@ -1,0 +1,11 @@
+{
+  "source": "Existing deployed Stage studio_runtime; file identities verified against the running container, independent of unpublished UI work.",
+  "native_image_id": "sha256:5e7c82a2dadc149114ad379ccc396b58f7b6302eb4bb10a8b54d038e13a584b8",
+  "files": {
+    "worker.py": "43c22076a7f67a53ee166c82a86a0192181b9b08d2709f9d5e21d6cc2f08a580",
+    "app.py": "ac3702b9a192ad7c05135c72a4e5de526d0a40906c5f3cace205946462c1a2fc",
+    "batch.py": "16cde2b6190b8e12d8c5d90d3d709f894e6ba98eab4798eacded80b4cb6dd7d0",
+    "resources.py": "bed4a82ceed52c4e4e0e0e6c3e82d4a203da9532699254898602208dca2c6681",
+    "waveform.py": "402720b107669d808f8c6561b4c54c96c312073ed7e812123340087f75c3ac3b"
+  }
+}

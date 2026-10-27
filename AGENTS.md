@@ -1,0 +1,3 @@
+# Song studio managed transport
+
+Canonical FC-TTD/pymss-webui isolated branch. Preserve the actually deployed CPU API, central immutable asset IDs, NAS outputs, original model options and other consumers. Only the three song separation models used by music-workbench move to the existing managed PYMSS native API; unrelated DME models retain their original execution path. No edits to the other task's working tree or UI release. No unknown inference replay; native model identity mismatch fails instead of silently using another loaded model. Formal inputs are committed, read-only snapshots with fixed native base and repeat digest.
