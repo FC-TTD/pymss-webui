@@ -2,6 +2,7 @@
 import hashlib
 import io
 import json
+import os
 import time
 from pathlib import Path
 from uuid import uuid4
@@ -12,7 +13,7 @@ import soundfile as sf
 from .native_worker import write, resample, label
 
 SONG_MODELS={'melband_roformer_instvox_duality_v2.ckpt','bs_roformer_karaoke_anvuew.ckpt','mel_band_roformer_karaoke_becruily.ckpt'}
-ORIGIN='http://pymss-studio'
+ORIGIN='http://model-gateway/internal/native/music-separation'
 
 
 def run_song(path):
@@ -21,6 +22,9 @@ def run_song(path):
   job.update(status='unknown',error='已有受管执行记录，请先核对，未重复提交');write(path,job);return
  job.update(managedSong=True,managedAttempt=uuid4().hex,status='running',message='等待分离模型资源');write(path,job)
  http=requests.Session();http.trust_env=False
+ # The CPU facade obtains queue/load/reclaim through the internal producer.
+ # This file is mounted server-side; no client browser receives the key.
+ http.headers['Authorization']='Bearer '+Path(os.environ['NATIVE_GATEWAY_KEY_FILE']).read_text().strip()
  try:
   assert job['model'] in SONG_MODELS
   manifest=json.loads(Path('/model-cache/download-manifest.json').read_text())
