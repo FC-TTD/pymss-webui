@@ -27,7 +27,9 @@ def main():
     assert old['Id'] == PREVIOUS and old['State']['Running']
     assert not (root / 'before.json').exists(), 'Inspect an existing promotion before repeating it'
     labels = old['Config']['Labels']
-    cmd = ['docker', 'compose', '--env-file', labels['com.docker.compose.project.environment_file'], '-f', labels['com.docker.compose.project.config_files']]
+    cmd = ['docker', 'compose']
+    if labels.get('com.docker.compose.project.environment_file'):cmd += ['--env-file', labels['com.docker.compose.project.environment_file']]
+    for source_file in labels['com.docker.compose.project.config_files'].split(','):cmd += ['-f',source_file]
     desired = json.loads(subprocess.check_output(cmd + ['config', '--format', 'json']))
     runtime = desired['services']['runtime']
     assert runtime['image'] == old['Config']['Image']
