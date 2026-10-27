@@ -6,8 +6,8 @@ import subprocess
 import time
 
 NAME = 'pymss-preview-runtime'
-PREVIOUS = '8ff9aa4347f117d009df7ceaf46883f42965d2a0bc7fe2dafce1261ce10da638'
-TARGET = 'registry.ttd/pymss-webui/runtime@sha256:e6488797b124593b70a020333b85a95f3cbcde00dccec5e76ec3f6af4660b7e8'
+PREVIOUS = '960bda3f38e4a553436bb040fa5b7e91d716a68026e2af755cb6096498ca5a69'
+TARGET = 'registry.ttd/pymss-webui/runtime@sha256:77aab4346028ddfb2e17f7c96f5ddab8ffdbd5b3fce17dc90c9b4f0810aeca98'
 
 
 def save(path, value):
@@ -21,7 +21,7 @@ def inspect(name):
 
 
 def main():
-    root = Path('/opt/music-hub-release-20261027/studio-release')
+    root = Path('/opt/music-hub-release-20261027/studio-release-queue')
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
     old = inspect(NAME)
     assert old['Id'] == PREVIOUS and old['State']['Running']
@@ -41,7 +41,7 @@ def main():
     save(root / 'siblings.json', before_ids)
     subprocess.run(['docker', 'pull', TARGET], check=True, stdout=subprocess.DEVNULL)
     proof = subprocess.check_output(['docker', 'run', '--rm', '--network', 'none', '--entrypoint', 'cat', TARGET, '/opt/song-studio-source-commit'], text=True).strip()
-    assert proof == 'e6064fc03cb716319eab306ce62acf0b80c7509d'
+    assert proof == 'e1576cef1bd2a3fa8fed1d5c4742f3da5164860e'
     assert set(old['NetworkSettings']['Networks']) == {'pymss-ui-preview_default'}
     subprocess.run(['docker', 'network', 'disconnect', 'pymss-ui-preview_default', NAME], check=True)
     deadline, empty = time.monotonic() + 1800, 0
@@ -61,13 +61,15 @@ def main():
     target['services'] = {'runtime': dict(runtime)}
     target['services']['runtime'].pop('depends_on', None)
     target['services']['runtime']['image'] = TARGET
-    target['services']['runtime'].setdefault('labels', {}).update({'ttd.song.transport.source': proof, 'ttd.preview.release': 'h-fd9b69f2ce8a'})
+    target['services']['runtime']['environment']['NATIVE_GATEWAY_KEY_FILE']='/run/music-gateway.key'
+    target['services']['runtime']['volumes'].append({'type':'bind','source':'/opt/music-hub-release-20261027/secrets/workbench-gateway.key','target':'/run/music-gateway.key','read_only':True})
+    target['services']['runtime'].setdefault('labels', {}).update({'ttd.song.transport.source': proof, 'ttd.preview.release': 'h-f9f15e590c26'})
     save(root / 'runtime-compose.json', target)
     command = ['docker', 'compose', '--project-name', 'pymss-ui-preview', '-f', str(root / 'runtime-compose.json')]
     subprocess.run(command + ['config', '--quiet'], check=True)
     subprocess.run(command + ['up', '-d', '--no-build', '--no-deps', '--pull', 'never', 'runtime'], check=True)
     new = inspect(NAME)
-    assert new['Config']['Image'] == TARGET and new['Mounts'] == old['Mounts']
+    assert new['Config']['Image'] == TARGET and all(m in new['Mounts'] for m in old['Mounts']) and len(new['Mounts'])==len(old['Mounts'])+1
     assert new['HostConfig']['DeviceRequests'] == old['HostConfig']['DeviceRequests']
     assert new['HostConfig']['PortBindings'] == old['HostConfig']['PortBindings']
     deadline = time.monotonic() + 60
