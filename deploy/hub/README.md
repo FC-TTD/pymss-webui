@@ -1,0 +1,3 @@
+# Scoped song transport
+
+Build runtime only from committed read-only snapshot through the registered docker_ci_cd launcher on Nest. Keep the actual Stage runtime image, management deployment, mounts/ports and non-song worker path. Three song models use existing managed PYMSS native load+inference with batch_size1 and mandatory model identity; float output is resampled by the original CPU scipy function and written 48k/PCM24. No shared GPU provider, SDK, Hub, frontend or other model rebuild. Verify original model assets/effective config, three native outputs, pending/drain and historical Range before promotion.

@@ -58,12 +58,16 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
             for job_id in state['jobs']:
                 job_path = data / job_id / 'job.json'
                 job = load_job(job_id)
+                if job['status']=='unknown':
+                    state.update(status='interrupted',error='上游执行状态待核对，不能重复执行。');write(path,state);return
                 if job['status'] == 'succeeded':
                     continue
                 job.update(status='queued', error='', outputs=[])
                 write(job_path, job)
                 try:
                     await execute(job_path, release_slot=False)
+                    if load_job(job_id)['status']=='unknown':
+                        state.update(status='interrupted',error='上游执行状态待核对，输入和已有结果保留。');write(path,state);return
                 except Exception:
                     job = load_job(job_id)
                     job.update(status='failed', error='处理未完成，可继续本批次重试。', outputs=[])
@@ -120,6 +124,7 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
             if not state['jobs']:
                 raise HTTPException(400, '请先上传音频。')
             validate(state['model'], json.dumps(state['stems']))
+            if any(load_job(item)['status']=='unknown' for item in state['jobs']):raise HTTPException(409,'上游执行状态待核对，不能重复提交。')
             claim()
             try:
                 state.update(status='running', error='')

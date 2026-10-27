@@ -1,0 +1,6 @@
+**
+!deploy/song-studio/runtime/
+!.source-commit
+!deploy/hub/Dockerfile.runtime
+**/__pycache__
+**/*.pyc

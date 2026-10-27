@@ -9,6 +9,7 @@ import time
 import uuid
 from pathlib import Path
 from .worker import write
+from .managed_song import SONG_MODELS
 
 MIB = 1024**2
 
@@ -73,6 +74,12 @@ async def execute_with_capacity(path, probe=free_memory, launch=run_worker, wait
     path = Path(path)
     root = path.parent.parent.parent
     state = json.loads(path.read_text())
+    if state['model'] in SONG_MODELS:
+        # Capacity, queue and unload belong to the managed provider; no Stage
+        # GPU probe, OOM replay or new direct native inference for song models.
+        log_path=path.with_name('managed-song-'+uuid.uuid4().hex+'.log')
+        await launch(path,log_path)
+        return
     required = required_memory(state['model'], root)
     deadline = time.monotonic() + wait_seconds
     session = uuid.uuid4().hex[:8]

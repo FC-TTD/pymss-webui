@@ -40,7 +40,7 @@ def recover_interrupted():
   try:
    state=json.loads(path.read_text())
    if state.get('status') in {'queued','running','waiting'}:
-    state.update(status='failed',error='服务重启，任务未完成。请重新提交。',outputs=[]);write(path,state)
+    state.update(status='unknown' if state.get('managedSong') else 'failed',error='服务重启，原任务与输入保留；受管执行状态需核对，未自动重跑。');write(path,state)
   except (OSError,ValueError):pass
  recover_batches(DATA.parent)
 

@@ -1,0 +1,4 @@
+# syntax=docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+FROM registry.ttd/pymss-webui/studio-native@sha256:5e7c82a2dadc149114ad379ccc396b58f7b6302eb4bb10a8b54d038e13a584b8
+COPY --link deploy/song-studio/runtime /app/studio_runtime
+COPY --link .source-commit /opt/song-studio-source-commit

@@ -1,0 +1,7 @@
+{
+  "project": "pymss-webui",
+  "components": {
+    "runtime": "song-studio-transport"
+  },
+  "cache": "registry.ttd/music-native/shared-cache:buildcache"
+}
