@@ -58,9 +58,9 @@ set -eu
 cd "$1"
 tar -xzf bundle.tar.gz
 docker image inspect nginx@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 >/dev/null
-docker build --pull=false --network none --build-arg PREVIEW_RELEASE="$2" -t audio-static:"$2" . > build.log 2>&1
+docker build --provenance=false --pull=false --network none --build-arg PREVIEW_RELEASE="$2" -t audio-static:"$2" . > build.log 2>&1
 first_image="$(docker image inspect audio-static:"$2" --format '{{.Id}}')"
-docker build --pull=false --network none --build-arg PREVIEW_RELEASE="$2" -t audio-static:"$2" . > repeat-build.log 2>&1
+docker build --provenance=false --pull=false --network none --build-arg PREVIEW_RELEASE="$2" -t audio-static:"$2" . > repeat-build.log 2>&1
 test "$first_image" = "$(docker image inspect audio-static:"$2" --format '{{.Id}}')"
 grep -q CACHED repeat-build.log
 '''
