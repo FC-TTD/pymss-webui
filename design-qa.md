@@ -201,3 +201,7 @@ Stage http://ttd-stage:17896/ui/，release h-e92556e09ea24f95；未提交/推送
 - 仅本轮CPU入口重建；原共享PYMSS、Stage预览Web、chain、ClearVoice、Ying、原MSST两容器及Stage原30911均保持原ID/image。没有停止其他工作负载、改精度/offload、删除输入/输出/权重或推送Git。
 
 证据：formal-verification.json、home-formal.json、runtime-after.json、committed-preflight.json、caddy-audio-routes.json、commits.json、formal-waveforms.png；原Stage完整矩阵 yingmusic-chain-20261026/verification.json。回退使用上述管理目录已保存rollback.sh恢复旧CPU入口配置/镜像，保留新旧所有NAS数据；实际未回退。
+
+## 公共入口空白启动（2026-10-28）
+
+裸入口不读取或保存上次任务，显式当前任务URL刷新保留；清旧两键但保留置顶。Chrome实际先观察旧版自动恢复长批次，新Stage与正式裸入口均空白、当前自有三轨QA链接及刷新正常、再回裸入口仍空白，console0/模型选择通过。已提交快照只更新两Web h-07af079a1852d40d/9772caa6，其他聊天已接管Hub后端ID/镜像不变；11资源SHA一致、家庭router32绑定32.2页面SHA一致。重复构建摘要一致/缓存命中，不重跑GPU、不删历史数据。证据../pymss-ui-evidence/static-followups/a520bb64da8ab155d6507b93d228d0180e2f24f9/acceptance.json和empty-entry.png。宿主重启/回滚/实际家庭Mac未新验收，未push。
