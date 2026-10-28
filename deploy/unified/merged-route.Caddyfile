@@ -10,7 +10,7 @@ http://msst {
   }
   @audio_ui path /ui /ui/*
   handle @audio_ui {
-    reverse_proxy 192.168.100.18:17898
+    redir https://separation-studio.api.ttd.honeywave.net/ 301
   }
   handle /api/studio/* {
     reverse_proxy 192.168.100.18:17898

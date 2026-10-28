@@ -1,5 +1,13 @@
 # 音频分离组合入口
 
+## 2026-10-28：旧工作台路径永久跳转
+
+分离工作台已独立到 `https://separation-studio.api.ttd.honeywave.net/`。按用户要求，`http://msst/ui`、`/ui/` 及其子路径固定返回 301，直接跳到新域名根路径，丢弃旧路径及查询参数。此条替代下文关于 `/ui` 继续展示组合界面的历史记录。
+
+本次仅修改 `entry` 的业务 Caddy label 与路由验证 fixture，沿用当前不可变 CPU 镜像和既有 Compose 网络。配置变更通过 Compose 仅重建 `entry`，短暂切换 CPU 代理，不执行 UI 镜像推广脚本，不重建模型或重启 provider。根路径、原生 MSST 和 API 的路由定义保持。新域名继续使用独立应用登录与授权。
+
+配置发布时保存当前 Compose/override/env，使用已提交版本的 `compose.yaml` 与原固定镜像 override/env 创建新的管理目录，执行 `docker compose --env-file formal.env -f compose.yaml -f formal-override.json up -d --no-build --no-deps entry`。校验 Caddy 实际聚合的 `/ui` handle 为 301，并检查 GET/HEAD、带旧查询参数的子路径、新站登录及 API。回退使用保存的原管理目录和同一 Compose 命令，只恢复 CPU 入口配置，保留所有音频与模型数据。
+
 用户已要求把最终工作台合并进原 MSST 入口，首页名称为“音频分离”、备注“MSST 和 PYMSS”，默认 PYMSS。Stage 验证入口始终为 `http://ttd-stage:17896/ui/`。
 
 ## 所有权与范围
