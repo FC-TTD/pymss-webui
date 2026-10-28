@@ -30,7 +30,7 @@ services:
       caddy.handle_0.reverse_proxy: "192.168.100.18:17898"
       caddy.@audio_ui.path: /ui /ui/*
       caddy.handle_1: "@audio_ui"
-      caddy.handle_1.redir: "https://separation-studio.api.ttd.honeywave.net/ 301"
+      caddy.handle_1.redir: "http://separation-studio/ 301"
       caddy.handle_2: /api/studio/*
       caddy.handle_2.reverse_proxy: "192.168.100.18:17898"
       caddy.handle_3: /api/speech/*
