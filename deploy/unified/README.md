@@ -82,3 +82,7 @@ python3 deploy/unified/publish.py h-fa900232858e1f41 <ui-commit> --speech-commit
 实际CDP异步刷新先页面后接口，首次脚本postcheck404，路由随后全部自动收敛；已改后续工具等待完整页面+模型+MSST契约。实际Caddy在srv1，不能固定假设srv0；私有speech/ym/chain全部验证，public-proxy与旧JSON一致。未手写平台全局配置。
 
 正式三条真实链路（PN人声→Ying三轨→ClearVoice48k，以及Deux国际声→BandIt音乐音效）均成功，无浏览器重传；完整30MB ZIP/Range/波形/来源SHA、prepared刷新与MSST导航通过。正式源与Stage全11资源SHA一致；家庭router32绑定32.2来源页面/JS/CSS/整ZIP一致。原MSST/30911及所有共享依赖ID不变，正式CPU入口healthy/restart0；回退文件已保存，未演练。证据../../..的work/pymss-ui-evidence/formal-entry-20261027/DEPLOYMENT_REPORT.md。同事质量试听及实际家庭电脑仍NOT_RUN。
+
+## 2026-10-28 静态界面收尾
+
+公共入口不再从localStorage自动加载上次任务；显式当前任务链接仍支持刷新/二次处理。因为其他聊天已将PYMSS及ClearVoice/Ying接到受管Hub，旧publisher的preview镜像门禁不适用于当前依赖；使用update_static.py，仅更新两CPU Web且锁定当前实际后端身份/镜像/管理路径，先Stage后正式，不启动或回退旧GPU服务。代码从授权提交的git archive只读快照构建，源文件前后SHA核对；相同输入第二次构建要求摘要一致并缓存命中。正式推广复用同一个Stage镜像，并核对Stage静态资源SHA。上一容器与Compose/env管理位置写入stage-before/formal-before.json，保留数据及既有网络。命令：python3 deploy/unified/update_static.py <commit>，Stage验收后同commit追加--formal。

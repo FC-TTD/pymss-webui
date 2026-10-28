@@ -72,11 +72,11 @@
   });
   async function initialise() {
     await refreshModels();
-    const params=new URLSearchParams(location.search);let batchId=params.get('batch') || '';
-    try{batchId=batchId || (!params.has('job')?localStorage.getItem('pymss-last-batch') || '':'');}catch{}
+    // The shared entry starts empty. Only an explicit current-task URL resumes work.
+    try{localStorage.removeItem('pymss-last-batch');localStorage.removeItem('pymss-last-job');}catch{}
+    const params=new URLSearchParams(location.search);const batchId=params.get('batch') || '';
     if(/^(cv-|ym-)?[a-f0-9]{32}$/.test(batchId)){busy=true;progress='正在恢复批次…';void monitorBatch(batchId,++runSequence,true);return;}
-    let id=params.get('job') || '';
-    try { id=id || localStorage.getItem('pymss-last-job') || ''; } catch {}
+    const id=params.get('job') || '';
     if(/^(cv-|ym-)?[a-f0-9]{32}$/.test(id)) { currentJob=id;restored=true;busy=true;progress='正在恢复上次任务…';void monitorJob(id,++runSequence); }
   }
   async function refreshModels() {
@@ -93,7 +93,7 @@
 
   function releaseResult() { result=null; }
   function clearResult() {releaseResult();batch=null;currentJob='';progress='';restored=false;exportSelection=[];seenExports.clear();exportMessage='';preparedExport=null;try{localStorage.removeItem('pymss-last-job');localStorage.removeItem('pymss-last-batch');}catch{} const url=new URL(location.href);url.searchParams.delete('job');url.searchParams.delete('batch');history.replaceState(null,'',url);} 
-  function persistJob(id:string) {try{localStorage.setItem('pymss-last-job',id);}catch{} const url=new URL(location.href);url.searchParams.delete('batch');url.searchParams.set('job',id);history.replaceState(null,'',url);}
+  function persistJob(id:string) {const url=new URL(location.href);url.searchParams.delete('batch');url.searchParams.set('job',id);history.replaceState(null,'',url);}
   async function monitorJob(id:string,seq:number,failures=0) {
     if(seq!==runSequence)return;
     try {
@@ -168,7 +168,7 @@
     inputs=restoredInputs;selectedInput=inputs[0]?.id || '';
     for(const input of restoredInputs)void inputOrigin(input.assetId!).then(origin=>{if(origin)inputs=inputs.map(i=>i.id===input.id?{...i,parent:origin.parent}:i);});
   }
-  function persistBatch(id:string){try{localStorage.setItem('pymss-last-batch',id);localStorage.removeItem('pymss-last-job');}catch{}const url=new URL(location.href);url.searchParams.delete('job');url.searchParams.set('batch',id);history.replaceState(null,'',url);}
+  function persistBatch(id:string){const url=new URL(location.href);url.searchParams.delete('job');url.searchParams.set('batch',id);history.replaceState(null,'',url);}
   function selectNewExports(){for(const entry of exportEntries)if(!seenExports.has(entry.key)){seenExports.add(entry.key);exportSelection=[...exportSelection,entry.key];}if(!expandedResults.some(id=>resultJobs.some(j=>j.id===id)) && resultJobs.length)expandedResults=[resultJobs[0].id];}
   function toggleExport(key:string,checked:boolean){exportSelection=checked?[...new Set([...exportSelection,key])]:exportSelection.filter(k=>k!==key);}
   function decorateJob(job:Job,purpose=job.purpose):Job{const model=catalog.find(m=>m.id===job.model);if(!model || purpose!=='dme')return job;const stems=outputStems(model,purpose);return {...job,outputs:job.outputs.map(o=>({...o,label:stems.find(s=>s.id.toLowerCase()===o.stem.toLowerCase())?.label || o.label}))};}
