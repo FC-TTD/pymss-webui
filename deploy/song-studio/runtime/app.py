@@ -82,9 +82,13 @@ async def store_input(request,model,filename,stems,purpose):
   from .media import probe,extract,receive
   size,source_digest=await receive(request,target)
   streams=await probe(target)
-  audio=folder/'prepared.flac'
-  info=await extract(target,audio,streams[0]['index'])
-  target.rename(folder/'original.media');audio.rename(target)
+  import soundfile as sf
+  try:info=sf.info(target)
+  except Exception:info=None
+  if info is None or info.channels>2:
+   audio=folder/'prepared.flac'
+   info=await extract(target,audio,streams[0]['index'])
+   target.rename(folder/'original.media');audio.rename(target)
   duration=info.duration
   path=folder/'job.json';write(path,{'id':job_id,'model':model,'filename':Path(filename).name,'purpose':purpose,'input':str(target),'input_asset_id':job_id,'input_bytes':size,'input_duration':duration,'input_sha256':source_digest,'stems':selected,'status':'queued','outputs':[]})
   return job_id

@@ -5,11 +5,11 @@ import requests
 from fastapi import FastAPI,HTTPException
 from pydantic import BaseModel,StrictStr
 DATA=Path(os.environ.get('CHAIN_DATA','/data'));DATA.mkdir(parents=True,exist_ok=True)
-PN='http://192.168.100.18:17896/api/studio'
+PN=os.environ.get('STUDIO_API','http://pymss-preview-runtime:8000/api/studio')
 CV='http://192.168.100.15:17902/api/speech'
 YM='http://192.168.100.15:17903/api/ym'
 app=FastAPI(title='PYMSS Derived Audio Assets');lock=threading.Lock()
-MAX_BYTES=512*1024**2
+MAX_BYTES=16*1024**3
 class Selection(BaseModel):
  job_id:StrictStr
  stem:StrictStr
@@ -47,8 +47,7 @@ def derive(selection:Selection):
   prefix=base.rsplit('/api/',1)[1]
   allowed=r'/api/'+re.escape(prefix)+r'/jobs/'+re.escape(selection.job_id)+r'/files/[a-f0-9]{16}\.wav'
   if not re.fullmatch(allowed,output.get('url','')):raise HTTPException(400,'音轨地址无效。')
-  if output.get('bytes',MAX_BYTES+1)>MAX_BYTES:raise HTTPException(413,'音轨超过512 MB，请先选取较短素材。')
-  if output.get('frames',0)/max(1,output.get('sample_rate',1))>600:raise HTTPException(413,'音轨超过10分钟，请先选取较短素材。')
+  if output.get('bytes',MAX_BYTES+1)>MAX_BYTES:raise HTTPException(413,'音轨超过16 GB，原结果已保留。')
   key=hashlib.sha256((selection.job_id+'|'+selection.stem+'|'+str(output.get('bytes'))).encode()).hexdigest()
   path=DATA/(key+'.json');state=json.loads(path.read_text()) if path.exists() else {}
   if state.get('asset_id'):

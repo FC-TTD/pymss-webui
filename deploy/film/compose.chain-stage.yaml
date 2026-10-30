@@ -1,0 +1,28 @@
+name: separation-film-chain
+services:
+  chain:
+    image: ${FILM_CHAIN_IMAGE:?Use immutable digest}
+    container_name: separation-film-chain
+    restart: unless-stopped
+    read_only: true
+    user: '10001:10001'
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 512m
+    cpus: 1
+    tmpfs: ['/tmp:rw,nosuid,size=16m']
+    volumes: [/mnt/TTD/04_应用/separation-film-chain:/data]
+    environment:
+      STUDIO_API: http://separation-film-runtime:8000/api/studio
+    networks: [existing]
+    labels:
+      org.opencontainers.image.revision: ${FILM_CHAIN_SOURCE:?Record source}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+networks:
+  existing:
+    external: true
+    name: pymss-ui-preview_default
