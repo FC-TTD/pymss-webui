@@ -18,6 +18,13 @@ async def command(*args):
         raise HTTPException(400, '无法读取媒体音轨，请检查文件是否完整或加密。')
     return stdout
 
+def seconds(value):
+    try:
+        if isinstance(value,str) and ':' in value:
+            hour,minute,second=value.split(':');return int(hour)*3600+int(minute)*60+float(second)
+        return float(value or 0)
+    except (TypeError,ValueError):return 0
+
 async def probe(path):
     raw = await command('ffprobe','-v','error','-show_streams','-show_format','-of','json',str(path))
     data = json.loads(raw)
@@ -25,7 +32,7 @@ async def probe(path):
     for stream in data.get('streams',[]):
         if stream.get('codec_type') != 'audio': continue
         tags=stream.get('tags',{})
-        duration=float(stream.get('duration') or data.get('format',{}).get('duration') or 0)
+        duration=seconds(stream.get('duration')) or seconds(tags.get('DURATION') or tags.get('duration')) or seconds(data.get('format',{}).get('duration'))
         if not math.isfinite(duration) or duration<=0: continue
         streams.append(dict(index=stream['index'], language=tags.get('language','未标注语言'),
             title=tags.get('title','音轨 '+str(len(streams)+1)), channels=stream.get('channels',0),
