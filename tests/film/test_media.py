@@ -95,3 +95,13 @@ def test_subsecond_tail_with_resampling_is_complete(tmp_path,rate,tail):
     output,_=sf.read(tmp_path/state['outputs'][0]['file'],always_2d=True)
     assert abs(len(output)-round(frames/rate*48000))<=1 and output.shape[1]==2
     assert np.isfinite(output).all() and np.max(abs(output))>.05
+
+
+def test_tracks_use_audio_duration_instead_of_longer_video(tmp_path):
+    video=tmp_path/'different-durations.mkv'
+    ffmpeg('-f','lavfi','-i','color=size=16x16:rate=1:duration=3',
+        '-f','lavfi','-i','sine=frequency=440:sample_rate=48000:duration=1.2',
+        '-f','lavfi','-i','sine=frequency=880:sample_rate=48000:duration=2.4',
+        '-map','0:v','-map','1:a','-map','2:a','-c:v','ffv1','-c:a','flac',video)
+    streams=asyncio.run(probe(video))
+    assert abs(streams[0]['duration']-1.2)<.001 and abs(streams[1]['duration']-2.4)<.001
