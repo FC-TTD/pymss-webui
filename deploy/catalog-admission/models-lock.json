@@ -1,0 +1,1718 @@
+{
+  "models": [
+    {
+      "id": "Apollo_LQ_MP3_restoration.ckpt",
+      "type": "apollo",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/cleanup/audio_restoration/Apollo_LQ_MP3_restoration.ckpt",
+          "bytes": 66541845,
+          "sha256": "99d9af7f1ff20e63c393035513a655392818d66b4d7fc23d658175c1f15e8d76",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/audio_restoration/Apollo_LQ_MP3_restoration.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/cleanup/audio_restoration/Apollo_LQ_MP3_restoration.yaml",
+          "bytes": 493,
+          "sha256": "80bf789f8aea563845c5b775c5b0783b1136f039be5f0d8642f6dd910737d3f3",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/audio_restoration/Apollo_LQ_MP3_restoration.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "cleanup/audio_restoration",
+      "declared_target": "restored"
+    },
+    {
+      "id": "apollo_model.ckpt",
+      "type": "apollo",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/cleanup/audio_restoration/apollo_model.ckpt",
+          "bytes": 66532080,
+          "sha256": "61b93332da9cde13925b2726b0b31167b05bc20030271b19a583ccf76d69354b",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/audio_restoration/apollo_model.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/cleanup/audio_restoration/apollo_model.yaml",
+          "bytes": 794,
+          "sha256": "864cc59f18b21e436bda0a4c20ef58a8db63a4163c6e6d1d5b02de681a5b930c",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/audio_restoration/apollo_model.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "cleanup/audio_restoration",
+      "declared_target": "restored"
+    },
+    {
+      "id": "apollo_model_v2.ckpt",
+      "type": "apollo",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/cleanup/audio_restoration/apollo_model_v2.ckpt",
+          "bytes": 38159792,
+          "sha256": "d9255c2f43b467840260dc4c0f99f26bcdb0a7c3523d7b5165d13322ca955b41",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/audio_restoration/apollo_model_v2.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/overrides/apollo_model_v2.yaml",
+          "bytes": 790,
+          "sha256": "26f53005ad12833d0aa053499d7a838fa138ff267eaeb60b0194d6f3c1277aa3",
+          "source": "repository:deploy/catalog-admission/overrides/apollo_model_v2.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "cleanup/audio_restoration",
+      "declared_target": "restored"
+    },
+    {
+      "id": "mel_band_roformer_denoise_debleed_gabox.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/cleanup/noise_bleed_control/mel_band_roformer_denoise_debleed_gabox.ckpt",
+          "bytes": 913026650,
+          "sha256": "91aa7a546ed2e93482e4629c982d35b0d258bb3de6eeab497fd91658cc86c7fd",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/mel_band_roformer_denoise_debleed_gabox.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/cleanup/noise_bleed_control/mel_band_roformer_denoise_debleed_gabox.yaml",
+          "bytes": 926,
+          "sha256": "4e9b6dd2944e1f598e762f5c6813ac3594e22f7bbacf52651b8e7637b6ca9e28",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/mel_band_roformer_denoise_debleed_gabox.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "cleanup/noise_bleed_control",
+      "declared_target": "Instrumental"
+    },
+    {
+      "id": "mel_band_roformer_instrumental_bleedless_v1_gabox.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/cleanup/noise_bleed_control/mel_band_roformer_instrumental_bleedless_v1_gabox.ckpt",
+          "bytes": 913026650,
+          "sha256": "de972fb724601beef237abe94c8b934c73218e9baf3e344ab4c2333276e5cfe7",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/mel_band_roformer_instrumental_bleedless_v1_gabox.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/cleanup/noise_bleed_control/mel_band_roformer_instrumental_bleedless_v1_gabox.yaml",
+          "bytes": 926,
+          "sha256": "4e9b6dd2944e1f598e762f5c6813ac3594e22f7bbacf52651b8e7637b6ca9e28",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/cleanup/noise_bleed_control/mel_band_roformer_instrumental_bleedless_v1_gabox.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "cleanup/noise_bleed_control",
+      "declared_target": "Instrumental"
+    },
+    {
+      "id": "apollo_model_uni.ckpt",
+      "type": "apollo",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/experimental_general/apollo_model_uni.ckpt",
+          "bytes": 146867952,
+          "sha256": "11433256eca90143d32f1108d156ac756fd0201fbc69e5f736def4062fb52186",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/experimental_general/apollo_model_uni.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/experimental_general/apollo_model_uni.yaml",
+          "bytes": 494,
+          "sha256": "b8907db2acddef203f3e3c17fd71c2025a32732c7693988e74a7781515a699dd",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/experimental_general/apollo_model_uni.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "experimental_general",
+      "declared_target": "restored"
+    },
+    {
+      "id": "mel_band_roformer_instrumental_fv8_gabox.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/instrumental/mel_band_roformer_instrumental_fv8_gabox.ckpt",
+          "bytes": 913026650,
+          "sha256": "50bfa127d21f419e0da89730867d28c7ac4484c9473e6f313d036bc8b429df80",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/instrumental/mel_band_roformer_instrumental_fv8_gabox.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/instrumental/mel_band_roformer_instrumental_fv8_gabox.yaml",
+          "bytes": 926,
+          "sha256": "4e9b6dd2944e1f598e762f5c6813ac3594e22f7bbacf52651b8e7637b6ca9e28",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/instrumental/mel_band_roformer_instrumental_fv8_gabox.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "instrumental",
+      "declared_target": "Instrumental"
+    },
+    {
+      "id": "mel_band_roformer_instrumental_gabox.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/instrumental/mel_band_roformer_instrumental_gabox.ckpt",
+          "bytes": 913026650,
+          "sha256": "7b3ad6bd8bed3aaaa4d9320ea2ca910d140196a2302186db1754f3a8d8e16fb1",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/instrumental/mel_band_roformer_instrumental_gabox.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/instrumental/mel_band_roformer_instrumental_gabox.yaml",
+          "bytes": 926,
+          "sha256": "4e9b6dd2944e1f598e762f5c6813ac3594e22f7bbacf52651b8e7637b6ca9e28",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/instrumental/mel_band_roformer_instrumental_gabox.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "instrumental",
+      "declared_target": "Instrumental"
+    },
+    {
+      "id": "bs_karaoke_gabox_IS.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/karaoke/bs_karaoke_gabox_IS.ckpt",
+          "bytes": 204483448,
+          "sha256": "db8357825398d4231031ad1ab4aa12a94bcaad8d67e8ce5e4b3c5b48fdee1d4f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/bs_karaoke_gabox_IS.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/karaoke/bs_karaoke_gabox_IS.yaml",
+          "bytes": 2004,
+          "sha256": "8360384097cc7a0b229b2918f70270bf7f5e64630d933ff359ceb6eaadf40fd9",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/bs_karaoke_gabox_IS.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "karaoke",
+      "declared_target": "vocals"
+    },
+    {
+      "id": "bs_roformer_karaoke_frazer_becruily.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/karaoke/bs_roformer_karaoke_frazer_becruily.ckpt",
+          "bytes": 204436907,
+          "sha256": "eb90ee24c1154d83fbcfd27e96182f19e061557cc6e4746953125e08c29389f9",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/bs_roformer_karaoke_frazer_becruily.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/karaoke/bs_roformer_karaoke_frazer_becruily.yaml",
+          "bytes": 1779,
+          "sha256": "85f18ece538aece3c55bea3bc7cc4c9a84409063f79038540ba0d004e95656a8",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/bs_roformer_karaoke_frazer_becruily.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "karaoke",
+      "declared_target": "Vocals"
+    },
+    {
+      "id": "mel_band_roformer_karaoke_gabox_v2.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/karaoke/mel_band_roformer_karaoke_gabox_v2.ckpt",
+          "bytes": 913090472,
+          "sha256": "ec34be50327aeaf1a996c27977f5c30d1ac80c0076d69683d3e5184c31ea29d3",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/mel_band_roformer_karaoke_gabox_v2.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/karaoke/mel_band_roformer_karaoke_gabox_v2.yaml",
+          "bytes": 1744,
+          "sha256": "bbd4048f17d525be5f62ce9382e49e864e5d51df7753061ae4a1abc5d56d0f6f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/mel_band_roformer_karaoke_gabox_v2.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "karaoke",
+      "declared_target": "Vocals"
+    },
+    {
+      "id": "small_karaoke_gaboxaufr.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/karaoke/small_karaoke_gaboxaufr.ckpt",
+          "bytes": 202574227,
+          "sha256": "6182fc508c0791d5a2ee4121b51f5ae9115a1bdbd209a8688b0620f4fd17fdca",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/small_karaoke_gaboxaufr.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/karaoke/small_karaoke_gaboxaufr.yaml",
+          "bytes": 1014,
+          "sha256": "5232524272f3c3d5d69d625adeacdc31db10c97c3165a1d178b212bb48fe0bb0",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/karaoke/small_karaoke_gaboxaufr.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "karaoke",
+      "declared_target": "Vocals"
+    },
+    {
+      "id": "1_HP-UVR.pth",
+      "type": "vr",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/legacy_vr/vr_instrumental_extraction/1_HP-UVR.pth",
+          "bytes": 126792647,
+          "sha256": "d9c654305888fe09668078ade76962b32d3782848f158192da7403a650e935a6",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/legacy_vr/vr_instrumental_extraction/1_HP-UVR.pth"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/legacy_vr/vr_instrumental_extraction/1_HP-UVR.yaml",
+          "bytes": 1198,
+          "sha256": "d563b6982bfdf43706e7b7f95d96306fb4efda71fe99fee579179d5fa2a1b005",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/legacy_vr/vr_instrumental_extraction/1_HP-UVR.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "legacy_vr/vr_instrumental_extraction",
+      "declared_target": "Instrumental/Vocals"
+    },
+    {
+      "id": "bs_mega_53stem_accordion_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_accordion_mvsep.ckpt",
+          "bytes": 77619808,
+          "sha256": "aafcbe186aaec0489d28e388d9d1d3c12660c5640a8494bdaf3cbfee60c08c78",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_accordion_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_accordion_mvsep.yaml",
+          "bytes": 1577,
+          "sha256": "f9c6a1a39d9b7b7fd3fa4aae27c78737861ea6b797018a00660a87e55cd29f94",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_accordion_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "accordion"
+    },
+    {
+      "id": "bs_mega_53stem_acoustic-guitar_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_acoustic-guitar_mvsep.ckpt",
+          "bytes": 77624038,
+          "sha256": "fa386b2e7b1ea4f12b9b5c557444c0dc78648ef4ee299de2759d86457e182b3e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_acoustic-guitar_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_acoustic-guitar_mvsep.yaml",
+          "bytes": 1589,
+          "sha256": "77e6a71f4451c207af7a498e403264ec695890be1d27351f87a1f95d7083df0d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_acoustic-guitar_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "acoustic-guitar"
+    },
+    {
+      "id": "bs_mega_53stem_back-vocal_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_back-vocal_mvsep.ckpt",
+          "bytes": 77620513,
+          "sha256": "9e60a9057340574977b0f858084113d952ba4731a7bbe054bf49d1d5338ca9d9",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_back-vocal_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_back-vocal_mvsep.yaml",
+          "bytes": 1579,
+          "sha256": "41231127b1f72cca550c848e30f1108c607d2ca7e7d1958591bdea2b2db3e7bb",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_back-vocal_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "back-vocal"
+    },
+    {
+      "id": "bs_mega_53stem_banjo_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_banjo_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "7f9d0ad56db9289c767d41104156c2dce5b88631e05958bc78479b77e62e4f0d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_banjo_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_banjo_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "51ac1c822705f1a7d3b94e9f9a003b9eddf1f4856d8d0c4ca5357076eb22edab",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_banjo_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "banjo"
+    },
+    {
+      "id": "bs_mega_53stem_bassoon_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_bassoon_mvsep.ckpt",
+          "bytes": 77618398,
+          "sha256": "2d7329356a80027377e11d6d20c1c37a6b1c8a97e6fc502379142ba88773caae",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_bassoon_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_bassoon_mvsep.yaml",
+          "bytes": 1573,
+          "sha256": "6673d289521241e2176bbf9a60242086a61357ae930113712781f0126996255c",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_bassoon_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "bassoon"
+    },
+    {
+      "id": "bs_mega_53stem_bells_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_bells_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "6328f387259bb50ef12e36d3ef6cc5703520a0a89cd3bd743cf4f420f87701b8",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_bells_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_bells_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "2a87b20c03640a09e7e4ead90ada790aa128ea8ede990b98afab152859409e53",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_bells_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "bells"
+    },
+    {
+      "id": "bs_mega_53stem_bowed_strings_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_bowed_strings_mvsep.ckpt",
+          "bytes": 77622628,
+          "sha256": "598a644d78dd6a385140b2134733eef42d9525805a84d55f224c80a1ca39ff61",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_bowed_strings_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_bowed_strings_mvsep.yaml",
+          "bytes": 1585,
+          "sha256": "c2cbd73c4a5b46e0a933aa44a96ced18eb065ea9e8b6321bf1b572b3cdaec62d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_bowed_strings_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "bowed_strings"
+    },
+    {
+      "id": "bs_mega_53stem_brass_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_brass_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "e7d7bf86a031f3253019ff9dc424485d8085946fc428ab66522c568ee17b8027",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_brass_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_brass_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "1d2571fcde175ebd0ac40f055c3f61d9cc04466b82f0193a7109d5d56b733f39",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_brass_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "brass"
+    },
+    {
+      "id": "bs_mega_53stem_cello_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_cello_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "bb6600ebc4dfe1d896d221073d114f51902a0b385afa23503034b9e8befba62c",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_cello_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_cello_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "10aaee25672f1d69b3a0348d81d0760923bd6dbcf894b4c070fac85c2ade331e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_cello_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "cello"
+    },
+    {
+      "id": "bs_mega_53stem_clarinet_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_clarinet_mvsep.ckpt",
+          "bytes": 77619103,
+          "sha256": "3c4ac033c03727943a491e05dc9c9aebbd92afc3d8e83b3484881e9ed3f3dde7",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_clarinet_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_clarinet_mvsep.yaml",
+          "bytes": 1575,
+          "sha256": "f95880336174c8002290efcbe93574400e7923ec396c1b840ced4f5543a44658",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_clarinet_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "clarinet"
+    },
+    {
+      "id": "bs_mega_53stem_congas_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_congas_mvsep.ckpt",
+          "bytes": 77617693,
+          "sha256": "78885092a3fdf0f63f349ba34e8fa4ff1ef84959a7e94f544b437e2404af5287",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_congas_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_congas_mvsep.yaml",
+          "bytes": 1571,
+          "sha256": "5d7bb3b0e501c4e297e56f861a7028d039fff1631e03d6649db0844efd5ae5bd",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_congas_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "congas"
+    },
+    {
+      "id": "bs_mega_53stem_digital-piano_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_digital-piano_mvsep.ckpt",
+          "bytes": 77622628,
+          "sha256": "481c741ff36208c9b11860297ff5c9a502873662724d35a437bf64aaade890bd",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_digital-piano_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_digital-piano_mvsep.yaml",
+          "bytes": 1585,
+          "sha256": "f769be4607cca070832290f83be88a0da02fc954b065fcc2c5fb89f89056917d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_digital-piano_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "digital-piano"
+    },
+    {
+      "id": "bs_mega_53stem_dobro_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_dobro_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "a8b99b1b837f04200cbb5b99d33c0ea2ac46bb76424879385d8fc6dde8abfe0b",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_dobro_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_dobro_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "9dc37ca36675179d4f2e177184f4292e52b8be192f0550a875dfe70d490b7643",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_dobro_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "dobro"
+    },
+    {
+      "id": "bs_mega_53stem_double-bass_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_double-bass_mvsep.ckpt",
+          "bytes": 77621218,
+          "sha256": "731d7bcaae4ce02f5a19116c1b5c1004bfe7208d14cc6b93aaab2753c0302cfb",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_double-bass_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_double-bass_mvsep.yaml",
+          "bytes": 1581,
+          "sha256": "b4db56c54523c041698c977558f645e5919fca68f54a86fa82846c33f6efcf6e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_double-bass_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "double-bass"
+    },
+    {
+      "id": "bs_mega_53stem_drums_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_drums_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "abfa64203417f0874aa3936320b1666364ef1badd917f5613a3017d0ea73c7a2",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_drums_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_drums_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "54b000d84b0fd863f7cf1955fc07fa2f8327805e7bc15c776744691d5f11d723",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_drums_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "drums"
+    },
+    {
+      "id": "bs_mega_53stem_electric-guitar_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_electric-guitar_mvsep.ckpt",
+          "bytes": 77624038,
+          "sha256": "cd506bfce9474f91a31001967f2c4935ce4e67f643da3df20d04058da927c553",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_electric-guitar_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_electric-guitar_mvsep.yaml",
+          "bytes": 1589,
+          "sha256": "cb235299e7b58b11aedb2a359f7e03c5ab93d9f03fe4ef95683fe9ff65ffadbf",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_electric-guitar_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "electric-guitar"
+    },
+    {
+      "id": "bs_mega_53stem_flute_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_flute_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "65dfa1e2c093165812cbdf8945715e7f71566bc3a8196ecad3edce1d29bb2e45",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_flute_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_flute_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "78207aa8e43dd8a734240c0d8eaab6f534a817dae2786b74153473310f5206f6",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_flute_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "flute"
+    },
+    {
+      "id": "bs_mega_53stem_french-horn_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_french-horn_mvsep.ckpt",
+          "bytes": 77621218,
+          "sha256": "484b9e68a962891daffb1d671f847509a7e6c7f72de42c445c774881dfe2c420",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_french-horn_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_french-horn_mvsep.yaml",
+          "bytes": 1581,
+          "sha256": "cb453739b827baa14fd242fcb2c39007eac8760813f9a232d2f01d8becb08e41",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_french-horn_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "french-horn"
+    },
+    {
+      "id": "bs_mega_53stem_glockenspiel_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_glockenspiel_mvsep.ckpt",
+          "bytes": 77621923,
+          "sha256": "dc18ac41fb8e0e1cf2dcb290d67c9e2f7a295f380e91864eda9f3cc805015231",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_glockenspiel_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_glockenspiel_mvsep.yaml",
+          "bytes": 1583,
+          "sha256": "ad0320a9b56a00ce5eb91c1761c881a1b42a696dcea638e80386a0b5da73f3ec",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_glockenspiel_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "glockenspiel"
+    },
+    {
+      "id": "bs_mega_53stem_guitar_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_guitar_mvsep.ckpt",
+          "bytes": 77617693,
+          "sha256": "9e4524d60cc7eb01eae4048ecda6e3fbf9a9a404e12838f4ed58b8dfb733762d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_guitar_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_guitar_mvsep.yaml",
+          "bytes": 1571,
+          "sha256": "6662b795a3905ea5593e4e02c05e9273c2d4334538249643e7f9b980dc7467e8",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_guitar_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "guitar"
+    },
+    {
+      "id": "bs_mega_53stem_harmonica_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_harmonica_mvsep.ckpt",
+          "bytes": 77619808,
+          "sha256": "90f9e794573c6492695efb18c5bd8967f28f7a1832aa9d237a2ebe53ffd7347c",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_harmonica_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_harmonica_mvsep.yaml",
+          "bytes": 1577,
+          "sha256": "7f1d2819bb10734502c222025987a7848fec800a758ba5aa7b695fcdd5d306de",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_harmonica_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "harmonica"
+    },
+    {
+      "id": "bs_mega_53stem_harp_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_harp_mvsep.ckpt",
+          "bytes": 77616219,
+          "sha256": "5fde42f720b062391e5a62df3b0ab86244bb0a6471b4896db3677e88cbf90ef6",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_harp_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_harp_mvsep.yaml",
+          "bytes": 1567,
+          "sha256": "f4ffcbf3f5be9b5cad404dfa2cfc866b422296bc34f9340c31944c8b372106a3",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_harp_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "harp"
+    },
+    {
+      "id": "bs_mega_53stem_harpsichord_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_harpsichord_mvsep.ckpt",
+          "bytes": 77621218,
+          "sha256": "362f6c681a465aea21d3d4b8d8eba29e0e2ae41152bf0b8798201cfb00f32ee1",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_harpsichord_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_harpsichord_mvsep.yaml",
+          "bytes": 1581,
+          "sha256": "63a993c4daf859223b76ae4706d9930351f3283d13711b77b25a41970ac931bb",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_harpsichord_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "harpsichord"
+    },
+    {
+      "id": "bs_mega_53stem_hh_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_hh_mvsep.ckpt",
+          "bytes": 77614809,
+          "sha256": "94901a05d358f16b2de4064eec45f0947bb28bf239040a3fe79e2ae7fadd2984",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_hh_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_hh_mvsep.yaml",
+          "bytes": 1563,
+          "sha256": "255cdb1e966870cc01bf84be979da3a1e3d705b97f49f68e51c6368de6afcf10",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_hh_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "hh"
+    },
+    {
+      "id": "bs_mega_53stem_keys_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_keys_mvsep.ckpt",
+          "bytes": 77616219,
+          "sha256": "4bc2bde8c5b26d5e22720304deace45dfeaffb2d02dc07922a8f2be17d82c844",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_keys_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_keys_mvsep.yaml",
+          "bytes": 1567,
+          "sha256": "a56716fe736d4e4db9a1375b236703cc4c2e3780c7fe1e8dc3e2074b3bc09756",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_keys_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "keys"
+    },
+    {
+      "id": "bs_mega_53stem_kick_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_kick_mvsep.ckpt",
+          "bytes": 77616219,
+          "sha256": "ad914b83f9ef13bedf9608771f4f1a86174e27a84f7f235dc2d1dd91bab85fbc",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_kick_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_kick_mvsep.yaml",
+          "bytes": 1567,
+          "sha256": "d6b80d69dbbc4df964bf5991fa94c6287f07b85063782d95bc4d39a461c97ea3",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_kick_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "kick"
+    },
+    {
+      "id": "bs_mega_53stem_lead-vocal_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_lead-vocal_mvsep.ckpt",
+          "bytes": 77620513,
+          "sha256": "7622ef83040f3a1e683d4250af10bcc52ebc36f0b4188ff2101d23c6dae310ce",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_lead-vocal_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_lead-vocal_mvsep.yaml",
+          "bytes": 1579,
+          "sha256": "c27dc11f977ae1168664955bc7818a0ef090d82fdbe0d4b13d1127e2652fb64a",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_lead-vocal_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "lead-vocal"
+    },
+    {
+      "id": "bs_mega_53stem_mandolin_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_mandolin_mvsep.ckpt",
+          "bytes": 77619103,
+          "sha256": "1a5589c6ee51a8f3f87f68e48aaf41792c31f63d5c0eaba497ae0ecd4bb6a675",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_mandolin_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_mandolin_mvsep.yaml",
+          "bytes": 1575,
+          "sha256": "5526a62400628d25305a4806f5c7e3e55321b31765b5f101a23e4303a4911650",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_mandolin_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "mandolin"
+    },
+    {
+      "id": "bs_mega_53stem_marimba_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_marimba_mvsep.ckpt",
+          "bytes": 77618398,
+          "sha256": "559835d6525898228f1ebcfac770ed44185217e547159a3c0f836391637fc3e8",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_marimba_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_marimba_mvsep.yaml",
+          "bytes": 1573,
+          "sha256": "2f283b316149145081cb0e6844c62e6e0c4a297cf92525ef68a79e8ebd55cbb2",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_marimba_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "marimba"
+    },
+    {
+      "id": "bs_mega_53stem_oboe_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_oboe_mvsep.ckpt",
+          "bytes": 77616219,
+          "sha256": "7de88790f82b86af910f943f5a31f30237c48997011e6123c5922449f2a22285",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_oboe_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_oboe_mvsep.yaml",
+          "bytes": 1567,
+          "sha256": "85edc82dca52e29eb3b4dda4f4acefa16db5424ae8c006a3c5bdeed06fa89147",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_oboe_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "oboe"
+    },
+    {
+      "id": "bs_mega_53stem_organ_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_organ_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "14c1c2a26fbd5061be85a31a170b6989ba296871895905ea6a1a048d200895ba",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_organ_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_organ_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "c9fee5cb3dc06ce90fef1d4c306b252a8c9fe8876266904841bf32e53e277f28",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_organ_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "organ"
+    },
+    {
+      "id": "bs_mega_53stem_percussion_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_percussion_mvsep.ckpt",
+          "bytes": 77620513,
+          "sha256": "82187665185d51e6050b4d6afaf45e7acafd85d1eefffd86c47ac0aa601e089f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_percussion_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_percussion_mvsep.yaml",
+          "bytes": 1579,
+          "sha256": "db3f192bd8ecd0405a129f8abeea832752e52dc535ebf595bb1f0cdfc4781be5",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_percussion_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "percussion"
+    },
+    {
+      "id": "bs_mega_53stem_saxophone_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_saxophone_mvsep.ckpt",
+          "bytes": 77619808,
+          "sha256": "7027da3852828194f224f5f822582a38015b0afc452fe3e407229084c10de6a9",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_saxophone_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_saxophone_mvsep.yaml",
+          "bytes": 1577,
+          "sha256": "362976ea8390e3d69883d4f40b85624f1e211e87908e52e676ad0c73d30ece11",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_saxophone_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "saxophone"
+    },
+    {
+      "id": "bs_mega_53stem_sitar_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_sitar_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "32683e3fcddebe1a5605fb5cffc76f8e89ec19d35f0ed49fe6f0f31476fd37d1",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_sitar_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_sitar_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "edf6dae4228b0a7e93cea0f91636aa9e675943213246b7da86eeaf42858b7fbb",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_sitar_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "sitar"
+    },
+    {
+      "id": "bs_mega_53stem_snare_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_snare_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "c4cde14867f1311836d4aa07649e39df4df43c4ba98780783fe96cd4fe8293bf",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_snare_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_snare_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "066457c0d5d52a58059a655f1a9380cef9be4758a154b96d342def2c500860c8",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_snare_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "snare"
+    },
+    {
+      "id": "bs_mega_53stem_strings_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_strings_mvsep.ckpt",
+          "bytes": 77618398,
+          "sha256": "2e8b76ff287f6127e1f3dd927b56946784d368d5a40e7f4f74b1373a647675c5",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_strings_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_strings_mvsep.yaml",
+          "bytes": 1573,
+          "sha256": "8b8d465a4277e7e412283c882d6d0ed1cbf6d2f86333df35241c1606efa7c7f3",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_strings_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "strings"
+    },
+    {
+      "id": "bs_mega_53stem_synth_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_synth_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "04749df7e2fab770a0d26bf9aa4850c1a6cd89547fc8bfe9c9d223602c0afb82",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_synth_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_synth_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "545c99b93158be95e2702309d017e3e98acc404074e5eb9c13328f7288bc177d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_synth_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "synth"
+    },
+    {
+      "id": "bs_mega_53stem_tambourine_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_tambourine_mvsep.ckpt",
+          "bytes": 77620513,
+          "sha256": "8e22d5e185ab3db1262f1fc6b98eff22d9f97fc6f6e7f381cacf4624e6b69ad2",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_tambourine_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_tambourine_mvsep.yaml",
+          "bytes": 1579,
+          "sha256": "1a06cd034339fbe7762be890b126e28e8ac00eb50dceff900f51bca53df48984",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_tambourine_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "tambourine"
+    },
+    {
+      "id": "bs_mega_53stem_timpani_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_timpani_mvsep.ckpt",
+          "bytes": 77618398,
+          "sha256": "a2f4813c366246f3af010340d9f1c7854bcb48e3187e51065dfaff34ca515b54",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_timpani_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_timpani_mvsep.yaml",
+          "bytes": 1573,
+          "sha256": "cb55c177234cad6e0b64c421d0d7cf648ee9997b76b3bf03a4d1f52eec29b13d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_timpani_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "timpani"
+    },
+    {
+      "id": "bs_mega_53stem_toms_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_toms_mvsep.ckpt",
+          "bytes": 77616219,
+          "sha256": "ceb45bbc16419363bb842484dadcc786a9ca290c4553c9eced0e98dc8f0f2458",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_toms_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_toms_mvsep.yaml",
+          "bytes": 1567,
+          "sha256": "254151801cd584657f3b2ee4fed6e6187cc7790af338d186fa8105b842f901da",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_toms_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "toms"
+    },
+    {
+      "id": "bs_mega_53stem_triangle_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_triangle_mvsep.ckpt",
+          "bytes": 77619103,
+          "sha256": "8e3692157868c6c7d0d4d6f36be263ed363e01cf66e4c97a400acb8c05ca250f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_triangle_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_triangle_mvsep.yaml",
+          "bytes": 1575,
+          "sha256": "94e2cc59e8d84e729ee6cd9d8898f5c840dfde06b94e554d35c80c6bfdbc6261",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_triangle_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "triangle"
+    },
+    {
+      "id": "bs_mega_53stem_trombone_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_trombone_mvsep.ckpt",
+          "bytes": 77619103,
+          "sha256": "f50d2e13e3e02cd74c3a5e084975d64a2a1f2090757c64495944a00823947f0d",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_trombone_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_trombone_mvsep.yaml",
+          "bytes": 1575,
+          "sha256": "2de1b5ad285ae456cc0919731856f6b09eead857509152b145fcceb184cab3f2",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_trombone_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "trombone"
+    },
+    {
+      "id": "bs_mega_53stem_trumpet_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_trumpet_mvsep.ckpt",
+          "bytes": 77618398,
+          "sha256": "47530e8c6ee14eb3f4469efc629b0a3942cfff062f3a7eb788cb15355fd7b724",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_trumpet_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_trumpet_mvsep.yaml",
+          "bytes": 1573,
+          "sha256": "a21d02cb5918c99cca36462ec89f797ebeec572908cac60903758881bec6848c",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_trumpet_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "trumpet"
+    },
+    {
+      "id": "bs_mega_53stem_tuba_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_tuba_mvsep.ckpt",
+          "bytes": 77616219,
+          "sha256": "0bb341f247101ba9e723a57089e0bdade930eab9fa09c349d1d36c3272bce34f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_tuba_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_tuba_mvsep.yaml",
+          "bytes": 1567,
+          "sha256": "6e0df35e3019a71a93cfaafc855a2628e5b1842ecb893550a389b774128c290f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_tuba_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "tuba"
+    },
+    {
+      "id": "bs_mega_53stem_ukulele_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_ukulele_mvsep.ckpt",
+          "bytes": 77618398,
+          "sha256": "56eb5a2cb4c3a45be630c27b03815ead66e9a892922b84f9ac27eeb1fe0be2f0",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_ukulele_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_ukulele_mvsep.yaml",
+          "bytes": 1573,
+          "sha256": "d64aedc59ee21d3b84d76eadddba03e9ea035dc6275b847421870d64b548a623",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_ukulele_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "ukulele"
+    },
+    {
+      "id": "bs_mega_53stem_viola_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_viola_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "41d47d879a45fe94bba0db01476cce5e93395b06c756b98463b1eda95a468354",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_viola_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_viola_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "ea688e3a488012a9868e2cf84adfc1ea48c3d07f36ae220bebed0650a4ba43ad",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_viola_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "viola"
+    },
+    {
+      "id": "bs_mega_53stem_violin_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_violin_mvsep.ckpt",
+          "bytes": 77617693,
+          "sha256": "43dd11a1816ba7c58d74f4de1a48ffc05b98fc499dfb24cf8e71c5ba729f2ada",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_violin_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_violin_mvsep.yaml",
+          "bytes": 1571,
+          "sha256": "9e03151bbd4100486d42b1ef7be9735ee09f38ae554227189368b6e41e622517",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_violin_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "violin"
+    },
+    {
+      "id": "bs_mega_53stem_vocal_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_vocal_mvsep.ckpt",
+          "bytes": 77616988,
+          "sha256": "917580ad6a1bab75d1b438db537ab98387839efb1809e5a50c78b7afdb96c8af",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_vocal_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_vocal_mvsep.yaml",
+          "bytes": 1569,
+          "sha256": "d810ad9784aecf3ec4a0d33c1a1c32bce5ed5a268be3bd05756199de14ba5140",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_vocal_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "vocal"
+    },
+    {
+      "id": "bs_mega_53stem_wind-chimes_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_wind-chimes_mvsep.ckpt",
+          "bytes": 77621218,
+          "sha256": "9bcb89de76916a44243e89ffd02051b527848afd8d2d618bd82e04de3bd861f3",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_wind-chimes_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_wind-chimes_mvsep.yaml",
+          "bytes": 1581,
+          "sha256": "1dee846e7b3c848ec687aa2e6b23bf43cfd9d782542cf6495a4418bfc9414607",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_wind-chimes_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "wind-chimes"
+    },
+    {
+      "id": "bs_mega_53stem_wind_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_wind_mvsep.ckpt",
+          "bytes": 77616219,
+          "sha256": "c2ae2f8b7aa777dba3596fa8a8c0aec42b1bf3c493ebdc9aaf2daeffcab9d025",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_wind_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_wind_mvsep.yaml",
+          "bytes": 1567,
+          "sha256": "f4299056438ecbcd89685263bc4052dd1cb9b9459257337a39be44da9fd3836c",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_wind_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "wind"
+    },
+    {
+      "id": "bs_mega_53stem_woodwind_mvsep.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/bs_mega_53stem_woodwind_mvsep.ckpt",
+          "bytes": 77619103,
+          "sha256": "9a1335d2cd21cd4fdd6964e7ab96c9e9776b2643644f763e2f59bb6c53d39060",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_woodwind_mvsep.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/bs_mega_53stem_woodwind_mvsep.yaml",
+          "bytes": 1575,
+          "sha256": "4cbc36a498993cd2c6959897f690a531a311b9bd1daa5e7f8d065ad36d69b9b6",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/bs_mega_53stem_woodwind_mvsep.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "woodwind"
+    },
+    {
+      "id": "mvsep_mega_model_bs_roformer_53_stems_v1.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/mega_53_stems/mvsep_mega_model_bs_roformer_53_stems_v1.ckpt",
+          "bytes": 1368919887,
+          "sha256": "c62820893bbf86d4e734f966bd142d9157cfc8bb8e79e9d8f9ea553f3ff3519f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/mvsep_mega_model_bs_roformer_53_stems_v1.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/mega_53_stems/mvsep_mega_model_bs_roformer_53_stems_v1.yaml",
+          "bytes": 4189,
+          "sha256": "4b515cf97aeebdd1717d62052ff0555e898dac935fe3399f5877e0115ecef559",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/mega_53_stems/mvsep_mega_model_bs_roformer_53_stems_v1.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/mega_53_stems",
+      "declared_target": "accordion/acoustic-guitar/back-vocal/banjo/bass/bassoon/bells/bowed_strings/brass/cello/clarinet/congas/digital-piano/dobro/double-bass/drums/electric-guitar/flute/french-horn/glockenspiel/guitar/harmonica/harp/harpsichord/hh/keys/kick/lead-vocal/mandolin/marimba/oboe/organ/percussion/piano/saxophone/sitar/snare/strings/synth/tambourine/timpani/toms/triangle/trombone/trumpet/tuba/ukulele/viola/violin/vocal/wind/wind-chimes/woodwind"
+    },
+    {
+      "id": "logic_bs_roformer.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/music_stems/six_stem/logic_bs_roformer.ckpt",
+          "bytes": 699446752,
+          "sha256": "57c4a987b7e99b4d313018eabf7a8b7b585bfbb64e809657a7e94faede62333a",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/six_stem/logic_bs_roformer.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/music_stems/six_stem/logic_bs_roformer.yaml",
+          "bytes": 4641,
+          "sha256": "070da10aa5cedefbf7cf1f8c5812c9ab8b43af48aa0f757b23a37c4ed856a383",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/music_stems/six_stem/logic_bs_roformer.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "music_stems/six_stem",
+      "declared_target": "bass/drums/other/vocals/guitar/piano"
+    },
+    {
+      "id": "Lead_VocalDereverb.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/reverb_echo_control/dereverb/Lead_VocalDereverb.ckpt",
+          "bytes": 913031195,
+          "sha256": "097c13b298414905651867ef315d881bbf2604a5c04be28820ed5946338b3eb4",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/reverb_echo_control/dereverb/Lead_VocalDereverb.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/reverb_echo_control/dereverb/Lead_VocalDereverb.yaml",
+          "bytes": 1315,
+          "sha256": "075e90763f8a0048c13085b7ea0141875a73f19b8ecd1223599d06ea14661cca",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/reverb_echo_control/dereverb/Lead_VocalDereverb.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "reverb_echo_control/dereverb",
+      "declared_target": "noreverb"
+    },
+    {
+      "id": "dereverb_mel_band_roformer_anvuew_sdr_19.1729.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/reverb_echo_control/dereverb/dereverb_mel_band_roformer_anvuew_sdr_19.1729.ckpt",
+          "bytes": 913107578,
+          "sha256": "9262877b87e9ebb0fb808a456b0a411fa677f5df31c8383c1254af531c078970",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/reverb_echo_control/dereverb/dereverb_mel_band_roformer_anvuew_sdr_19.1729.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/reverb_echo_control/dereverb/dereverb_mel_band_roformer_anvuew_sdr_19.1729.yaml",
+          "bytes": 1852,
+          "sha256": "f0c577433cfe3be440a0df33153678d40a1ba44b195c5304f642cdebbf3f55cf",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/reverb_echo_control/dereverb/dereverb_mel_band_roformer_anvuew_sdr_19.1729.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "reverb_echo_control/dereverb",
+      "declared_target": "noreverb"
+    },
+    {
+      "id": "dereverb_super_big_mbr_ep_346.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/reverb_echo_control/dereverb/dereverb_super_big_mbr_ep_346.ckpt",
+          "bytes": 455864012,
+          "sha256": "26dda242bce4405555f2d6086d079fe8cc23f1f04e02e501d2689bfe3ece0489",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/reverb_echo_control/dereverb/dereverb_super_big_mbr_ep_346.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/reverb_echo_control/dereverb/dereverb_super_big_mbr_ep_346.yaml",
+          "bytes": 1901,
+          "sha256": "ee69528fcc24611cf4297aa0b344b37b2fb1e030575f9349e09ef2997cce0564",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/reverb_echo_control/dereverb/dereverb_super_big_mbr_ep_346.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "reverb_echo_control/dereverb",
+      "declared_target": "dry"
+    },
+    {
+      "id": "gilliaan_MonoStereo_Dual_Beta1.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/spatial/mono_stereo_duality/gilliaan_MonoStereo_Dual_Beta1.ckpt",
+          "bytes": 869726129,
+          "sha256": "62579f748925893d0b1408e5a3319b1bbd8451a8f62d948e8438c72471f4574f",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/spatial/mono_stereo_duality/gilliaan_MonoStereo_Dual_Beta1.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/spatial/mono_stereo_duality/gilliaan_MonoStereo_Dual_Beta1.yaml",
+          "bytes": 941,
+          "sha256": "f76c968b960ed51cc395e725e83ab1a02e6e6b8d13a193a09b09fa8ebb5435e8",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/spatial/mono_stereo_duality/gilliaan_MonoStereo_Dual_Beta1.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "spatial/mono_stereo_duality",
+      "declared_target": "center/wide"
+    },
+    {
+      "id": "gilliaan_MonoStereo_Dual_Beta2.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/spatial/mono_stereo_duality/gilliaan_MonoStereo_Dual_Beta2.ckpt",
+          "bytes": 869726129,
+          "sha256": "a77908f6e91d091e549525a4ad0053ce49a06ba4901a56659a76f864bc095502",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/spatial/mono_stereo_duality/gilliaan_MonoStereo_Dual_Beta2.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/spatial/mono_stereo_duality/gilliaan_MonoStereo_Dual_Beta2.yaml",
+          "bytes": 941,
+          "sha256": "f76c968b960ed51cc395e725e83ab1a02e6e6b8d13a193a09b09fa8ebb5435e8",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/spatial/mono_stereo_duality/gilliaan_MonoStereo_Dual_Beta2.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "spatial/mono_stereo_duality",
+      "declared_target": "center/wide"
+    },
+    {
+      "id": "gilliaan_CenterExtractor_Single_StemV1.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/spatial/phantom_center_wide/gilliaan_CenterExtractor_Single_StemV1.ckpt",
+          "bytes": 204495806,
+          "sha256": "334bc80ca5830e87e464694ff197c60372a2758c427d63588dc0cc2c1b3c885e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/spatial/phantom_center_wide/gilliaan_CenterExtractor_Single_StemV1.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/spatial/phantom_center_wide/gilliaan_CenterExtractor_Single_StemV1.yaml",
+          "bytes": 2188,
+          "sha256": "9ce1ce1040f8a2691f6e259eaccb8f711fce9726774d6efc3b961daf6265661e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/spatial/phantom_center_wide/gilliaan_CenterExtractor_Single_StemV1.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "spatial/phantom_center_wide",
+      "declared_target": "center"
+    },
+    {
+      "id": "gilliaan_CenterExtractor_Single_StemV2.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/spatial/phantom_center_wide/gilliaan_CenterExtractor_Single_StemV2.ckpt",
+          "bytes": 204435682,
+          "sha256": "72cbc991fc8fe96a9f6c33d5683649c662343a9e906e6c73189ff0f692ef9fe4",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/spatial/phantom_center_wide/gilliaan_CenterExtractor_Single_StemV2.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/spatial/phantom_center_wide/gilliaan_CenterExtractor_Single_StemV2.yaml",
+          "bytes": 2188,
+          "sha256": "9ce1ce1040f8a2691f6e259eaccb8f711fce9726774d6efc3b961daf6265661e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/spatial/phantom_center_wide/gilliaan_CenterExtractor_Single_StemV2.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "spatial/phantom_center_wide",
+      "declared_target": "center"
+    },
+    {
+      "id": "model_scnet_ep_42_sdr_5.2559.ckpt",
+      "type": "scnet",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/choir_vocal/model_scnet_ep_42_sdr_5.2559.ckpt",
+          "bytes": 42457314,
+          "sha256": "14a668939243ab1551d2643820d4ff1a2b8f3c4ac1b9642718d5673405ea2f8b",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/choir_vocal/model_scnet_ep_42_sdr_5.2559.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/vocal/choir_vocal/model_scnet_ep_42_sdr_5.2559.yaml",
+          "bytes": 1985,
+          "sha256": "3cc60593d8cdc34d90481382a932a41c6b589bf2e24f58c58ce4aaa7982ae855",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/choir_vocal/model_scnet_ep_42_sdr_5.2559.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "vocal/choir_vocal",
+      "declared_target": "alto/bass/soprano/tenor"
+    },
+    {
+      "id": "big_beta5e.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/big_beta5e.ckpt",
+          "bytes": 1479749810,
+          "sha256": "32b876e1163716a9a007438b5a5107069586aa9b9ca653a5f63013b1edf6920c",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/big_beta5e.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/vocal/vocal_extraction/big_beta5e.yaml",
+          "bytes": 913,
+          "sha256": "e7632669bc0d83b2026d8b5f51b2ac8696bf9ac7a4cc72b9e4a2e017dcb619bb",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/big_beta5e.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "vocal/vocal_extraction",
+      "declared_target": "vocals"
+    },
+    {
+      "id": "kimmel_unwa_ft2.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/kimmel_unwa_ft2.ckpt",
+          "bytes": 913100690,
+          "sha256": "5ed7b9e4c2eebbec7a7e5e8113058f7b68ba5e6048db8eaccfbbeb884c7884c0",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/kimmel_unwa_ft2.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/vocal/vocal_extraction/kimmel_unwa_ft2.yaml",
+          "bytes": 1728,
+          "sha256": "f4c10e5f6ffe8ff2f5a6b4a5ad5820448ec9a0620e3c3c3571db3c35fae1b62e",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/kimmel_unwa_ft2.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "vocal/vocal_extraction",
+      "declared_target": "vocals"
+    },
+    {
+      "id": "mel_band_roformer_vocals_gabox.ckpt",
+      "type": "mel_band_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_extraction/mel_band_roformer_vocals_gabox.ckpt",
+          "bytes": 913026650,
+          "sha256": "ff802a67501fac70587c3ff4e8dbc89c2558e7d8911c92222dfea2aaac208517",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/mel_band_roformer_vocals_gabox.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/vocal/vocal_extraction/mel_band_roformer_vocals_gabox.yaml",
+          "bytes": 923,
+          "sha256": "8b5529a7a24210513319bb3019c2c976cd4f71f44bbc0d55b4b35d2c37671f33",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_extraction/mel_band_roformer_vocals_gabox.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "vocal/vocal_extraction",
+      "declared_target": "Vocals"
+    },
+    {
+      "id": "bs_roformer_male_female_by_aufr33_sdr_7.2889.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_gender_chorus/bs_roformer_male_female_by_aufr33_sdr_7.2889.ckpt",
+          "bytes": 527119779,
+          "sha256": "3cf11736d1b42a11ae55d8299316585921477dd2a671b24b663660846ca9861b",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_gender_chorus/bs_roformer_male_female_by_aufr33_sdr_7.2889.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/vocal/vocal_gender_chorus/bs_roformer_male_female_by_aufr33_sdr_7.2889.yaml",
+          "bytes": 1853,
+          "sha256": "a4bb49a80e0fef59d884ffb4b9fd9ddbe799fa3d83e5a403bf80ad5554824625",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_gender_chorus/bs_roformer_male_female_by_aufr33_sdr_7.2889.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "vocal/vocal_gender_chorus",
+      "declared_target": "male/female"
+    },
+    {
+      "id": "model_chorus_bs_roformer_ep_146_sdr_23.8613.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_gender_chorus/model_chorus_bs_roformer_ep_146_sdr_23.8613.ckpt",
+          "bytes": 527121477,
+          "sha256": "755e3641645687c618a448605ba71c30abd3be1b1a8861e5bfa12362a85c609a",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_gender_chorus/model_chorus_bs_roformer_ep_146_sdr_23.8613.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/vocal/vocal_gender_chorus/model_chorus_bs_roformer_ep_146_sdr_23.8613.yaml",
+          "bytes": 1883,
+          "sha256": "8257c8ee6a435fd194f52a699032dcec66a30cbbbf0b652f967b6621db6c7331",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_gender_chorus/model_chorus_bs_roformer_ep_146_sdr_23.8613.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "vocal/vocal_gender_chorus",
+      "declared_target": "male/female"
+    },
+    {
+      "id": "model_chorus_bs_roformer_ep_267_sdr_24.1275.ckpt",
+      "type": "bs_roformer",
+      "artifacts": [
+        {
+          "path": "/mnt/TTD-Data/pymss/models/vocal/vocal_gender_chorus/model_chorus_bs_roformer_ep_267_sdr_24.1275.ckpt",
+          "bytes": 527121477,
+          "sha256": "123c00786bdbc6bd462dddb35cd21fd6ae99ab8319f93f63a8abc1012e593d94",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_gender_chorus/model_chorus_bs_roformer_ep_267_sdr_24.1275.ckpt"
+        },
+        {
+          "path": "/mnt/TTD-Data/pymss-ui-preview/models/catalog-20261031/vocal/vocal_gender_chorus/model_chorus_bs_roformer_ep_267_sdr_24.1275.yaml",
+          "bytes": 1853,
+          "sha256": "a4bb49a80e0fef59d884ffb4b9fd9ddbe799fa3d83e5a403bf80ad5554824625",
+          "source": "https://huggingface.co/baicai1145/pymss/resolve/f02318ef92c43472777ed7aeeded3d2b29a68b58/vocal/vocal_gender_chorus/model_chorus_bs_roformer_ep_267_sdr_24.1275.yaml"
+        }
+      ],
+      "downloaded": true,
+      "admission_category": "vocal/vocal_gender_chorus",
+      "declared_target": "male/female"
+    }
+  ],
+  "excluded": [
+    {
+      "id": "epoch=54-val_loss=-17.6221.ckpt",
+      "reason": "缺少已固定来源的目录与架构记录"
+    },
+    {
+      "id": "huge_scnet_4stems_bleedless.ckpt",
+      "reason": "缺少已固定来源的目录与架构记录"
+    },
+    {
+      "id": "checkpoint-multi_fixed.ckpt",
+      "reason": "缺少已固定来源的目录与架构记录"
+    },
+    {
+      "id": "aufr33-jarredou_DrumSep_model_mdx23c_ep_141_sdr_10.8059.ckpt",
+      "reason": "缺少已固定来源的目录与架构记录"
+    },
+    {
+      "id": "huge_scnet_4stems_v1.2.ckpt",
+      "reason": "缺少已固定来源的目录与架构记录"
+    },
+    {
+      "id": "model_mdx23c_ep_168_sdr_7.0207.ckpt",
+      "reason": "缺少已固定来源的目录与架构记录"
+    },
+    {
+      "id": "gabox_karaoke_25_02_2025.ckpt",
+      "reason": "缺少已固定来源的目录与架构记录"
+    },
+    {
+      "id": "model_scnet_masked_ep_14_sdr_6.3693.ckpt",
+      "reason": "缺少已固定来源的目录与架构记录"
+    }
+  ]
+}

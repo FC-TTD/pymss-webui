@@ -1,0 +1,9 @@
+# 已有权重上架
+
+用户2026-10-31授权把核查出的已有权重补齐上架。先按固定HF索引核对权重SHA、配置Git blob SHA与架构，产出隔离候选manifest；不下载或覆盖共享权重。使用原生固定运行镜像和worker，串行短音频验收，保持原精度、batch1及GPU分工。验收容器绑定同一gpu-worker.lock，独立输入/结果、无网络/无端口，已有服务不重启。失败项不标可用，短片段技术通过不表示质量优胜。
+
+prepare.py只写指定的隔离manifest，输入为应用catalog-snapshot、provider已固定hf-catalog和现场运行清单。全局热加载清单与验证记录只在提交/PR、结果复核和并发检查后原子追加，保留原条目与可执行回退。输出证据及NAS素材不进Git。
+
+旧缓存YAML可能由原工具规范化过，与上游文件字节不同。不能以权重文件存在推定整组一致，也不直接覆盖旧YAML；用固定版本索引把小配置下载到独立catalog目录，核对Git blob后配合原权重验收。未知来源条目保留明确状态，不据文件名猜架构。publish先追加验证记录再追加manifest，避免无验证记录的模型短暂可选择；备份与原记录保留，不重启任何runtime。
+
+Apollo v2的旧缓存配置feature_dim=192与checkpoint实测BN通道192相符；固定上游YAML却设256，直接加载会shape mismatch。保留旧缓存，在本目录overrides/apollo_model_v2.yaml记录192配置及原生num_overlap=4映射；仅该候选引用独立覆盖配置，并须再次原生CUDA验收。不涉及精度、设备或offload变化。

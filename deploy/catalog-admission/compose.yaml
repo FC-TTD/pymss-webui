@@ -1,0 +1,33 @@
+name: separation-catalog-admission
+services:
+  smoke:
+    image: registry.ttd/pymss-webui/runtime@sha256:8143933a72a63d950d89d1111908b5f3757682765a3919a03def1eb008fdce1c
+    container_name: separation-catalog-admission
+    network_mode: none
+    read_only: true
+    mem_limit: 12g
+    cpus: 4
+    pids_limit: 256
+    tmpfs: ['/tmp:rw,nosuid,size=512m']
+    command: [python, /admission/smoke.py]
+    environment:
+      STUDIO_GPU_UUID: GPU-731f9bc4-8979-6abb-98e1-c2dae293693e
+      CUDA_VISIBLE_DEVICES: '0'
+      OMP_NUM_THREADS: '4'
+      PYTORCH_KERNEL_CACHE_PATH: /tmp/torch-kernels
+      NUMBA_CACHE_DIR: /tmp/numba
+      PYTHONPATH: /app/provider:/app/dbs-source:/app
+    volumes:
+      - /opt/separation-catalog-admission/20261031:/admission:ro
+      - /opt/separation-catalog-admission/20261031/candidates.json:/model-cache/download-manifest.json:ro
+      - /mnt/TTD-Data/pymss/models:/mnt/TTD-Data/pymss/models:ro
+      - /mnt/TTD-Data/pymss-ui-preview:/mnt/TTD-Data/pymss-ui-preview:ro
+      - /mnt/TTD/04_应用/separation-model-admission-20261031:/data
+      - /mnt/TTD/04_应用/pymss-ui-preview/gpu-worker.lock:/data/gpu-worker.lock
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [GPU-731f9bc4-8979-6abb-98e1-c2dae293693e]
+              capabilities: [gpu]
