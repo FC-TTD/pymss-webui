@@ -5,6 +5,7 @@
   import LoadedView from "./LoadedView.svelte";
   import SeparationView from "./SeparationView.svelte";
   import SettingsView from "./SettingsView.svelte";
+  import WorkbenchView from "./WorkbenchView.svelte";
   import type {
     CatalogListResponse,
     CatalogModel,
@@ -31,6 +32,7 @@
     loadedModel: LoadedModel | null;
     catalog: CatalogListResponse | null;
     selectedCatalog: CatalogModel | null;
+    selectedDownloadModels: string[];
     busyAction: string | null;
     selectedStems: string[];
     resultUrl: string | null;
@@ -46,7 +48,11 @@
     onApplyCatalogFilters: () => void;
     onShowCatalogDetail: (model: string) => void;
     onDownload: (model: string) => void;
+    onDownloadSelected: () => void;
+    onToggleDownloadSelection: (model: string, checked: boolean) => void;
+    onSetDownloadSelection: (models: string[]) => void;
     onSetLoadTarget: (model: string) => void;
+    onLoadModel: (model: string) => void;
     onCloseDetail: () => void;
     onLoad: () => void;
     onToggleStem: (stem: string, checked: boolean) => void;
@@ -73,7 +79,7 @@
   export let downloadEndpointForm: string;
 </script>
 
-<section class="mx-auto w-full max-w-5xl space-y-10 px-4 py-8 sm:px-6 lg:py-12">
+<section class={`w-full space-y-10 px-4 py-8 sm:px-6 lg:py-12 ${state.activeView === "workbench" ? "" : "mx-auto max-w-5xl"}`}>
   <Alerts
     errorMessage={state.errorMessage}
     noticeMessage={state.noticeMessage}
@@ -81,7 +87,31 @@
     onDismissNotice={actions.onDismissNotice}
   />
 
-  {#if state.activeView === "dashboard"}
+  {#if state.activeView === "workbench"}
+    <WorkbenchView
+      catalog={state.catalog}
+      loadedModel={state.loadedModel}
+      selectedDownloadModels={state.selectedDownloadModels}
+      busyAction={state.busyAction}
+      selectedStems={state.selectedStems}
+      resultUrl={state.resultUrl}
+      resultName={state.resultName}
+      jsonResult={state.jsonResult}
+      bind:catalogQuery
+      bind:audioFile
+      bind:responseFormat
+      bind:outputAudioFormat
+      onApplyFilters={actions.onApplyCatalogFilters}
+      onDownload={actions.onDownload}
+      onDownloadSelected={actions.onDownloadSelected}
+      onToggleDownloadSelection={actions.onToggleDownloadSelection}
+      onSetDownloadSelection={actions.onSetDownloadSelection}
+      onLoadModel={actions.onLoadModel}
+      onToggleStem={actions.onToggleStem}
+      onSeparate={actions.onSeparate}
+      onDownloadJsonOutput={actions.onDownloadJsonOutput}
+    />
+  {:else if state.activeView === "dashboard"}
     <DashboardView
       health={state.health}
       serverInfo={state.serverInfo}
@@ -93,11 +123,15 @@
     <CatalogView
       catalog={state.catalog}
       selectedCatalog={state.selectedCatalog}
+      selectedDownloadModels={state.selectedDownloadModels}
       bind:catalogQuery
       busyAction={state.busyAction}
       onApplyFilters={actions.onApplyCatalogFilters}
       onShowDetail={actions.onShowCatalogDetail}
       onDownload={actions.onDownload}
+      onDownloadSelected={actions.onDownloadSelected}
+      onToggleDownloadSelection={actions.onToggleDownloadSelection}
+      onSetDownloadSelection={actions.onSetDownloadSelection}
       onSetLoadTarget={actions.onSetLoadTarget}
       onCloseDetail={actions.onCloseDetail}
     />

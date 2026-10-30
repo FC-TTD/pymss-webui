@@ -3,7 +3,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  define: mode === "design" ? { "import.meta.env.VITE_STUDIO_PREVIEW": JSON.stringify("true") } : {},
   base: "/ui/",
   plugins: [svelte(), tailwindcss()],
   resolve: {
@@ -22,4 +23,4 @@ export default defineConfig({
       "/v1": "http://127.0.0.1:8000",
     },
   },
-});
+}));

@@ -105,12 +105,6 @@ export function listCatalogModels(token: string, query: CatalogQuery): Promise<C
   const params = new URLSearchParams();
   params.set("supported", query.supported);
   params.set("local", query.local);
-  if (query.category.trim()) {
-    params.set("category", query.category.trim());
-  }
-  if (query.q.trim()) {
-    params.set("q", query.q.trim());
-  }
   return apiJson<CatalogListResponse>(`/v1/catalog/models?${params.toString()}`, { token });
 }
 

@@ -100,7 +100,40 @@ export async function downloadCatalogModel(
   return {
     catalog,
     serverInfo,
-    noticeMessage: `Downloaded ${result.downloaded.length}, skipped ${result.skipped.length}.`,
+    noticeMessage: `下载完成：新下载 ${result.downloaded.length} 个文件，已存在跳过 ${result.skipped.length} 个文件。`,
+  };
+}
+
+export async function downloadCatalogModels(
+  token: string,
+  models: string[],
+  catalogQuery: CatalogQuery,
+): Promise<CatalogDownloadUpdate> {
+  const targets = [...new Set(models.map((model) => model.trim()).filter(Boolean))];
+  if (!targets.length) {
+    throw new Error("请选择要下载的模型。");
+  }
+
+  let downloaded = 0;
+  let skipped = 0;
+  const failed: string[] = [];
+  for (const model of targets) {
+    try {
+      const result = await downloadModel(token, model);
+      downloaded += result.downloaded.length;
+      skipped += result.skipped.length;
+    } catch {
+      failed.push(model);
+    }
+  }
+
+  const catalog = await listCatalogModels(token, catalogQuery);
+  const serverInfo = await getServerInfo(token);
+  const failedText = failed.length ? `，失败 ${failed.length} 个：${failed.join(", ")}` : "";
+  return {
+    catalog,
+    serverInfo,
+    noticeMessage: `下载完成：新下载 ${downloaded} 个文件，已存在跳过 ${skipped} 个文件${failedText}。`,
   };
 }
 
@@ -114,7 +147,7 @@ export async function loadNamedModel(
 ): Promise<ModelLoadUpdate> {
   const target = modelName.trim();
   if (!target) {
-    throw new Error("Model name is required.");
+    throw new Error("请输入模型名称。");
   }
 
   const params = parseParams(inferenceParamsText);
@@ -127,7 +160,7 @@ export async function loadNamedModel(
     model: result.model,
     health,
     catalog,
-    noticeMessage: `Loaded ${result.model.id}.`,
+    noticeMessage: `已加载 ${result.model.id}。`,
   };
 }
 
@@ -165,7 +198,7 @@ export async function separateAudio(
       resultUrl: URL.createObjectURL(blob),
       resultName: `pymss-${model.id.replace(/\.[^.]+$/, "")}-${timestampName()}.zip`,
       jsonResult: null,
-      noticeMessage: `Processed ${prepared.seconds.toFixed(1)} seconds.`,
+      noticeMessage: `已处理 ${prepared.seconds.toFixed(1)} 秒音频。`,
     };
   }
 
@@ -173,7 +206,7 @@ export async function separateAudio(
     resultUrl: null,
     resultName: "",
     jsonResult: (await response.json()) as SeparationJsonResult,
-    noticeMessage: `Processed ${prepared.seconds.toFixed(1)} seconds.`,
+    noticeMessage: `已处理 ${prepared.seconds.toFixed(1)} 秒音频。`,
   };
 }
 
@@ -185,7 +218,8 @@ export function revokeResultUrl(resultUrl: string | null): void {
 
 export function saveJsonOutput(output: SeparationJsonResult["outputs"][number]): void {
   const extension = output.audio.format === "pcm_f32le" ? "f32le" : output.audio.format;
-  const blob = base64ToBlob(output.audio.data, "application/octet-stream");
+  const contentType = output.audio.format === "wav" ? "audio/wav" : "application/octet-stream";
+  const blob = base64ToBlob(output.audio.data, contentType);
   downloadBlob(blob, `${output.stem}.${extension}`);
 }
 

@@ -5,8 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
+    "dev:design": "vite --mode design --host 127.0.0.1 --port 5179 --strictPort",
+    "build:design": "vite build --mode design --outDir dist-design",
     "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1"
+    "preview": "vite preview --host 127.0.0.1",
+    "generate:advisory": "node scripts/generate-model-advisory-index.mjs",
+    "check:advisory": "node scripts/check-model-advisory-index.mjs"
   },
   "devDependencies": {
     "@fontsource-variable/noto-sans": "^5.2.10",

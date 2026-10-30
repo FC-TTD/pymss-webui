@@ -96,3 +96,34 @@ export function base64ToBlob(base64: string, contentType: string): Blob {
   }
   return new Blob([bytes], { type: contentType });
 }
+
+export function pcmF32leBase64ToWavBlob(base64: string, sampleRate: number, channels: number): Blob {
+  const raw = atob(base64);
+  const pcmBytes = new Uint8Array(raw.length);
+  for (let index = 0; index < raw.length; index += 1) {
+    pcmBytes[index] = raw.charCodeAt(index);
+  }
+
+  const header = new ArrayBuffer(44);
+  const view = new DataView(header);
+  writeAscii(view, 0, "RIFF");
+  view.setUint32(4, 36 + pcmBytes.byteLength, true);
+  writeAscii(view, 8, "WAVE");
+  writeAscii(view, 12, "fmt ");
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 3, true);
+  view.setUint16(22, channels, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * channels * 4, true);
+  view.setUint16(32, channels * 4, true);
+  view.setUint16(34, 32, true);
+  writeAscii(view, 36, "data");
+  view.setUint32(40, pcmBytes.byteLength, true);
+  return new Blob([header, pcmBytes], { type: "audio/wav" });
+}
+
+function writeAscii(view: DataView, offset: number, text: string): void {
+  for (let index = 0; index < text.length; index += 1) {
+    view.setUint8(offset + index, text.charCodeAt(index));
+  }
+}

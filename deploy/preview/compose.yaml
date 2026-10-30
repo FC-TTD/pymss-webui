@@ -1,0 +1,81 @@
+name: pymss-ui-preview
+services:
+  web:
+    image: pymss-ui-preview:${PREVIEW_RELEASE:?Set PREVIEW_RELEASE}
+    container_name: pymss-ui-preview-web
+    restart: unless-stopped
+    depends_on:
+      runtime:
+        condition: service_healthy
+    ports:
+      - "192.168.100.18:17896:8080"
+    read_only: true
+    user: "101:101"
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=16m"]
+    mem_limit: 64m
+    cpus: 0.5
+    pids_limit: 64
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    labels:
+      ttd.preview.owner: "pymss-webui"
+      ttd.preview.release: "${PREVIEW_RELEASE}"
+      ttd.preview.scope: "real-separation-preview"
+
+  runtime:
+    image: pymss-preview-runtime:${PREVIEW_RELEASE:?Set PREVIEW_RELEASE}
+    container_name: pymss-preview-runtime
+    init: true
+    restart: unless-stopped
+    read_only: true
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    tmpfs: ["/tmp:rw,nosuid,size=256m"]
+    mem_limit: 16g
+    cpus: 6
+    pids_limit: 256
+    environment:
+      CUDA_VISIBLE_DEVICES: "0"
+      STUDIO_GPU_UUID: GPU-731f9bc4-8979-6abb-98e1-c2dae293693e
+      NVIDIA_VISIBLE_DEVICES: GPU-731f9bc4-8979-6abb-98e1-c2dae293693e
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+      NUMBA_CACHE_DIR: /tmp/numba
+      PYTORCH_KERNEL_CACHE_PATH: /tmp/torch-kernels
+      OMP_NUM_THREADS: "4"
+      OPENBLAS_NUM_THREADS: "4"
+      HF_HUB_OFFLINE: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+    volumes:
+      - /mnt/TTD-Data/pymss/models:/mnt/TTD-Data/pymss/models:ro
+      - /mnt/TTD-Data/pymss-ui-preview:/mnt/TTD-Data/pymss-ui-preview:ro
+      - /mnt/TTD-Data/pymss-ui-preview:/model-cache:ro
+      - /mnt/TTD/04_应用/pymss-ui-preview:/data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [GPU-731f9bc4-8979-6abb-98e1-c2dae293693e]
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    labels:
+      ttd.preview.owner: pymss-webui
+      ttd.preview.release: "${PREVIEW_RELEASE}"
+      ttd.preview.scope: real-separation-preview
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.35.0.0/24

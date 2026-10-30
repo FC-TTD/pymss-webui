@@ -14,7 +14,7 @@
     <AlertTriangle class="size-5" />
     <AlertDescription>{errorMessage}</AlertDescription>
     <AlertAction>
-      <Button variant="ghost" size="xs" type="button" onclick={onDismissError}>Dismiss</Button>
+      <Button variant="ghost" size="xs" type="button" onclick={onDismissError}>关闭</Button>
     </AlertAction>
   </Alert>
 {/if}
@@ -24,7 +24,7 @@
     <CheckCircle2 class="size-5" />
     <AlertDescription>{noticeMessage}</AlertDescription>
     <AlertAction>
-      <Button variant="ghost" size="xs" type="button" onclick={onDismissNotice}>Dismiss</Button>
+      <Button variant="ghost" size="xs" type="button" onclick={onDismissNotice}>关闭</Button>
     </AlertAction>
   </Alert>
 {/if}

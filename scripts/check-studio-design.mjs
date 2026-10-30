@@ -1,0 +1,61 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { createServer } from 'vite';
+const vite=await createServer({server:{middlewareMode:true},appType:'custom',mode:'design'});
+try {
+ const {models,matchesModel}=await vite.ssrLoadModule('/src/lib/studio/models.ts');
+ assert.equal(new Set(models.map(m=>m.id)).size,models.length);
+ assert(!models.some(m=>m.id==='scnet_xl_dnr'));
+ const leap=models.find(m=>m.id==='bs_leap_xe_voc.ckpt');
+ assert(matchesModel(leap,'Leap 人声','duo','curated'));
+ assert(matchesModel(leap,'Leap','dme','all'));
+ assert(matchesModel({...leap,state:'ready'},'Leap','duo','ready'));
+ assert(!matchesModel({...leap,state:'missing'},'Leap','duo','ready'));
+ const {compareQuality}=await vite.ssrLoadModule('/src/lib/studio/quality.ts');
+ const duo=models.filter(m=>m.curated && m.scenarios.includes('duo')).sort((a,b)=>compareQuality(a,b,'duo'));
+ assert.deepEqual(duo.slice(0,2).map(m=>m.id),['melband_roformer_instvox_duality_v2.ckpt','model_bs_roformer_ep_368_sdr_12.9628.ckpt']);
+ assert.equal([...duo].reverse().sort((a,b)=>compareQuality({...a,tag:'2030新模型'},{...b,tag:'2020旧版'},'duo'))[0].id,'melband_roformer_instvox_duality_v2.ckpt');
+ assert.equal([...duo].sort((a,b)=>compareQuality(a,b,'duo',['becruily_deux.ckpt']))[0].id,'becruily_deux.ckpt');
+ assert(models.filter(m=>m.curated).every(m=>m.description.length<=48 && (m.description.match(/。/g)||[]).length===1));
+ const {groupLibraryModels}=await vite.ssrLoadModule('/src/lib/studio/library.ts');
+ const runtimeCatalog=models.map(m=>({...m,available:m.curated,state:m.curated?'ready':'missing'}));
+ const groups=groupLibraryModels(runtimeCatalog,'','all',[]);const flat=groups.flatMap(g=>g.models);
+ assert.equal(flat.length,models.filter(m=>!m.hidden).length);assert.equal(new Set(flat.map(m=>m.id)).size,models.filter(m=>!m.hidden).length);
+ assert(groups.find(g=>g.id==='breath').models.some(m=>m.id==='aspiration_mel_band_roformer_sdr_18.9845.ckpt'));
+ assert(!groups.find(g=>g.id==='cleanup')?.models.some(m=>m.id==='aspiration_mel_band_roformer_sdr_18.9845.ckpt'));
+ assert.equal(groupLibraryModels(runtimeCatalog,'','ready',[]).flatMap(g=>g.models).length,42);
+ assert(groupLibraryModels(runtimeCatalog,'推荐依据','all',[]).flatMap(g=>g.models).length>0);
+ assert(models.find(m=>m.id==='aspiration_mel_band_roformer_sdr_18.9845.ckpt').originalDescription.includes('呼吸声目标模型'));
+ const {capabilityText,fileSize}=await vite.ssrLoadModule('/src/lib/studio/models.ts');
+ assert(capabilityText(models.find(m=>m.id==='HTDemucs4_6stems.th')).includes('钢琴'));
+ assert(capabilityText(models.find(m=>m.id==='HTDemucs4_6stems.th')).includes('吉他'));
+ assert(models.find(m=>m.id==='BS-Roformer-Resurrection.ckpt').classic);
+ assert.equal(fileSize(2*1024**3),'2.00 GB');
+ const {baseModelCards,stableModelCards}=await vite.ssrLoadModule('/src/lib/studio/presentation.ts');
+ const film=runtimeCatalog.filter(m=>m.scenarios.includes('dme')).sort((a,b)=>compareQuality(a,b,'dme'));
+ assert.equal(film[0].id,'becruily_deux.ckpt');
+ assert(!film.some(m=>['speech_bs_roformer_AliceN_sdr_20.4440.ckpt','checkpoint-cmn_state_dict.ckpt'].includes(m.id)));
+ const filmCards=baseModelCards(film,'dme');
+ for(const id of ['bandit_v2_multi.ckpt','model_bandit_plus_dnr_sdr_11.47.ckpt','DBS-TIGER-DnR']){
+  const model=filmCards.find(m=>m.id===id);assert(model && capabilityText(model,'dme').includes('配乐') && capabilityText(model,'dme').includes('音效'));
+ }
+ assert(capabilityText(film[0],'dme').includes('国际声'));
+ assert(!capabilityText(film[0],'duo').includes('国际声'));
+ const musicSix=runtimeCatalog.filter(m=>m.scenarios.includes('six')).sort((a,b)=>compareQuality(a,b,'six'));assert.equal(musicSix[0].id,'HTDemucs4_6stems.th');assert.equal(baseModelCards(musicSix,'six')[0].id,'HTDemucs4_6stems.th');
+ const harmony=runtimeCatalog.filter(m=>m.scenarios.includes('karaoke')).sort((a,b)=>compareQuality(a,b,'karaoke'));assert.equal(harmony[0].id,'ym:yingmusic_bs_roformer');
+ const topDuo=baseModelCards(duo,'duo');assert.deepEqual(topDuo.slice(0,2).map(m=>m.id),duo.slice(0,2).map(m=>m.id));
+ const ordered=runtimeCatalog.filter(m=>m.scenarios.includes('vocal')).sort((a,b)=>compareQuality(a,b,'vocal'));
+ const base=baseModelCards(ordered).map(m=>m.id);const extra=ordered.find(m=>!base.includes(m.id));assert(extra);
+ const stable=stableModelCards(ordered,[extra.id,extra.id]).map(m=>m.id);assert.deepEqual(stable.slice(0,base.length),base);assert.equal(stable.length,base.length+1);
+ assert(models.some(m=>m.scenarios.includes('dme') && m.scenarios.includes('vocal') && m.stems.length===2));
+ assert(models.some(m=>m.scenarios.includes('instrumental')));
+ const api=await vite.ssrLoadModule('/src/lib/studio/studio-api.ts');const previousFetch=globalThis.fetch;
+ try {globalThis.fetch=async()=>{throw new TypeError('Failed to fetch');};await assert.rejects(api.readJob('a'.repeat(32)),err=>err.retryable===true && !err.message.includes('Failed to fetch'));
+ globalThis.fetch=async()=>({text:async()=>{throw new TypeError('terminated');}});await assert.rejects(api.readJob('a'.repeat(32)),err=>err.retryable===true);
+ globalThis.fetch=async()=>new Response('<h1>Bad Gateway</h1>',{status:502});await assert.rejects(api.readJob('a'.repeat(32)),err=>err.retryable===true);
+ }finally {globalThis.fetch=previousFetch;}
+ const source=await readFile('src/lib/studio/Studio.svelte','utf8');
+ assert(!source.includes('demoWave'));assert(!source.includes('useDemo'));
+ assert(!source.includes('type="radio"'));assert(!source.includes('res.blob()'));assert(source.includes('monitorJob'));assert(source.includes('featuredModels'));
+ console.log(JSON.stringify({catalog:models.length,filtering:'passed',demoRemoved:true,singleSelectionArchitecture:true}));
+}finally{await vite.close();}

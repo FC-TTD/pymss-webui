@@ -10,6 +10,17 @@ export function createCatalogQuery(): CatalogQuery {
     local: "all",
     category: "",
     q: "",
+    recommendedOnly: false,
+    selectionMode: "scenario",
+    scenario: "vocal",
+    primaryCategoryCn: "",
+    secondaryCategoryCn: "",
+    architecture: "",
+    modelType: "",
+    targetStem: "",
+    confidence: "",
+    sizeTier: "",
+    sort: "recommended",
   };
 }
 

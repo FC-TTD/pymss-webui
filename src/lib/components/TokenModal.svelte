@@ -13,17 +13,17 @@
 <Dialog.Root bind:open={show} onOpenChange={(open) => !open && onClose()}>
   <Dialog.Content>
     <Dialog.Header>
-      <Dialog.Title>API token</Dialog.Title>
-      <Dialog.Description class="sr-only">Bearer token</Dialog.Description>
+      <Dialog.Title>API 令牌</Dialog.Title>
+      <Dialog.Description class="sr-only">Bearer 令牌</Dialog.Description>
     </Dialog.Header>
     <form class="space-y-4" on:submit|preventDefault={onSave}>
       <div class="grid gap-1.5">
-        <Label for="token-input">Bearer token</Label>
+        <Label for="token-input">Bearer 令牌</Label>
         <Input id="token-input" class="h-9 text-sm" bind:value={tokenInput} type="password" />
       </div>
       <Dialog.Footer>
-        <Button variant="ghost" type="button" onclick={onClose}>Cancel</Button>
-        <Button type="submit">Save</Button>
+        <Button variant="ghost" type="button" onclick={onClose}>取消</Button>
+        <Button type="submit">保存</Button>
       </Dialog.Footer>
     </form>
   </Dialog.Content>

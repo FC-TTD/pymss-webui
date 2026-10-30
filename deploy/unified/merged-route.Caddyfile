@@ -1,0 +1,4 @@
+# Validation fixture for merging the new business-owned path labels with the
+# existing, unchanged msst-hub-entry catch-all. Never load this platform-wide.
+# The unified entry no longer declares the `http://msst` site. The native
+# MSST-WebUI Compose service owns that host and its root UI.
