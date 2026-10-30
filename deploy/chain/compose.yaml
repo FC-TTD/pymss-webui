@@ -1,9 +1,12 @@
 name: pymss-chain-preview
 services:
   chain:
-    image: pymss-chain-preview:${CHAIN_RELEASE:?Use immutable release}
+    image: ${CHAIN_IMAGE:?Use immutable release digest}
     container_name: pymss-chain-preview
     init: true
+    user: '0:0'
+    environment:
+      STUDIO_API: http://pymss-preview-runtime:8000/api/studio
     restart: unless-stopped
     read_only: true
     cap_drop: [ALL]

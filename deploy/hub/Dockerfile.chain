@@ -1,0 +1,10 @@
+# syntax=docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+# Existing CPU application dependencies; no CUDA/model base in the derived-asset service.
+FROM registry.ttd/ttd-separation-studio/app@sha256:284960316e9703ca464cf849c946f7eeaae98feef2d7aa03c9e54fcd2ba6e27d
+USER root
+RUN --mount=type=cache,target=/root/.cache/pip pip install --no-deps requests==2.32.3 urllib3==2.4.0 charset-normalizer==3.4.2
+COPY --link deploy/chain/app.py /app/chain_api.py
+COPY --link .source-commit /opt/film-chain-source
+USER 10001:10001
+ENTRYPOINT []
+CMD ["python","-m","uvicorn","chain_api:app","--host","0.0.0.0","--port","8000","--workers","1"]

@@ -1,0 +1,8 @@
+{
+  "project": "pymss-webui",
+  "components": {
+    "runtime": "song-studio-transport",
+    "chain": "film-derived-assets"
+  },
+  "cache": "registry.ttd/music-native/shared-cache:buildcache"
+}

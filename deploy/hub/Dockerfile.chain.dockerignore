@@ -1,0 +1,4 @@
+**
+!deploy/chain/app.py
+!.source-commit
+!deploy/hub/Dockerfile.chain
