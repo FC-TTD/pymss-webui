@@ -12,7 +12,7 @@
     ci_buildkit_endpoint: tcp://ttd-nest:1234
     ci_buildx_builder_name: hub-immutable-builder
     ci_publish_label_tag: false
-    ci_registry_cache_ref: "registry.ttd/music-native/shared-cache:buildcache"
+    ci_registry_cache_ref: "{{ 'registry.ttd/pymss-webui/chain:buildcache' if component == 'chain' else 'registry.ttd/music-native/shared-cache:buildcache' }}"
     ci_probe_work_dir: "{{ evidence_path }}/probe-{{ component }}"
     ci_build_log_path: "{{ evidence_path }}/build-{{ component }}.log"
   tasks:
