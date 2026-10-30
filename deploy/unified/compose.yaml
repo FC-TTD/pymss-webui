@@ -23,22 +23,6 @@ services:
       ttd.audio.owner: pymss-webui
       ttd.audio.source: ${AUDIO_SOURCE_COMMIT:?Record the authorized source commit}
       ttd.audio.release: ${AUDIO_RELEASE:?Record the verified release}
-      caddy: http://msst
-      caddy.@audio_home.path: /
-      caddy.@audio_home.not.query: native=msst
-      caddy.handle_0: "@audio_home"
-      caddy.handle_0.reverse_proxy: "192.168.100.18:17898"
-      caddy.@audio_ui.path: /ui /ui/*
-      caddy.handle_1: "@audio_ui"
-      caddy.handle_1.redir: "http://separation-studio/ 301"
-      caddy.handle_2: /api/studio/*
-      caddy.handle_2.reverse_proxy: "192.168.100.18:17898"
-      caddy.handle_3: /api/speech/*
-      caddy.handle_3.reverse_proxy: "192.168.100.18:17898"
-      caddy.handle_4: /api/ym/*
-      caddy.handle_4.reverse_proxy: "192.168.100.18:17898"
-      caddy.handle_5: /api/chain/*
-      caddy.handle_5.reverse_proxy: "192.168.100.18:17898"
 networks:
   pymss_backend:
     external: true

@@ -1,28 +1,4 @@
 # Validation fixture for merging the new business-owned path labels with the
 # existing, unchanged msst-hub-entry catch-all. Never load this platform-wide.
-http://msst {
-  @audio_home {
-    path /
-    not query native=msst
-  }
-  handle @audio_home {
-    reverse_proxy 192.168.100.18:17898
-  }
-  @audio_ui path /ui /ui/*
-  handle @audio_ui {
-    redir http://separation-studio/ 301
-  }
-  handle /api/studio/* {
-    reverse_proxy 192.168.100.18:17898
-  }
-  handle /api/speech/* {
-    reverse_proxy 192.168.100.18:17898
-  }
-  handle /api/ym/* {
-    reverse_proxy 192.168.100.18:17898
-  }
-  handle /api/chain/* {
-    reverse_proxy 192.168.100.18:17898
-  }
-  reverse_proxy 10.0.3.200:8080
-}
+# The unified entry no longer declares the `http://msst` site. The native
+# MSST-WebUI Compose service owns that host and its root UI.

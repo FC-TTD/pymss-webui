@@ -1,8 +1,10 @@
-# 音频分离组合入口
+# 音频分离组合入口（已迁出 MSST host）
+
+当前 `http://msst` 由 `FC-TTD/MSST-WebUI` 原生服务独占。此 Compose 只保留组合工作台的运行定义，不再声明任何 Caddy host 或路径，避免与原生 MSST-WebUI 抢占同一内网域名。
 
 ## 2026-10-28：旧工作台路径永久跳转
 
-分离工作台已独立到 `http://separation-studio/`。按用户要求，`http://msst/ui`、`/ui/` 及其子路径固定返回 301，直接跳到内网新域名根路径，丢弃旧路径及查询参数。此条替代下文关于 `/ui` 继续展示组合界面的历史记录。
+分离工作台已独立到 `http://separation-studio/`。旧组合入口不再接管 `http://msst`；原生 MSST-WebUI 恢复为该域名的根页面。Separation Studio 继续使用自己的内网域名。
 
 本次仅修改 `entry` 的业务 Caddy label 与路由验证 fixture，沿用当前不可变 CPU 镜像和既有 Compose 网络。配置变更通过 Compose 仅重建 `entry`，短暂切换 CPU 代理，不执行 UI 镜像推广脚本，不重建模型或重启 provider。根路径、原生 MSST 和 API 的路由定义保持。新域名继续使用独立应用登录与授权。
 
@@ -12,8 +14,8 @@
 
 ## 所有权与范围
 
-- `FC-TTD/pymss-webui` 拥有组合页面、明显的 PYMSS/MSST 导航、PYMSS 工作台、音频复用 API 和本入口的业务 Caddy 标签。
-- 原 `msst-hub-entry`、MSST 原生界面、租约和 admission 路径保持；MSST 页通过 `http://msst/?native=msst` 加载，API 的 `__gradio__` 路径继续由原 Hub 入口处理。
+- `FC-TTD/pymss-webui` 拥有已迁出的组合页面、PYMSS 工作台和音频复用 API；本部署定义不再拥有 `http://msst` 的业务 Caddy 标签。
+- 原 `msst-hub-entry`、MSST 原生界面、租约和 admission 路径保持；MSST 原生页直接通过 `http://msst/` 提供，API 的 `__gradio__` 路径继续由原生服务处理。
 - 首页卡片由 `FC-TTD/ttd-file/file/index.links.json` 及其现有 `/index-api/links` API 管理。本次仅改 `tools.msst` 的 text/title，保留原 `http://msst/` 链接。
 - 不修改平台 Caddy 全局配置，不创建域名/DNS/认证/公网路由，不迁移或新建 GPU runtime。新的正式组件仅为64MiB/.5CPU只读静态入口；复用现有 PYMSS 后端网络和已经验证的 Stage API、GPU、NAS 数据。
 
