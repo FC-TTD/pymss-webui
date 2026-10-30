@@ -13,7 +13,7 @@ from fastapi.responses import FileResponse
 from .worker import write
 
 MAX_FILES = 20
-MAX_INPUT_BYTES = 2 * 1024**3
+MAX_INPUT_BYTES = 64 * 1024**3
 
 
 def recover_batches(root):
@@ -98,7 +98,7 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
                 raise HTTPException(400, '每批最多20个文件。')
             remaining = MAX_INPUT_BYTES - state['bytes']
             if int(request.headers.get('content-length', '0')) > remaining:
-                raise HTTPException(413, '每批音频合计不能超过2 GB。')
+                raise HTTPException(413, '每批文件合计不能超过64 GB。')
             # Bound even chunked requests without buffering whole files in memory.
             class LimitedInput:
                 async def stream(self):
@@ -106,7 +106,7 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
                     async for chunk in request.stream():
                         size += len(chunk)
                         if size > remaining:
-                            raise HTTPException(413, '每批音频合计不能超过2 GB。')
+                            raise HTTPException(413, '每批文件合计不能超过64 GB。')
                         yield chunk
             job_id = await store_input(LimitedInput(), state['model'], filename, json.dumps(state['stems']), state['purpose'])
             state['jobs'].append(job_id)
@@ -150,7 +150,7 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
             if not source.get('input_asset_id'):
                 raise HTTPException(404, '已上传音频不存在，请重新选择文件。')
             if size + state['bytes'] > MAX_INPUT_BYTES:
-                raise HTTPException(413, '每批音频合计不能超过2 GB。')
+                raise HTTPException(413, '每批文件合计不能超过64 GB。')
             job_id = reuse_input(asset_id, state['model'], state['stems'], state['purpose'])
             state['jobs'].append(job_id)
             state['bytes'] += size

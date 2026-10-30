@@ -1,0 +1,42 @@
+name: separation-film-runtime
+services:
+  runtime:
+    image: ${FILM_RUNTIME_IMAGE:?Use immutable candidate digest}
+    container_name: separation-film-runtime
+    restart: unless-stopped
+    command: [python, -m, uvicorn, studio_runtime.app:app, --host, 0.0.0.0, --port, '8000', --workers, '1']
+    mem_limit: 16g
+    cpus: 6
+    environment:
+      STUDIO_SKIP_RECOVERY: '1'
+      OMP_NUM_THREADS: '4'
+      PYTORCH_KERNEL_CACHE_PATH: /tmp/torch-kernels
+      NATIVE_GATEWAY_KEY_FILE: /run/music-gateway.key
+      CUDA_VISIBLE_DEVICES: '0'
+      NVIDIA_VISIBLE_DEVICES: GPU-731f9bc4-8979-6abb-98e1-c2dae293693e
+      PYTHONPATH: /app/provider:/app/dbs-source:/app
+    volumes:
+      - /mnt/TTD-Data/pymss-ui-preview:/model-cache:ro
+      - /mnt/TTD-Data/pymss-ui-preview:/mnt/TTD-Data/pymss-ui-preview:ro
+      - /mnt/TTD-Data/pymss/models:/mnt/TTD-Data/pymss/models:ro
+      - /mnt/TTD/04_应用/pymss-ui-preview:/data
+      - /opt/music-hub-release-20261027/secrets/workbench-gateway.key:/run/music-gateway.key:ro
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [GPU-731f9bc4-8979-6abb-98e1-c2dae293693e]
+              capabilities: [gpu]
+    networks: [existing]
+    labels:
+      org.opencontainers.image.revision: ${FILM_RUNTIME_SOURCE:?Record source}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+networks:
+  existing:
+    external: true
+    name: pymss-ui-preview_default

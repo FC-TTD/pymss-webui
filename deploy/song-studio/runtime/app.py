@@ -1,5 +1,5 @@
 """Isolated LAN preview API. No Hub selection, load, or catalog mutations."""
-import asyncio,json,sys,uuid,hashlib,mimetypes
+import asyncio,json,sys,uuid,hashlib,mimetypes,os
 from pathlib import Path
 from fastapi import FastAPI,HTTPException,Request,Query
 from fastapi.responses import FileResponse
@@ -8,7 +8,7 @@ from .waveform import audio_peaks
 from .batch import install_batch_routes, recover_batches
 from .resources import execute_with_capacity
 
-DATA=Path('/data/jobs');DATA.mkdir(parents=True,exist_ok=True)
+DATA=Path(os.getenv('STUDIO_JOBS','/data/jobs'));DATA.mkdir(parents=True,exist_ok=True)
 MANIFEST=Path('/model-cache/download-manifest.json')
 VERIFIED=Path('/data/verified-models.json')
 active=False
@@ -36,6 +36,7 @@ def registry():
  return rows
 @app.on_event('startup')
 def recover_interrupted():
+ if os.getenv('STUDIO_SKIP_RECOVERY')=='1':return
  for path in DATA.glob('*/job.json'):
   try:
    state=json.loads(path.read_text())
@@ -78,22 +79,14 @@ async def store_input(request,model,filename,stems,purpose):
  selected=validate_selection(model,stems)
  job_id=uuid.uuid4().hex;folder=DATA/job_id;folder.mkdir();target=folder/'input.audio';size=0;digest=hashlib.sha256()
  try:
-  with target.open('wb') as f:
-   async for chunk in request.stream():
-    size+=len(chunk)
-    if size>512*1024*1024:raise HTTPException(413,'音频不能超过512 MB。')
-    digest.update(chunk)
-    f.write(chunk)
-  import soundfile as sf
-  try:info=sf.info(target)
-  except Exception: # ffprobe handles mp3/m4a when soundfile cannot.
-   try:
-    probe=await asyncio.create_subprocess_exec('ffprobe','-v','error','-show_entries','format=duration','-of','json',str(target),stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.PIPE)
-    raw,_=await probe.communicate();duration=float(json.loads(raw)['format']['duration'])
-   except Exception:raise HTTPException(400,'无法读取这段音频，请换成WAV或MP3。')
-  else:duration=info.duration
-  if not 0<duration<=600:raise HTTPException(400,'音频长度应在10分钟以内。')
-  path=folder/'job.json';write(path,{'id':job_id,'model':model,'filename':Path(filename).name,'purpose':purpose,'input':str(target),'input_asset_id':job_id,'input_bytes':size,'input_duration':duration,'input_sha256':digest.hexdigest(),'stems':selected,'status':'queued','outputs':[]})
+  from .media import probe,extract,receive
+  size,source_digest=await receive(request,target)
+  streams=await probe(target)
+  audio=folder/'prepared.flac'
+  info=await extract(target,audio,streams[0]['index'])
+  target.rename(folder/'original.media');audio.rename(target)
+  duration=info.duration
+  path=folder/'job.json';write(path,{'id':job_id,'model':model,'filename':Path(filename).name,'purpose':purpose,'input':str(target),'input_asset_id':job_id,'input_bytes':size,'input_duration':duration,'input_sha256':source_digest,'stems':selected,'status':'queued','outputs':[]})
   return job_id
  except BaseException:raise
 
@@ -115,13 +108,14 @@ def reuse_input(asset_id,model,stems,purpose):
  selected=validate_selection(model,json.dumps(stems));canonical,source,path=load_asset(asset_id)
  job_id=uuid.uuid4().hex;folder=DATA/job_id;folder.mkdir()
  # Source audio is immutable. Reference its canonical server file; never copy/re-upload it.
- write(folder/'job.json',{'id':job_id,'model':model,'filename':source['filename'],'purpose':purpose,'input':str(path),'input_asset_id':canonical,'input_bytes':path.stat().st_size,'input_duration':source.get('input_duration',0),'input_sha256':source.get('input_sha256',''),'stems':selected,'status':'queued','outputs':[]})
+ write(folder/'job.json',{'id':job_id,'model':model,'filename':source['filename'],'purpose':purpose,'input':str(path),'input_asset_id':canonical,'input_bytes':source.get('input_bytes',path.stat().st_size),'input_duration':source.get('input_duration',0),'input_sha256':source.get('input_sha256',''),'stems':selected,'status':'queued','outputs':[]})
  return job_id
 
 @app.get('/api/studio/assets/{asset_id}/audio')
 def input_audio(asset_id:str):
  _,source,path=load_asset(asset_id)
- return FileResponse(path,media_type=mimetypes.guess_type(source['filename'])[0] or 'application/octet-stream')
+ with path.open('rb') as source_file:magic=source_file.read(4)
+ return FileResponse(path,media_type='audio/flac' if magic==b'fLaC' else mimetypes.guess_type(source['filename'])[0] or 'application/octet-stream')
 @app.get('/api/studio/jobs/{job_id}')
 def job(job_id:str):
  state=load_job(job_id)
@@ -134,7 +128,7 @@ def job(job_id:str):
  try:
   canonical,source,input_path=load_asset(job_id)
   duration=source.get('input_duration') or (outputs[0]['frames']/outputs[0]['sample_rate'] if outputs else 0)
-  extra={'input_asset_id':canonical,'input_bytes':input_path.stat().st_size,'input_duration':duration,'input_url':f'/api/studio/assets/{canonical}/audio'}
+  extra={'input_asset_id':canonical,'input_bytes':source.get('input_bytes',input_path.stat().st_size),'input_duration':duration,'input_url':f'/api/studio/assets/{canonical}/audio'}
  except HTTPException:pass
  return {k:v for k,v in state.items() if k not in {'input','outputs','attempt_log','required_gpu_mb','free_gpu_mb'}} | {'outputs':outputs} | extra
 
@@ -161,3 +155,6 @@ def release_slot():
  active=False
 
 install_batch_routes(app,DATA,validate_selection,store_input,load_job,job,execute,claim_slot,release_slot,reuse_input)
+
+from .media import install_media
+install_media(app,DATA,write)
