@@ -19,7 +19,8 @@
     },
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.svelte"],
   "references": []

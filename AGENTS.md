@@ -1,3 +1,75 @@
-# Song studio managed transport
+# PYMSS 界面与测试约定
 
-Canonical FC-TTD/pymss-webui isolated branch. Preserve the actually deployed CPU API, central immutable asset IDs, NAS outputs, original model options and other consumers. Only the three song separation models used by music-workbench move to the existing managed PYMSS native API; unrelated DME models retain their original execution path. No edits to the other task's working tree or UI release. No unknown inference replay; native model identity mismatch fails instead of silently using another loaded model. Formal inputs are committed, read-only snapshots with fixed native base and repeat digest.
+先读取工作区 work/PROJECT_STATE.md，并遵循 TTD:/00_项目/共享测试部署标准.md。测试交付必须部署至stage，正式发布须有对应用户授权。
+
+## 用户确认的交互要求（2026-10-25）
+
+- 不提供演示样例、合成结果或虚构处理进度。真实上传、分离、播放和下载通过独立测试后端完成。
+- 采用紧凑的常规工具页面：正文14px、辅助12px、分区标题16px、页面标题24px；所有中文不小于等效12px。
+- 主页直接平铺新旧优质模型（优先2款当前推荐+3款经典，并保留当前选择，但点击只切选中态，禁止把选中项移到首位或删除其他已展示卡片），不能默认只有2026模型；其余可用模型放可搜索下拉，包含第一版经典优秀模型并按质量排列；展开区可滚动、拖动滚动条和右下角调整高度；使用浮层，不挤压页面或自动滚动，避免收起时跳页；选择反馈只能对应一个模型，使用有key的受控按钮，避免原生radio重排双选。
+- 默认按同用途的分离质量、公开评测及社区口碑排序；2026只作标签，不作默认范围或排序。专业质量优先，不以速度快但质量低作推荐理由；新增优势说明仅一句简洁的用户收益/能力；原有模型说明原文保留并另列，不用新文案覆盖，完整文件名保持可见。
+- 工作台保留“人声分离”“伴奏分离”独立分类并按质量排序。乐器细类不占常驻单独一行，由“乐器分轨”父选项点击展开，可选择四/六轨、鼓、贝斯、吉他、钢琴、弦乐。影视分离包含对白/其余声音双轨及DME三轨，按真实输出标识，不能只收三轨模型。模型库默认全部330目录，按用途分组且所有组展开，每模型仅出现一次；可使用/置顶优先，未接入项不能假装可运行。每卡统一“使用此模型处理”，当前已选模型也可点；实际可用项直接切到工作台并保留已上传音频，不自动提交任务。
+- 每模型不展示“作者来源”链接，原位展示真实能力可导出的分轨；每卡和下拉项显示权重文件大小。可用模型以真实验证输出为准，未接入模型只标目录目标，不假称已可导出。保留来源在内部记录供核查。禁用控件不能一律使用等待光标；只有真实处理中才显示等待。
+- 分离结果每轨显示真实PCM波形、播放进度、点击/键盘定位；旧结果可直接恢复。由服务端流式读取生成小型峰值缓存，不在浏览器整曲解码，不改已验证worker指纹。
+- 长音频必须验证整曲及大于临时缓冲区的实际下载，不仅测短片段；结果用流式/Range试听下载，网络短断应保留任务并可恢复，不能触发重复分离。
+- 模型可置顶，当前浏览器刷新后保留；置顶列表优先显示。不声称跨账号共享。
+- 本轮推荐的新模型需下载和真实分离验证后才标为可使用，保留2026整理/新收录标签。下载与真实可用分开；不可取得的权重不能伪装为可用，不以音乐四轨SCNet替代未经核实的影视DNR权重。
+- Stage预览保持显式无冲突网络10.35.0.0/24，发布前后复核IPAM、家庭客户端回程与家庭方向页面/资源。不能恢复自动网段的旧Compose造成访问复发。
+
+## 来源与运行边界
+
+默认构建仍是原LegacyApp；设计模式承载新工作台。独立preview后端复用FC-TTD/pymss已记录源码和固定原生CUDA镜像，仅使用preview自有新增权重/结果目录，现有Hub模型缓存只读。未经用户确认，不修改正式Hub实例或发布生产UI。
+
+## 批量操作与展示补充（2026-10-25）
+
+- 用户要求移除界面商用授权提示及内部/Stage测试标识，来源许可继续留内部记录，不表示改变许可。模型技术能力限制仍可显示。
+- 可用模型的“使用此模型处理”不能受全局任务busy阻止；切到工作台并保留上传列表，后台任务按已提交的模型/分轨快照运行。未接入模型仍不可冒充可用。
+- 恢复多文件选择/拖入与多音轨导出，可选逐个WAV或ZIP；批次持久保存、服务端串行占用原GPU，刷新不重跑已完成项，失败续跑只重试未完成文件。每批20文件/合计2GB，每文件512MB/10分钟；选择导出分轨且ZIP按输入文件分目录，保留原音频字节。
+- ZIP准备完成应提供明确下载链接；生成包成功不等于浏览器下载落盘成功，不绕过Chrome HTTP下载保护。
+
+## 显存等待与重试（2026-10-25）
+
+- 不以“可使用”表示显卡当前有空余。独立资源检查器在原worker外实现等待、有限OOM重试与任务保留，禁止更改已验证worker指纹、精度或offload来规避错误。等待状态必须告知用户无需重新上传。
+- GPU观测从应用PID1环境核实，CDI可把NVIDIA_VISIBLE_DEVICES改为void，不能仅凭docker exec环境断言可用。固定STUDIO_GPU_UUID须与原reservation一致；不得以此选择其他GPU。
+- 部署修复自有资源等待任务，只能显式EXPECTED_WAITING_JOB，唯一活动任务ID及waiting状态匹配且无worker/smoke；其他活动任务仍应阻止部署。
+
+## 组合入口与音频复用（2026-10-25）
+
+- 用户已请求把最终版本合并进msst首页入口，卡片名称“音频分离”、备注“MSST 和 PYMSS”，明显PYMSS/MSST导航、默认PYMSS。实际发布仍遵守单独源码提交授权门禁。业务标签归pymss-webui，首页数据归ttd-file；不修改原MSST Hub admission/租约或公网proxy。
+- 用户本次试听指定duo默认前两为InstVox Duality v2、BS Roformer12.97，置顶仍优先；不恢复旧Leap第一默认。
+- 同一输入换模型不得重新上传或复制。以服务端input_asset_id归一到原NAS输入，不能按文件名猜测身份；新job仅引用同源并独立写输出。刷新恢复已导入列表，删除输入前必须确认其他job引用，当前不自动清理。
+- 发布CPU入口前核对相对Location，禁止让内部8080端口进入用户跳转；native=msst保留MSST原根、__gradio__仍走原Hub入口。正式入口与Stage候选前端应独立，已有后端数据不迁移。
+
+## 影视国际声补充（2026-10-26）
+
+- 影视业务优先取人声外的国际声，Deux双轨默认优先；AliceN BS98MB与BandIt v2中文移出影视分类，保留历史元数据与权重。三轨仍必须可直接找到，展示能独立导出人声/配乐/音效的真实能力，DBS标明单声道。双轨背景是模型估计，不声称等同原版国际声。音乐用途文案与原有说明保留。
+- 正式msst与Stage当前共享后端；纯界面预览使用PREVIEW_WEB_ONLY=1，只更新web，核对后端输入未变并固定其镜像/release，禁止无故重建/重启共享GPUruntime。
+
+## 对白与降噪分类（2026-10-26）
+
+- 提取对白指从配乐/音效混音中分出讲话，人声降噪指给现有对白去底噪；双人对白分离指两人叠音，音质提升指对白超分。不能把这些或歌曲主唱/和声混为一类。提取对白与去混响/气声/群杂归更多人声处理父项点击延展。
+- AliceN BS98MB及BandIt v2中文不再提供新选择，保留历史元数据/结果，不删权重。此规则替代较早仅移出影视的处理。
+- cv:模型/cv-任务走独立ClearVoice provider，输入canonical asset仍归既有PYMSS池，首次只上传一次；原输入只读跨provider引用，未来自动清理必须检查所有引用。5款已验证权重原生推理，改worker/native/权重锁须重新验证。模型年份指收录年份，不冒称新发行。
+- Stage及正式入口相互独立；本轮ClearVoice为preview而非Hub admission。纯web修订固定原共享PYMSS runtime，不重启它；原始ClearVoice/原MSST不改。
+
+## 推荐与二次处理（2026-10-26）
+
+- 用户提供的Stemdeck六轨=HTDemucs六轨，stems/six默认第一；YingMusic官方三轨BS-RoFormer为karaoke默认第一，置顶仍优先，duo Instvox/BS12.97前两不改。Ying ym:yingmusic_bs_roformer/ym-任务独立provider；不得当成SVC变声或UVR-MDX Karaoke2。
+- 每条结果可继续处理：服务器对合法已完成job/stem白名单流式导入中央派生asset一次，SHA与母轨相同、重复选择幂等；不浏览器重传、覆写母结果或删除。保留来源/上一轮链接，准备目标批次后刷新能恢复，不自动启动GPU。原音频引用继续用canonical asset，不因切模型复制。
+- 消费者二次处理部署归deploy/chain，无GPU且复用既有10.35网络；Ying原生推理归FC-TTD/YingMusic-SVC独立edge provider。两个新provider均preview，原30911/ClearVoice/sharedPYMSS/正式入口不改。正式推广前必须补依赖纳管、ym/chain路由和提交授权，旧publisher不能直接用于这版。
+
+## 正式入口本轮授权（2026-10-27）
+
+用户已单独授权本轮三个仓库本地提交并继续发布msst/ui供局域网测试，不含push。推广CPU入口须从已提交源码校验全部候选输入，并记录现有共享PYMSS/ClearVoice/Ying/chain镜像与管理状态；不重启这些依赖、不改原30911/MSST或GPU Hub生命周期。后续其他聊天可能接管共享provider，实际发布前必须重新核对容器/源码/镜像漂移，不能凭历史记录覆盖。
+
+## 公共入口空白启动（2026-10-28）
+
+用户不需要展示历史记录。裸/ui入口不读取上次job/batch浏览器缓存，也不持久保存这两项；置顶偏好保留。仅当前显式任务URL用于刷新续跑和二次处理回看，不枚举他人历史，不删NAS文件。只改静态UI，保留10/27后已由其他聊天接管的Hub entry/runtime，不恢复旧GPU容器。此为已授权发布收尾的同一入口小范围修订；本地提交、Stage验证后推广，仍不push。
+
+## 受管歌曲链路与长片导入（2026-10-30）
+
+保留现场 CPU API、canonical asset、NAS 输入/结果及所有原有模型选项。三个歌曲模型通过既有受管 PYMSS API 执行，其他 DME 沿用已验证 native_worker；不编辑其他任务工作树，不因模型身份不匹配自动换模型，不自动重放未知执行。
+
+本轮用户已明确要求专业90～120分钟电影，默认第一音轨且可切换，5.1/7.1交付含对白与背景的立体声分轨；这替代旧10分钟导入限制。视频来源只上传一次并保留，按音轨缓存FLAC，切模型引用同一asset。240秒窗口及上下文/交叉淡化属于CPU编排；native_worker、managed_song、权重、精度、CPU/GPU分工不改。长片须完整帧数及大文件流式下载验收；测试素材不得作为产品演示或模型质量认证。
+
+用户最新已授权优化验证后替换原版并推送，本轮工作分支push允许；正式执行前仍核对线上身份、活跃任务、固定镜像、来源和回退。只有已完成的片段可复用，未知片段记录需核对后处理，不盲目重跑。其他UI、模型/服务不在本次替换范围内。

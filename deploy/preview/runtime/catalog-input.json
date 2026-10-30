@@ -1,0 +1,684 @@
+[
+  {
+    "name": "mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144.ckpt",
+    "aliases": [
+      "mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144.ckpt",
+      "mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "cleanup/crowd_removal/mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144.ckpt",
+    "config_relpath": "cleanup/crowd_removal/mel_band_roformer_crowd_aufr33_viperx_sdr_8.7144.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 913096801,
+    "primary_category": "cleanup",
+    "primary_category_cn": "音频清理/修复",
+    "secondary_category": "crowd_removal",
+    "secondary_category_cn": "人群/观众声移除",
+    "target_stem": "crowd"
+  },
+  {
+    "name": "denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768.ckpt",
+    "aliases": [
+      "denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768.ckpt",
+      "denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768.ckpt",
+    "config_relpath": "cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_aggr_sdr_27.9768.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 913097300,
+    "primary_category": "cleanup",
+    "primary_category_cn": "音频清理/修复",
+    "secondary_category": "noise_bleed_control",
+    "secondary_category_cn": "降噪/串音抑制",
+    "target_stem": "dry"
+  },
+  {
+    "name": "denoise_mel_band_roformer_aufr33_sdr_27.9959.ckpt",
+    "aliases": [
+      "denoise_mel_band_roformer_aufr33_sdr_27.9959.ckpt",
+      "denoise_mel_band_roformer_aufr33_sdr_27.9959"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_sdr_27.9959.ckpt",
+    "config_relpath": "cleanup/noise_bleed_control/denoise_mel_band_roformer_aufr33_sdr_27.9959.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 913097300,
+    "primary_category": "cleanup",
+    "primary_category_cn": "音频清理/修复",
+    "secondary_category": "noise_bleed_control",
+    "secondary_category_cn": "降噪/串音抑制",
+    "target_stem": "dry"
+  },
+  {
+    "name": "checkpoint-cmn_state_dict.ckpt",
+    "aliases": [
+      "checkpoint-cmn_state_dict.ckpt",
+      "checkpoint-cmn_state_dict"
+    ],
+    "model_type": "bandit_v2",
+    "architecture": "bandit_v2",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "experimental_general/checkpoint-cmn_state_dict.ckpt",
+    "config_relpath": "experimental_general/checkpoint-cmn_state_dict.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 149097604,
+    "primary_category": "experimental_general",
+    "primary_category_cn": "实验/通用分离",
+    "secondary_category": "",
+    "secondary_category_cn": "通用源分离",
+    "target_stem": "speech/music/sfx"
+  },
+  {
+    "name": "bs_roformer_inst_hyperacev2.ckpt",
+    "aliases": [
+      "bs_roformer_inst_hyperacev2.ckpt",
+      "bs_roformer_inst_hyperacev2"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "instrumental/bs_roformer_inst_hyperacev2.ckpt",
+    "config_relpath": "instrumental/bs_roformer_inst_hyperacev2.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 288725646,
+    "primary_category": "instrumental",
+    "primary_category_cn": "伴奏/无人声提取",
+    "secondary_category": "",
+    "secondary_category_cn": "伴奏/无人声提取",
+    "target_stem": "instrument"
+  },
+  {
+    "name": "bs_roformer_karaoke_anvuew.ckpt",
+    "aliases": [
+      "bs_roformer_karaoke_anvuew.ckpt",
+      "bs_roformer_karaoke_anvuew"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "karaoke/bs_roformer_karaoke_anvuew.ckpt",
+    "config_relpath": "karaoke/bs_roformer_karaoke_anvuew.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 204486925,
+    "primary_category": "karaoke",
+    "primary_category_cn": "卡拉OK/和声",
+    "secondary_category": "",
+    "secondary_category_cn": "卡拉OK/和声",
+    "target_stem": "Vocals"
+  },
+  {
+    "name": "mel_band_roformer_karaoke_becruily.ckpt",
+    "aliases": [
+      "mel_band_roformer_karaoke_becruily.ckpt",
+      "mel_band_roformer_karaoke_becruily"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "karaoke/mel_band_roformer_karaoke_becruily.ckpt",
+    "config_relpath": "karaoke/mel_band_roformer_karaoke_becruily.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 1719139254,
+    "primary_category": "karaoke",
+    "primary_category_cn": "卡拉OK/和声",
+    "secondary_category": "",
+    "secondary_category_cn": "卡拉OK/和声",
+    "target_stem": "Vocals/Instrumental"
+  },
+  {
+    "name": "model_bandit_plus_dnr_sdr_11.47.ckpt",
+    "aliases": [
+      "model_bandit_plus_dnr_sdr_11.47.ckpt",
+      "model_bandit_plus_dnr_sdr_11.47"
+    ],
+    "model_type": "bandit",
+    "architecture": "bandit",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "music_stems/dnr_stems/model_bandit_plus_dnr_sdr_11.47.ckpt",
+    "config_relpath": "music_stems/dnr_stems/model_bandit_plus_dnr_sdr_11.47.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 148891175,
+    "primary_category": "music_stems",
+    "primary_category_cn": "音乐多轨/分轨",
+    "secondary_category": "dnr_stems",
+    "secondary_category_cn": "DNR 对话/音乐/音效分轨",
+    "target_stem": "Speech/Music/Effects"
+  },
+  {
+    "name": "dereverb_bs_roformer_anvuew_sdr_22.5050.ckpt",
+    "aliases": [
+      "dereverb_bs_roformer_anvuew_sdr_22.5050.ckpt",
+      "dereverb_bs_roformer_anvuew_sdr_22.5050"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "reverb_echo_control/dereverb/dereverb_bs_roformer_anvuew_sdr_22.5050.ckpt",
+    "config_relpath": "reverb_echo_control/dereverb/dereverb_bs_roformer_anvuew_sdr_22.5050.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 204496717,
+    "primary_category": "reverb_echo_control",
+    "primary_category_cn": "混响/回声处理",
+    "secondary_category": "dereverb",
+    "secondary_category_cn": "去混响",
+    "target_stem": "noreverb"
+  },
+  {
+    "name": "aspiration_mel_band_roformer_less_aggr_sdr_18.1201.ckpt",
+    "aliases": [
+      "aspiration_mel_band_roformer_less_aggr_sdr_18.1201.ckpt",
+      "aspiration_mel_band_roformer_less_aggr_sdr_18.1201"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/aspiration_breath/aspiration_mel_band_roformer_less_aggr_sdr_18.1201.ckpt",
+    "config_relpath": "vocal/aspiration_breath/aspiration_mel_band_roformer_less_aggr_sdr_18.1201.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 835982664,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "aspiration_breath",
+    "secondary_category_cn": "气声/呼吸声分离",
+    "target_stem": "aspiration/other"
+  },
+  {
+    "name": "aspiration_mel_band_roformer_sdr_18.9845.ckpt",
+    "aliases": [
+      "aspiration_mel_band_roformer_sdr_18.9845.ckpt",
+      "aspiration_mel_band_roformer_sdr_18.9845"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/aspiration_breath/aspiration_mel_band_roformer_sdr_18.9845.ckpt",
+    "config_relpath": "vocal/aspiration_breath/aspiration_mel_band_roformer_sdr_18.9845.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 835983746,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "aspiration_breath",
+    "secondary_category_cn": "气声/呼吸声分离",
+    "target_stem": "aspiration/other"
+  },
+  {
+    "name": "BS-Roformer-Resurrection.ckpt",
+    "aliases": [
+      "BS-Roformer-Resurrection.ckpt",
+      "BS-Roformer-Resurrection"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/vocal_extraction/BS-Roformer-Resurrection.ckpt",
+    "config_relpath": "vocal/vocal_extraction/BS-Roformer-Resurrection.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 204510749,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "vocal_extraction",
+    "secondary_category_cn": "人声提取",
+    "target_stem": "vocals"
+  },
+  {
+    "name": "bs_roformer_voc_hyperacev2.ckpt",
+    "aliases": [
+      "bs_roformer_voc_hyperacev2.ckpt",
+      "bs_roformer_voc_hyperacev2"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/vocal_extraction/bs_roformer_voc_hyperacev2.ckpt",
+    "config_relpath": "vocal/vocal_extraction/bs_roformer_voc_hyperacev2.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 288724430,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "vocal_extraction",
+    "secondary_category_cn": "人声提取",
+    "target_stem": "vocals"
+  },
+  {
+    "name": "becruily_deux.ckpt",
+    "aliases": [
+      "becruily_deux.ckpt",
+      "becruily_deux"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/vocal_instrumental_dual/becruily_deux.ckpt",
+    "config_relpath": "vocal/vocal_instrumental_dual/becruily_deux.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 435006815,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "vocal_instrumental_dual",
+    "secondary_category_cn": "人声-伴奏双向分离",
+    "target_stem": "Vocals/Instrumental"
+  },
+  {
+    "name": "BS-Roformer-Resurrection-Inst.ckpt",
+    "aliases": [
+      "BS-Roformer-Resurrection-Inst.ckpt",
+      "BS-Roformer-Resurrection-Inst"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/vocal_instrumental_dual/BS-Roformer-Resurrection-Inst.ckpt",
+    "config_relpath": "vocal/vocal_instrumental_dual/BS-Roformer-Resurrection-Inst.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 204483033,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "vocal_instrumental_dual",
+    "secondary_category_cn": "人声-伴奏双向分离",
+    "target_stem": "other"
+  },
+  {
+    "name": "mel_band_roformer_vocals_becruily.ckpt",
+    "aliases": [
+      "mel_band_roformer_vocals_becruily.ckpt",
+      "mel_band_roformer_vocals_becruily"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/vocal_extraction/mel_band_roformer_vocals_becruily.ckpt",
+    "config_relpath": "vocal/vocal_extraction/mel_band_roformer_vocals_becruily.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 913107578,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "vocal_extraction",
+    "secondary_category_cn": "人声提取",
+    "target_stem": "vocals"
+  },
+  {
+    "name": "mel_band_roformer_instrumental_becruily.ckpt",
+    "aliases": [
+      "mel_band_roformer_instrumental_becruily.ckpt",
+      "mel_band_roformer_instrumental_becruily"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "instrumental/mel_band_roformer_instrumental_becruily.ckpt",
+    "config_relpath": "instrumental/mel_band_roformer_instrumental_becruily.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 913106900,
+    "primary_category": "instrumental",
+    "primary_category_cn": "伴奏/无人声提取",
+    "secondary_category": "",
+    "secondary_category_cn": "伴奏/无人声提取",
+    "target_stem": "Instrumental"
+  },
+  {
+    "name": "Kim_MelBandRoformer.ckpt",
+    "aliases": [
+      "Kim_MelBandRoformer.ckpt",
+      "Kim_MelBandRoformer"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/vocal_extraction/Kim_MelBandRoformer.ckpt",
+    "config_relpath": "vocal/vocal_extraction/Kim_MelBandRoformer.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 913106900,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "vocal_extraction",
+    "secondary_category_cn": "人声提取",
+    "target_stem": "vocals"
+  },
+  {
+    "name": "kimmel_unwa_ft2_bleedless.ckpt",
+    "aliases": [
+      "kimmel_unwa_ft2_bleedless.ckpt",
+      "kimmel_unwa_ft2_bleedless"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "cleanup/noise_bleed_control/kimmel_unwa_ft2_bleedless.ckpt",
+    "config_relpath": "cleanup/noise_bleed_control/kimmel_unwa_ft2_bleedless.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 913101368,
+    "primary_category": "cleanup",
+    "primary_category_cn": "音频清理/修复",
+    "secondary_category": "noise_bleed_control",
+    "secondary_category_cn": "降噪/串音抑制",
+    "target_stem": "vocals"
+  },
+  {
+    "name": "model_bs_roformer_ep_368_sdr_12.9628.ckpt",
+    "aliases": [
+      "model_bs_roformer_ep_368_sdr_12.9628.ckpt",
+      "model_bs_roformer_ep_368_sdr_12.9628"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/vocal_extraction/model_bs_roformer_ep_368_sdr_12.9628.ckpt",
+    "config_relpath": "vocal/vocal_extraction/model_bs_roformer_ep_368_sdr_12.9628.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 639317465,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "vocal_extraction",
+    "secondary_category_cn": "人声提取",
+    "target_stem": "Vocals"
+  },
+  {
+    "name": "melband_roformer_instvox_duality_v2.ckpt",
+    "aliases": [
+      "melband_roformer_instvox_duality_v2.ckpt",
+      "melband_roformer_instvox_duality_v2",
+      "MelBand_Roformer_Kim_InstVoc_Duality_V2_by_Unwa.ckpt",
+      "MelBand_Roformer_Kim_InstVoc_Duality_V2_by_Unwa"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/vocal_instrumental_dual/melband_roformer_instvox_duality_v2.ckpt",
+    "config_relpath": "vocal/vocal_instrumental_dual/melband_roformer_instvox_duality_v2.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 1719116358,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "vocal_instrumental_dual",
+    "secondary_category_cn": "人声-伴奏双向分离",
+    "target_stem": "Vocals/Instrumental"
+  },
+  {
+    "name": "mel_band_roformer_instrumental_bleedless_v2_gabox.ckpt",
+    "aliases": [
+      "mel_band_roformer_instrumental_bleedless_v2_gabox.ckpt",
+      "mel_band_roformer_instrumental_bleedless_v2_gabox"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "cleanup/noise_bleed_control/mel_band_roformer_instrumental_bleedless_v2_gabox.ckpt",
+    "config_relpath": "cleanup/noise_bleed_control/mel_band_roformer_instrumental_bleedless_v2_gabox.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 913026650,
+    "primary_category": "cleanup",
+    "primary_category_cn": "音频清理/修复",
+    "secondary_category": "noise_bleed_control",
+    "secondary_category_cn": "降噪/串音抑制",
+    "target_stem": "Instrumental"
+  },
+  {
+    "name": "bs_roformer_vocals_gabox.ckpt",
+    "aliases": [
+      "bs_roformer_vocals_gabox.ckpt",
+      "bs_roformer_vocals_gabox"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/vocal_extraction/bs_roformer_vocals_gabox.ckpt",
+    "config_relpath": "vocal/vocal_extraction/bs_roformer_vocals_gabox.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 639254584,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "vocal_extraction",
+    "secondary_category_cn": "人声提取",
+    "target_stem": "Vocals"
+  },
+  {
+    "name": "HTDemucs4.th",
+    "aliases": [
+      "HTDemucs4.th",
+      "HTDemucs4"
+    ],
+    "model_type": "htdemucs",
+    "architecture": "htdemucs",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "music_stems/four_stem/HTDemucs4.th",
+    "config_relpath": "music_stems/four_stem/HTDemucs4.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 84141911,
+    "primary_category": "music_stems",
+    "primary_category_cn": "音乐多轨/分轨",
+    "secondary_category": "four_stem",
+    "secondary_category_cn": "四轨分离",
+    "target_stem": "drums/bass/other/vocals"
+  },
+  {
+    "name": "HTDemucs4_6stems.th",
+    "aliases": [
+      "HTDemucs4_6stems.th",
+      "HTDemucs4_6stems"
+    ],
+    "model_type": "htdemucs",
+    "architecture": "htdemucs",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "music_stems/six_stem/HTDemucs4_6stems.th",
+    "config_relpath": "music_stems/six_stem/HTDemucs4_6stems.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 54996327,
+    "primary_category": "music_stems",
+    "primary_category_cn": "音乐多轨/分轨",
+    "secondary_category": "six_stem",
+    "secondary_category_cn": "六轨分离",
+    "target_stem": "drums/bass/other/vocals/guitar/piano"
+  },
+  {
+    "name": "BS-Roformer-SW.ckpt",
+    "aliases": [
+      "BS-Roformer-SW.ckpt",
+      "BS-Roformer-SW"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "music_stems/six_stem/BS-Roformer-SW.ckpt",
+    "config_relpath": "music_stems/six_stem/BS-Roformer-SW.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 699412152,
+    "primary_category": "music_stems",
+    "primary_category_cn": "音乐多轨/分轨",
+    "secondary_category": "six_stem",
+    "secondary_category_cn": "六轨分离",
+    "target_stem": "bass/drums/other/vocals/guitar/piano"
+  },
+  {
+    "name": "mel_band_roformer_4stems_xl_ver1.ckpt",
+    "aliases": [
+      "mel_band_roformer_4stems_xl_ver1.ckpt",
+      "mel_band_roformer_4stems_xl_ver1"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "music_stems/four_stem/mel_band_roformer_4stems_xl_ver1.ckpt",
+    "config_relpath": "music_stems/four_stem/mel_band_roformer_4stems_xl_ver1.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 6411087858,
+    "primary_category": "music_stems",
+    "primary_category_cn": "音乐多轨/分轨",
+    "secondary_category": "four_stem",
+    "secondary_category_cn": "四轨分离",
+    "target_stem": "drums/bass/other/vocals"
+  },
+  {
+    "name": "gilliaan_drumsV1.ckpt",
+    "aliases": [
+      "gilliaan_drumsV1.ckpt",
+      "gilliaan_drumsV1"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "music_stems/drum_stems/gilliaan_drumsV1.ckpt",
+    "config_relpath": "music_stems/drum_stems/gilliaan_drumsV1.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 303490678,
+    "primary_category": "music_stems",
+    "primary_category_cn": "音乐多轨/分轨",
+    "secondary_category": "drum_stems",
+    "secondary_category_cn": "鼓组细分",
+    "target_stem": "drums/other"
+  },
+  {
+    "name": "becruily_guitar.ckpt",
+    "aliases": [
+      "becruily_guitar.ckpt",
+      "becruily_guitar"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "single_instrument/guitar/becruily_guitar.ckpt",
+    "config_relpath": "single_instrument/guitar/becruily_guitar.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 45142183,
+    "primary_category": "single_instrument",
+    "primary_category_cn": "单乐器/单音轨",
+    "secondary_category": "guitar",
+    "secondary_category_cn": "吉他",
+    "target_stem": "Guitar"
+  },
+  {
+    "name": "gilliaan_bowedstrings_bs_v1.ckpt",
+    "aliases": [
+      "gilliaan_bowedstrings_bs_v1.ckpt",
+      "gilliaan_bowedstrings_bs_v1"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "single_instrument/strings/gilliaan_bowedstrings_bs_v1.ckpt",
+    "config_relpath": "single_instrument/strings/gilliaan_bowedstrings_bs_v1.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 303490678,
+    "primary_category": "single_instrument",
+    "primary_category_cn": "单乐器/单音轨",
+    "secondary_category": "strings",
+    "secondary_category_cn": "弦乐",
+    "target_stem": "strings/other"
+  },
+  {
+    "name": "bs_mega_53stem_piano_mvsep.ckpt",
+    "aliases": [
+      "bs_mega_53stem_piano_mvsep.ckpt",
+      "bs_mega_53stem_piano_mvsep"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "music_stems/mega_53_stems/bs_mega_53stem_piano_mvsep.ckpt",
+    "config_relpath": "music_stems/mega_53_stems/bs_mega_53stem_piano_mvsep.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 77616988,
+    "primary_category": "music_stems",
+    "primary_category_cn": "音乐多轨/分轨",
+    "secondary_category": "mega_53_stems",
+    "secondary_category_cn": "MVSep 53 轨分离",
+    "target_stem": "piano"
+  },
+  {
+    "name": "bs_mega_53stem_bass_mvsep.ckpt",
+    "aliases": [
+      "bs_mega_53stem_bass_mvsep.ckpt",
+      "bs_mega_53stem_bass_mvsep"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "music_stems/mega_53_stems/bs_mega_53stem_bass_mvsep.ckpt",
+    "config_relpath": "music_stems/mega_53_stems/bs_mega_53stem_bass_mvsep.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 77616219,
+    "primary_category": "music_stems",
+    "primary_category_cn": "音乐多轨/分轨",
+    "secondary_category": "mega_53_stems",
+    "secondary_category_cn": "MVSep 53 轨分离",
+    "target_stem": "bass"
+  },
+  {
+    "name": "speech_bs_roformer_AliceN_sdr_20.4440.ckpt",
+    "aliases": [
+      "speech_bs_roformer_AliceN_sdr_20.4440.ckpt",
+      "speech_bs_roformer_AliceN_sdr_20.4440"
+    ],
+    "model_type": "bs_roformer",
+    "architecture": "bs_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/speech_vocal/speech_bs_roformer_AliceN_sdr_20.4440.ckpt",
+    "config_relpath": "vocal/speech_vocal/speech_bs_roformer_AliceN_sdr_20.4440.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 102387933,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "speech_vocal",
+    "secondary_category_cn": "语音/说话人声分离",
+    "target_stem": "vocals"
+  },
+  {
+    "name": "speech_mel_roformer_AliceN_sdr_16.5716.ckpt",
+    "aliases": [
+      "speech_mel_roformer_AliceN_sdr_16.5716.ckpt",
+      "speech_mel_roformer_AliceN_sdr_16.5716"
+    ],
+    "model_type": "mel_band_roformer",
+    "architecture": "mel_band_roformer",
+    "supported": true,
+    "unsupported_reason": "",
+    "relpath": "vocal/speech_vocal/speech_mel_roformer_AliceN_sdr_16.5716.ckpt",
+    "config_relpath": "vocal/speech_vocal/speech_mel_roformer_AliceN_sdr_16.5716.yaml",
+    "auxiliary_relpaths": [],
+    "size_bytes": 435091173,
+    "primary_category": "vocal",
+    "primary_category_cn": "人声",
+    "secondary_category": "speech_vocal",
+    "secondary_category_cn": "语音/说话人声分离",
+    "target_stem": "vocals/other"
+  }
+]

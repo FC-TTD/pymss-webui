@@ -1,0 +1,80 @@
+{
+  "_id": "6ac9fcff0628f31e09ad8e6c",
+  "id": "JusperLee/DBS-TIGER-DnR",
+  "private": false,
+  "pipeline_tag": "audio-to-audio",
+  "library_name": "pytorch",
+  "tags": [
+    "pytorch",
+    "safetensors",
+    "audio-source-separation",
+    "cinematic-audio-source-separation",
+    "dynamic-band-splitting",
+    "model_hub_mixin",
+    "pytorch_model_hub_mixin",
+    "audio-to-audio",
+    "arxiv:2610.14993",
+    "license:apache-2.0",
+    "region:us"
+  ],
+  "downloads": 817,
+  "likes": 1,
+  "modelId": "JusperLee/DBS-TIGER-DnR",
+  "author": "JusperLee",
+  "sha": "22da7d4cd3ea63f9365181008bff1c0d2ab6fb2b",
+  "lastModified": "2026-10-15T11:38:56.000Z",
+  "gated": false,
+  "disabled": false,
+  "model-index": null,
+  "config": {},
+  "cardData": {
+    "license": "apache-2.0",
+    "library_name": "pytorch",
+    "pipeline_tag": "audio-to-audio",
+    "tags": [
+      "audio-source-separation",
+      "cinematic-audio-source-separation",
+      "dynamic-band-splitting",
+      "model_hub_mixin",
+      "pytorch_model_hub_mixin"
+    ]
+  },
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "blobId": "a6344aac8c09253b3b630fb776ae94478aa0275b",
+      "size": 1519
+    },
+    {
+      "rfilename": "README.md",
+      "blobId": "d77f2fa091f5da9d2ddc85852f0f8f1a2c13c8b6",
+      "size": 2403
+    },
+    {
+      "rfilename": "config.json",
+      "blobId": "f01f0a581a33968b356f624c61a5954ba32cb4c6",
+      "size": 957
+    },
+    {
+      "rfilename": "model.safetensors",
+      "blobId": "0a07c529220a5ee1a6fe9873d2a93b42f48de444",
+      "size": 4111836,
+      "lfs": {
+        "sha256": "3d8205743f2a6f5a6704f5d4104d7cf5bf7bf02dab2fd728da31f4c69225cadb",
+        "size": 4111836,
+        "pointerSize": 132
+      }
+    }
+  ],
+  "spaces": [
+    "JusperLee/DBS-Demo"
+  ],
+  "createdAt": "2026-10-10T08:53:19.000Z",
+  "safetensors": {
+    "parameters": {
+      "F32": 1013702
+    },
+    "total": 1013702
+  },
+  "usedStorage": 4111836
+}

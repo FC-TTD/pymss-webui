@@ -1,0 +1,10 @@
+FROM registry.ttd/pymss/native@sha256:a5bb212a097c35e9d99cb6eefd33323aaa82717530992976c282ef61cd9b672a
+COPY runtime-wheels /tmp/runtime-wheels
+RUN pip install --no-deps --no-index /tmp/runtime-wheels/*.whl
+COPY provider/pymss /app/provider/pymss
+COPY dbs-source/dbs /app/dbs-source/dbs
+COPY runtime/*.py /app/studio_runtime/
+ENV PYTHONPATH=/app/provider:/app/dbs-source:/app PYTHONUNBUFFERED=1
+ENTRYPOINT []
+WORKDIR /app/provider
+CMD ["python","-m","uvicorn","studio_runtime.app:app","--host","0.0.0.0","--port","8000","--workers","1"]

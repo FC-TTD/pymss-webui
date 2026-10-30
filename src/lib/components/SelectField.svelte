@@ -2,7 +2,7 @@
   import { Label } from "$lib/components/ui/label/index.js";
   import * as Select from "$lib/components/ui/select/index.js";
 
-  export interface SelectOption<T extends string = string> {
+  interface SelectOption<T extends string = string> {
     value: T;
     label: string;
   }

@@ -1,0 +1,45 @@
+name: audio-separation
+services:
+  entry:
+    image: ${AUDIO_UI_IMAGE:?Use the verified immutable Stage image}
+    container_name: audio-separation-entry
+    restart: unless-stopped
+    read_only: true
+    user: "101:101"
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=16m"]
+    mem_limit: 64m
+    cpus: 0.5
+    pids_limit: 64
+    networks: [pymss_backend]
+    ports: ["192.168.100.18:17898:8080"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    labels:
+      ttd.audio.owner: pymss-webui
+      ttd.audio.source: ${AUDIO_SOURCE_COMMIT:?Record the authorized source commit}
+      ttd.audio.release: ${AUDIO_RELEASE:?Record the verified release}
+      caddy: http://msst
+      caddy.@audio_home.path: /
+      caddy.@audio_home.not.query: native=msst
+      caddy.handle_0: "@audio_home"
+      caddy.handle_0.reverse_proxy: "192.168.100.18:17898"
+      caddy.@audio_ui.path: /ui /ui/*
+      caddy.handle_1: "@audio_ui"
+      caddy.handle_1.reverse_proxy: "192.168.100.18:17898"
+      caddy.handle_2: /api/studio/*
+      caddy.handle_2.reverse_proxy: "192.168.100.18:17898"
+      caddy.handle_3: /api/speech/*
+      caddy.handle_3.reverse_proxy: "192.168.100.18:17898"
+      caddy.handle_4: /api/ym/*
+      caddy.handle_4.reverse_proxy: "192.168.100.18:17898"
+      caddy.handle_5: /api/chain/*
+      caddy.handle_5.reverse_proxy: "192.168.100.18:17898"
+networks:
+  pymss_backend:
+    external: true
+    name: pymss-ui-preview_default
