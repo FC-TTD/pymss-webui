@@ -129,6 +129,7 @@ def job(job_id:str):
   canonical,source,input_path=load_asset(job_id)
   duration=source.get('input_duration') or (outputs[0]['frames']/outputs[0]['sample_rate'] if outputs else 0)
   extra={'input_asset_id':canonical,'input_bytes':source.get('input_bytes',input_path.stat().st_size),'input_duration':duration,'input_url':f'/api/studio/assets/{canonical}/audio'}
+  if source.get('source_media'):extra.update(input_media_id=source['source_media'],input_stream=source['source_stream'])
  except HTTPException:pass
  return {k:v for k,v in state.items() if k not in {'input','outputs','attempt_log','required_gpu_mb','free_gpu_mb'}} | {'outputs':outputs} | extra
 

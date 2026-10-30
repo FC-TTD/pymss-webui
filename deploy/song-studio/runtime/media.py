@@ -86,6 +86,10 @@ def install_media(app,data,write):
         path=root/identity/'media.json'
         if not path.is_file():raise HTTPException(404)
         return path,json.loads(path.read_text())
+    @app.get('/api/studio/media/{identity}')
+    def describe(identity:str):
+        _,state=load(identity)
+        return {k:v for k,v in state.items() if k!='assets'}
     @app.post('/api/studio/media',status_code=201)
     async def upload(request:Request,filename:str):
         identity=uuid.uuid4().hex;folder=root/identity;folder.mkdir()

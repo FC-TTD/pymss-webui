@@ -20,7 +20,7 @@ def run_long(path,execute,step=STEP):
                 end=min(core+step*rate,total)
                 left=max(0,core-CONTEXT*rate);right=min(total,end+CONTEXT*rate)
                 folder=path.parent/'segments'/str(number);folder.mkdir(parents=True,exist_ok=True)
-                job.update(message=f'正在处理第 {number+1} / {count} 段',segment=number+1,segments=count);write(path,job)
+                job.update(message=f'正在处理第 {number+1} 段（共 {count} 段）',segment=number+1,segments=count);write(path,job)
                 child_path=folder/'job.json'
                 if child_path.exists():
                     previous=json.loads(child_path.read_text())
@@ -34,7 +34,7 @@ def run_long(path,execute,step=STEP):
                     child.pop('managedAttempt',None)
                     write(child_path,child)
                     execute(child_path)
-                job.update(message=f'已处理第 {number+1} / {count} 段',segment=number+1,segments=count);write(path,job)
+                job.update(message=f'已处理第 {number+1} 段（共 {count} 段）',segment=number+1,segments=count);write(path,job)
                 result=json.loads((folder/'job.json').read_text())
                 if result['status']!='succeeded':
                     job.update(status=result['status'],error=result.get('error','长音频片段未完成'))
