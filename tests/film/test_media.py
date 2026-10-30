@@ -65,3 +65,14 @@ def test_uncertain_segment_is_not_replayed(tmp_path):
     folder=tmp_path/'segments/0';folder.mkdir(parents=True);write(folder/'job.json',dict(state,status='unknown',managedAttempt='previous'))
     called=[];run_long(path,lambda p:called.append(p),step=4)
     assert not called and json.loads(path.read_text())['status']=='unknown'
+
+
+def test_existing_ten_minute_inputs_keep_original_execution(tmp_path,monkeypatch):
+    from film_runtime import worker,long_audio
+    calls=[]
+    monkeypatch.setattr(worker,'run_short',lambda path:calls.append('native'))
+    monkeypatch.setattr(long_audio,'run_long',lambda path,execute:calls.append('windowed'))
+    path=tmp_path/'job.json'
+    path.write_text(json.dumps({'input_duration':600}));worker.run(path)
+    path.write_text(json.dumps({'input_duration':601}));worker.run(path)
+    assert calls==['native','windowed']

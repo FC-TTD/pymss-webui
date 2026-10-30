@@ -12,7 +12,7 @@ def run_short(path):
 
 def run(path):
  state=json.loads(Path(path).read_text())
- if state.get('input_duration',0)>300:
+ if state.get('input_duration',0)>600:
   from .long_audio import run_long
   return run_long(path,run_short)
  return run_short(path)
