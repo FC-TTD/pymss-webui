@@ -43,8 +43,10 @@ def run_long(path,execute,step=STEP):
                 for row in result['outputs']:
                     stem=row['stem'];out_rate=row['sample_rate']
                     if out_rate!=48000:raise ValueError('输出采样率不一致')
-                    start=round((core-left)/rate*out_rate)-(round(FADE*out_rate) if core else 0)
-                    stop=round((end-left)/rate*out_rate)+(round(FADE*out_rate) if end<total else 0)
+                    incoming=min(round(FADE*rate),end-core) if core else 0
+                    outgoing=min(round(FADE*rate),total-end)
+                    start=round((core-left)/rate*out_rate)-round(incoming/rate*out_rate)
+                    stop=round((end-left)/rate*out_rate)+round(outgoing/rate*out_rate)
                     with sf.SoundFile(folder/row['file']) as audio_file:
                         if audio_file.frames < stop:raise ValueError('模型输出发生截断')
                         audio_file.seek(start);chunk=audio_file.read(stop-start,dtype='float32',always_2d=True)
@@ -61,7 +63,8 @@ def run_long(path,execute,step=STEP):
                         weight=np.linspace(0,1,length,dtype='float32')[:,None]
                         writer.write(tail*(1-weight)+chunk[:length]*weight);chunk=chunk[length:]
                     if end<total:
-                        overlap=round(2*FADE*out_rate);tails[stem]=chunk[-overlap:].copy();chunk=chunk[:-overlap]
+                        overlap=2*round(outgoing/rate*out_rate)
+                        if overlap:tails[stem]=chunk[-overlap:].copy();chunk=chunk[:-overlap]
                     writer.write(chunk)
                 del chunk
         for row in outputs:

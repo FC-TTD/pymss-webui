@@ -33,8 +33,9 @@ def test_silent_video_is_rejected(tmp_path):
     video=tmp_path/'silent.mkv';ffmpeg('-f','lavfi','-i','color=size=16x16:rate=1:duration=1','-c:v','ffv1',video)
     with pytest.raises(Exception,match='没有可读取'):asyncio.run(probe(video))
 
-def test_window_join_retains_length_signal_and_stereo(tmp_path):
-    rate=48000;frames=17*rate+137
+@pytest.mark.parametrize('seconds',[17,16])
+def test_window_join_retains_length_signal_and_stereo(tmp_path,seconds):
+    rate=48000;frames=seconds*rate+137
     t=np.arange(frames)/rate;audio=np.stack([.1*np.sin(t*440*2*np.pi),.1*np.sin(t*880*2*np.pi)],axis=1)
     source=tmp_path/'source.flac';sf.write(source,audio,rate,subtype='PCM_24')
     path=tmp_path/'job.json';write(path,dict(id='a'*32,model='identity',input=str(source),stems=['Other'],status='queued',outputs=[]))
@@ -76,3 +77,21 @@ def test_existing_ten_minute_inputs_keep_original_execution(tmp_path,monkeypatch
     path.write_text(json.dumps({'input_duration':600}));worker.run(path)
     path.write_text(json.dumps({'input_duration':601}));worker.run(path)
     assert calls==['native','windowed']
+
+@pytest.mark.parametrize('rate,tail',[(44100,137),(192000,1)])
+def test_subsecond_tail_with_resampling_is_complete(tmp_path,rate,tail):
+    from math import gcd
+    from scipy.signal import resample_poly
+    frames=16*rate+tail;t=np.arange(frames)/rate
+    source=tmp_path/'source.flac';sf.write(source,np.stack([.1*np.sin(t*440*2*np.pi)]*2,axis=1),rate,subtype='PCM_24')
+    path=tmp_path/'job.json';write(path,dict(id='c'*32,model='identity',input=str(source),stems=['Other'],status='queued',outputs=[]))
+    def resampling_identity(child):
+        state=json.loads(child.read_text());audio,sr=sf.read(state['input'],always_2d=True)
+        d=gcd(sr,48000);audio=resample_poly(audio,48000//d,sr//d,axis=0)
+        sf.write(child.parent/'other.wav',audio,48000,subtype='PCM_24')
+        state.update(status='succeeded',outputs=[dict(stem='Other',file='other.wav',sample_rate=48000,channels=2)]);write(child,state)
+    run_long(path,resampling_identity,step=4)
+    state=json.loads(path.read_text());assert state['status']=='succeeded',state
+    output,_=sf.read(tmp_path/state['outputs'][0]['file'],always_2d=True)
+    assert abs(len(output)-round(frames/rate*48000))<=1 and output.shape[1]==2
+    assert np.isfinite(output).all() and np.max(abs(output))>.05
