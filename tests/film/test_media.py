@@ -27,7 +27,8 @@ def test_video_stream_selection_and_surround_center(tmp_path):
     asyncio.run(extract(video,first,streams[0]['index']));asyncio.run(extract(video,second,streams[1]['index']))
     a,sr=sf.read(first,always_2d=True);b,_=sf.read(second,always_2d=True)
     assert len(a)==96000 and a.shape[1]==2 and np.max(abs(a[:,0]))>.02
-    assert np.max(abs(a[:,0]-a[:,1]))<1e-6 and not np.allclose(a,b)
+    assert np.max(abs(a[:,0]-a[:,1]))<1e-6
+    assert b.shape==(96000,1) and not np.allclose(a[:,0],b[:,0])
 
 def test_silent_video_is_rejected(tmp_path):
     video=tmp_path/'silent.mkv';ffmpeg('-f','lavfi','-i','color=size=16x16:rate=1:duration=1','-c:v','ffv1',video)
@@ -105,3 +106,94 @@ def test_tracks_use_audio_duration_instead_of_longer_video(tmp_path):
         '-map','0:v','-map','1:a','-map','2:a','-c:v','ffv1','-c:a','flac',video)
     streams=asyncio.run(probe(video))
     assert abs(streams[0]['duration']-1.2)<.001 and abs(streams[1]['duration']-2.4)<.001
+
+
+@pytest.mark.parametrize("input_channels,model_channels", [(1,2),(2,1),(2,2),(1,1)])
+def test_export_matches_source_channels(tmp_path,input_channels,model_channels):
+    from film_runtime.worker import match_output_channels
+
+    target=tmp_path/'out.wav'
+    audio=np.tile(np.arange(1,model_channels+1)*.1,(128,1))
+    sf.write(target,audio,48000,subtype='PCM_24')
+    path=tmp_path/'job.json'
+    write(path,dict(status='succeeded',outputs=[dict(file=target.name,channels=model_channels)]))
+    match_output_channels(path,input_channels)
+    info=sf.info(target)
+    assert (info.channels,info.frames,info.samplerate,info.subtype)==(input_channels,128,48000,'PCM_24')
+    assert json.loads(path.read_text())['outputs'][0]['channels']==input_channels
+    expected=audio if input_channels==model_channels else np.repeat(audio.mean(axis=1,keepdims=True),input_channels,axis=1)
+    assert np.allclose(sf.read(target,always_2d=True)[0],expected,atol=3e-7)
+
+
+def test_four_native_workers_overlap_when_memory_allows(tmp_path):
+    from film_runtime.resources import execute_with_capacity
+
+    async def exercise():
+        all_started=asyncio.Event()
+        active=set()
+        async def probe():
+            return 16000
+        async def launch(path,log):
+            active.add(path)
+            if len(active)==4:
+                all_started.set()
+            await asyncio.wait_for(all_started.wait(),timeout=2)
+            write(path,dict(model='test-model',status='succeeded'))
+            return 0
+
+        paths=[]
+        for number in range(4):
+            path=tmp_path/'jobs'/str(number)/'job.json'
+            path.parent.mkdir(parents=True)
+            write(path,dict(model='test-model',status='queued'))
+            paths.append(path)
+        await asyncio.gather(*(execute_with_capacity(p,probe=probe,launch=launch) for p in paths))
+        assert active==set(paths)
+
+    asyncio.run(exercise())
+
+
+def test_four_batches_are_admitted_and_fifth_can_retry(tmp_path,monkeypatch):
+    import httpx
+    monkeypatch.setenv('STUDIO_JOBS',str(tmp_path/'jobs'))
+    monkeypatch.setenv('STUDIO_MAX_ACTIVE_JOBS','4')
+    from film_runtime import app as studio
+
+    async def exercise():
+        all_started=asyncio.Event()
+        finish=asyncio.Event()
+        active=set()
+        async def run(path):
+            active.add(path)
+            if len(active)==4:
+                all_started.set()
+            await finish.wait()
+            write(path,dict(json.loads(path.read_text()),status='succeeded'))
+        monkeypatch.setattr(studio,'execute_with_capacity',run)
+        monkeypatch.setattr(studio,'registry',lambda:[dict(id='fixture',available=True,stems=[dict(id='Other')])])
+        fixture=tmp_path/'input.wav'
+        sf.write(fixture,np.zeros(4800),48000)
+        params={'model':'fixture','stems':'["Other"]'}
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=studio.app),base_url='http://test') as client:
+            batches=[]
+            for _ in range(5):
+                batch=await client.post('/api/studio/batches',params=params)
+                assert batch.status_code==201,batch.text
+                endpoint='/api/studio/batches/'+batch.json()['id']
+                uploaded=await client.post(endpoint+'/inputs',params={'filename':'input.wav'},content=fixture.read_bytes())
+                assert uploaded.status_code==201,uploaded.text
+                batches.append(endpoint)
+            try:
+                responses=await asyncio.gather(*(client.post(b+'/start') for b in batches[:4]))
+                assert [response.status_code for response in responses]==[202]*4
+                await asyncio.wait_for(all_started.wait(),timeout=2)
+                assert (await client.post(batches[4]+'/start')).status_code==429
+            finally:
+                finish.set()
+                await asyncio.sleep(0)
+            assert studio.active==0
+            assert (await client.post(batches[4]+'/start')).status_code==202
+            await asyncio.sleep(0)
+            assert studio.active==0
+
+    asyncio.run(exercise())

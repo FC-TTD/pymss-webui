@@ -50,13 +50,17 @@ def run_long(path,execute,step=STEP):
                     with sf.SoundFile(folder/row['file']) as audio_file:
                         if audio_file.frames < stop:raise ValueError('模型输出发生截断')
                         audio_file.seek(start);chunk=audio_file.read(stop-start,dtype='float32',always_2d=True)
+                    if source.channels==1 and chunk.shape[1]==2:
+                        chunk=chunk.mean(axis=1,keepdims=True)
+                    elif source.channels==2 and chunk.shape[1]==1:
+                        chunk=chunk.repeat(2,axis=1)
                     if not np.isfinite(chunk).all():raise ValueError('输出包含无效采样')
                     if stem not in writers:
                         name=hashlib.sha256(stem.encode()).hexdigest()[:16]+'.wav'
                         # RF64 is selected before exceeding classic WAV's 4 GB ceiling.
-                        fmt='RF64' if total/rate*out_rate*row['channels']*3>=4294960000 else 'WAV'
-                        writers[stem]=sf.SoundFile(path.parent/name,'w',samplerate=out_rate,channels=row['channels'],format=fmt,subtype='PCM_24')
-                        outputs.append(dict(row,file=name,frames=0))
+                        fmt='RF64' if total/rate*out_rate*source.channels*3>=4294960000 else 'WAV'
+                        writers[stem]=sf.SoundFile(path.parent/name,'w',samplerate=out_rate,channels=source.channels,format=fmt,subtype='PCM_24')
+                        outputs.append(dict(row,file=name,frames=0,channels=source.channels))
                     writer=writers[stem]
                     if stem in tails:
                         tail=tails.pop(stem);length=len(tail)
