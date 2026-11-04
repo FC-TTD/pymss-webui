@@ -12,6 +12,8 @@ from .worker import write
 from .managed_song import SONG_MODELS
 
 MIB = 1024**2
+_capacity_lock = asyncio.Lock()
+_reserved_memory = 0
 
 
 async def free_memory():
@@ -71,6 +73,7 @@ async def run_worker(path, log_path):
 
 
 async def execute_with_capacity(path, probe=free_memory, launch=run_worker, wait_seconds=600, interval=2, attempts=3):
+    global _reserved_memory
     path = Path(path)
     root = path.parent.parent.parent
     state = json.loads(path.read_text())
@@ -85,9 +88,11 @@ async def execute_with_capacity(path, probe=free_memory, launch=run_worker, wait
     session = uuid.uuid4().hex[:8]
     for attempt in range(1, attempts + 1):
         while True:
-            free = await probe()
-            if free is not None and free >= required:
-                break
+            async with _capacity_lock:
+                free = await probe()
+                if free is not None and free >= required + _reserved_memory:
+                    _reserved_memory += required
+                    break
             state = json.loads(path.read_text())
             if time.monotonic() >= deadline:
                 state.update(status='failed', error='等待显卡资源超过10分钟，音频已保留，可继续未完成文件。', error_code='gpu_capacity_timeout', outputs=[])
@@ -97,12 +102,15 @@ async def execute_with_capacity(path, probe=free_memory, launch=run_worker, wait
                          retry_count=attempt - 1, required_gpu_mb=required, free_gpu_mb=free)
             write(path, state)
             await asyncio.sleep(interval)
-        state = json.loads(path.read_text())
-        log_path = path.with_name(f'job-attempt-{session}-{attempt}.log')
-        state.update(status='queued', error='', error_code='', message='正在启动分离…', retry_count=attempt - 1,
-                     required_gpu_mb=required, free_gpu_mb=free, attempt_log=log_path.name)
-        write(path, state)
-        code = await launch(path, log_path)
+        try:
+            state = json.loads(path.read_text())
+            log_path = path.with_name(f'job-attempt-{session}-{attempt}.log')
+            state.update(status='queued', error='', error_code='', message='正在启动分离…', retry_count=attempt - 1,
+                         required_gpu_mb=required, free_gpu_mb=free, attempt_log=log_path.name)
+            write(path, state)
+            code = await launch(path, log_path)
+        finally:
+            _reserved_memory -= required
         state = json.loads(path.read_text())
         if state.get('status') == 'succeeded' and not code:
             remember_peak(state['model'], state.get('peak_cuda_bytes', 0), root)

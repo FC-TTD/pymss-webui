@@ -11,7 +11,9 @@ from .resources import execute_with_capacity
 DATA=Path(os.getenv('STUDIO_JOBS','/data/jobs'));DATA.mkdir(parents=True,exist_ok=True)
 MANIFEST=Path('/model-cache/download-manifest.json')
 VERIFIED=Path('/data/verified-models.json')
-active=False
+active=0
+MAX_ACTIVE=int(os.getenv('STUDIO_MAX_ACTIVE_JOBS','1'))
+if not 1<=MAX_ACTIVE<=4:raise ValueError('STUDIO_MAX_ACTIVE_JOBS must be between 1 and 4')
 app=FastAPI(title='PYMSS Stage Preview')
 
 DUO_IDS={'becruily_deux.ckpt','bs_leap_xe_voc.ckpt','bs_leap_xe_inst.ckpt','bs_roformer_voc_hyperacev2.ckpt','bs_roformer_inst_hyperacev2.ckpt','BS-Roformer-Resurrection.ckpt','BS-Roformer-Resurrection-Inst.ckpt','mel_band_roformer_vocals_becruily.ckpt','mel_band_roformer_instrumental_becruily.ckpt','Kim_MelBandRoformer.ckpt','kimmel_unwa_ft2_bleedless.ckpt','model_bs_roformer_ep_368_sdr_12.9628.ckpt','melband_roformer_instvox_duality_v2.ckpt','mel_band_roformer_instrumental_bleedless_v2_gabox.ckpt','bs_roformer_vocals_gabox.ckpt'}
@@ -46,26 +48,23 @@ def recover_interrupted():
  recover_batches(DATA.parent)
 
 @app.get('/healthz')
-def health():return {'status':'ok','busy':active}
+def health():return {'status':'ok','busy':active>=MAX_ACTIVE,'active':active,'capacity':MAX_ACTIVE}
 @app.get('/api/studio/models')
 def models():return {'models':registry()}
 
 async def execute(path,release_slot=True):
- global active
  try:
   await execute_with_capacity(path)
  finally:
-  if release_slot:active=False
+  if release_slot:release_job_slot()
 @app.post('/api/studio/jobs',status_code=202)
 async def submit(request:Request,model:str,filename:str,stems:str,purpose:str="duo"):
- global active
  validate_selection(model,stems)
- if active:raise HTTPException(429,'服务正在处理一个任务，请完成后再提交。')
- active=True
+ claim_slot()
  try:
   job_id=await store_input(request,model,filename,stems,purpose)
   asyncio.create_task(execute(DATA/job_id/'job.json'));return {'id':job_id}
- except BaseException:active=False;raise
+ except BaseException:release_job_slot();raise
 
 def validate_selection(model,stems):
  row=next((m for m in registry() if m['id']==model),None)
@@ -153,13 +152,13 @@ def waveform(job_id:str,name:str,bins:int=Query(900,ge=128,le=4096)):
 
 def claim_slot():
  global active
- if active:raise HTTPException(429,'服务正在处理其他任务，请稍后开始本批次。')
- active=True
-def release_slot():
+ if active>=MAX_ACTIVE:raise HTTPException(429,'处理名额已满，请稍后开始。')
+ active+=1
+def release_job_slot():
  global active
- active=False
+ active-=1
 
-install_batch_routes(app,DATA,validate_selection,store_input,load_job,job,execute,claim_slot,release_slot,reuse_input)
+install_batch_routes(app,DATA,validate_selection,store_input,load_job,job,execute,claim_slot,release_job_slot,reuse_input)
 
 from .media import install_media
 install_media(app,DATA,write)

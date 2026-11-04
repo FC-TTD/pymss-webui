@@ -56,6 +56,9 @@ def run_song(path):
     if row['stem'] not in job['stems'] or row['format']!='pcm_f32le' or row['sample_rate']!=sr:raise ValueError('原生输出合同不一致')
     raw=archive.read(row['filename']);channels=int(row['channels']);audio=np.frombuffer(raw,dtype='<f4').reshape(-1,channels).T
     if not np.isfinite(audio).all():raise ValueError('音轨含无效数值')
+    if mix.shape[0]==1 and channels==2:audio=audio.mean(axis=0,keepdims=True)
+    if mix.shape[0]==2 and channels==1:audio=audio.repeat(2,axis=0)
+    channels=audio.shape[0]
     if sr!=48000:audio=resample(audio,sr,48000)
     name=hashlib.sha256(row['stem'].encode()).hexdigest()[:16]+'.wav'
     sf.write(str(path.parent/name),audio.T,48000,subtype='PCM_24')

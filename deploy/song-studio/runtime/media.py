@@ -76,13 +76,14 @@ async def extract(source,target,index):
     # FFmpeg's layout-aware stereo downmix includes center and surround channels.
     # No video decode, browser PCM buffer, normalization or sample-rate conversion.
     stream=next(s for s in await probe(source) if s['index']==index)
-    required=int(stream['duration']*max(stream['sample_rate'],48000)*2*3)+2*1024**3
+    channels=min(stream['channels'],2)
+    required=int(stream['duration']*max(stream['sample_rate'],48000)*channels*3)+2*1024**3
     if shutil.disk_usage(target.parent).free<required:raise HTTPException(507,'存储空间不足，未开始提取音轨。')
     await command('ffmpeg','-nostdin','-v','error','-i',str(source),'-map','0:'+str(index),
-        '-vn','-sn','-dn',*downmix(stream),'-ac','2','-c:a','flac','-compression_level','1','-f','flac',str(target))
+        '-vn','-sn','-dn',*downmix(stream),'-ac',str(channels),'-c:a','flac','-compression_level','1','-f','flac',str(target))
     import soundfile as sf
     info=sf.info(target)
-    if info.channels!=2 or info.frames<=0: raise HTTPException(400,'音轨提取未完成。')
+    if info.channels!=channels or info.frames<=0: raise HTTPException(400,'音轨提取未完成。')
     return info
 
 def install_media(app,data,write):
