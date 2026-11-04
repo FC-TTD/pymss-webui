@@ -57,6 +57,7 @@ if __name__=='__main__':
  state=json.loads(Path(sys.argv[1]).read_text())
  if state['model'] in SONG_MODELS:run(sys.argv[1])
  else:
-  with open('/data/gpu-worker.lock','a') as lock:
+  # NFS implements shared flock as a read lock and needs a readable descriptor.
+  with open('/data/gpu-worker.lock','a+') as lock:
    mode=fcntl.LOCK_SH if int(os.getenv('STUDIO_MAX_ACTIVE_JOBS','1'))>1 else fcntl.LOCK_EX
    fcntl.flock(lock,mode);run(sys.argv[1])
