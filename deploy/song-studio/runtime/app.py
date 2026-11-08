@@ -7,6 +7,7 @@ from .worker import write, verification_key
 from .waveform import audio_peaks
 from .batch import install_batch_routes, recover_batches
 from .resources import execute_with_capacity
+from . import deshimmer_audio
 
 DATA=Path(os.getenv('STUDIO_JOBS','/data/jobs'));DATA.mkdir(parents=True,exist_ok=True)
 MANIFEST=Path('/model-cache/download-manifest.json')
@@ -35,6 +36,9 @@ def registry():
  for m in manifest['models']:
   v=verified.get(m['id'],{});v=v if v.get('verification_key')==verification_key(m) else {};art=m.get('artifacts',[])
   rows.append({'id':m['id'],'available':bool(v.get('passed') and m['downloaded']),'downloaded':m['downloaded'],'stems':[dict(o,label=display_label(m['id'],o['id'],o['label'])) for o in v.get('stems',[])],'size':art[0]['bytes'] if art else 0,'reason':'' if v.get('passed') else ('当前空闲显存不足' if 'out of memory' in v.get('reason','').lower() else '当前环境暂不兼容' if v.get('reason') else '') or ('安装中' if m['downloaded'] else '下载未完成')})
+ if deshimmer_audio.enabled():
+  rows.append({'id':deshimmer_audio.MODEL_ID,'available':True,'downloaded':True,'size':0,
+               'stems':[{'id':deshimmer_audio.STEM,'label':deshimmer_audio.LABEL}],'reason':''})
  return rows
 @app.on_event('startup')
 def recover_interrupted():
