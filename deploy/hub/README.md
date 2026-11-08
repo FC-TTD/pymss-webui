@@ -28,3 +28,15 @@ had 1/2/1/2 channels and 1152000 frames each. GPU0 free memory returned to the
 pre-test 5519 MiB. The test covers one model and one host with four simultaneous
 API clients. Mixed heavier models, managed song concurrency, and four physical
 workstations remain to be verified.
+
+## Deshimmer music repair
+
+Set `STUDIO_ENABLE_DESHIMMER=1` on the selected runtime to expose `deshimmer`
+and its `restored` track through the existing studio job and batch routes.
+This uses the MIT-licensed Deshimmer DSP at upstream commit
+`76d77e38d7802c31d952ad99a6c8b256042e59ca` with a checksum-pinned archive,
+without model weights, Gradio, mastering, or an optimizer. One CPU repair
+process runs at a time and shares the ordinary application admission limit.
+Long audio reuses the existing windowed render with 60-second windows,
+context, and crossfades. Outputs are 48 kHz PCM24 WAV and follow the source
+mono/stereo layout. Existing multichannel downmix rules still apply.

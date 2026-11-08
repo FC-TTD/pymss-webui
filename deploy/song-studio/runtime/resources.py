@@ -10,10 +10,12 @@ import uuid
 from pathlib import Path
 from .worker import write
 from .managed_song import SONG_MODELS
+from . import deshimmer_audio
 
 MIB = 1024**2
 _capacity_lock = asyncio.Lock()
 _reserved_memory = 0
+_deshimmer_slot = asyncio.Lock()
 
 
 async def free_memory():
@@ -66,9 +68,13 @@ def is_oom(state):
 
 
 async def run_worker(path, log_path):
+    env = None
+    if json.loads(path.read_text())['model'] == deshimmer_audio.MODEL_ID:
+        env = dict(os.environ, CUDA_VISIBLE_DEVICES='', OMP_NUM_THREADS='1',
+                   OPENBLAS_NUM_THREADS='1', NUMBA_NUM_THREADS='1')
     with log_path.open('w') as log:
         process = await asyncio.create_subprocess_exec(
-            sys.executable, '-m', 'studio_runtime.worker', str(path), stdout=log, stderr=log)
+            sys.executable, '-m', 'studio_runtime.worker', str(path), stdout=log, stderr=log, env=env)
         return await process.wait()
 
 
@@ -77,6 +83,16 @@ async def execute_with_capacity(path, probe=free_memory, launch=run_worker, wait
     path = Path(path)
     root = path.parent.parent.parent
     state = json.loads(path.read_text())
+    if state['model'] == deshimmer_audio.MODEL_ID:
+        if _deshimmer_slot.locked():
+            state.update(status='waiting', message='正在等待音乐修复资源，音频已保留。')
+            write(path, state)
+        async with _deshimmer_slot:
+            code = await launch(path, path.with_name('deshimmer.log'))
+            current = json.loads(path.read_text())
+            if code and current['status'] != 'failed':
+                write(path, dict(current, status='failed', error='音乐修复进程中断，音频已保留。', outputs=[]))
+        return
     if state['model'] in SONG_MODELS:
         # Capacity, queue and unload belong to the managed provider; no Stage
         # GPU probe, OOM replay or new direct native inference for song models.

@@ -3,6 +3,7 @@ import json,os,sys
 from pathlib import Path
 from .native_worker import write, verification_key
 from .managed_song import SONG_MODELS, run_song
+from . import deshimmer_audio
 
 def match_output_channels(path, source_channels):
     import soundfile as sf
@@ -55,7 +56,8 @@ def run(path):
 if __name__=='__main__':
  import fcntl
  state=json.loads(Path(sys.argv[1]).read_text())
- if state['model'] in SONG_MODELS:run(sys.argv[1])
+ if state['model']==deshimmer_audio.MODEL_ID:deshimmer_audio.run(sys.argv[1])
+ elif state['model'] in SONG_MODELS:run(sys.argv[1])
  else:
   # NFS implements shared flock as a read lock and needs a readable descriptor.
   with open('/data/gpu-worker.lock','a+') as lock:
