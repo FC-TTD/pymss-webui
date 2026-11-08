@@ -197,3 +197,73 @@ def test_four_batches_are_admitted_and_fifth_can_retry(tmp_path,monkeypatch):
             assert studio.active==0
 
     asyncio.run(exercise())
+
+
+def test_slow_upload_only_blocks_its_own_batch(tmp_path):
+    import uuid
+    import httpx
+    from fastapi import FastAPI
+    from film_runtime.batch import install_batch_routes
+
+    data = tmp_path / 'jobs'
+    data.mkdir()
+    app = FastAPI()
+    jobs = {}
+    processed = []
+    upload_held = asyncio.Event()
+    release_upload = asyncio.Event()
+
+    async def store_input(request, model, filename, stems, purpose):
+        if filename == 'slow.wav':
+            upload_held.set()
+        body = b''.join([chunk async for chunk in request.stream()])
+        job_id = uuid.uuid4().hex
+        folder = data / job_id
+        folder.mkdir()
+        (folder / 'input.audio').write_bytes(body)
+        jobs[job_id] = {'id': job_id, 'status': 'queued'}
+        return job_id
+
+    async def execute(path, release_slot):
+        processed.append(path.parent.name)
+        jobs[path.parent.name]['status'] = 'succeeded'
+
+    async def body_stream():
+        yield b'first'
+        await release_upload.wait()
+        yield b'second'
+
+    install_batch_routes(app, data, lambda *_: ['Other'], store_input, jobs.__getitem__,
+                         jobs.__getitem__, execute, lambda: None, lambda: None)
+
+    async def exercise():
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app),
+                                     base_url='http://test') as client:
+            async def create():
+                batch = await client.post('/api/studio/batches', params={'model': 'fixture', 'stems': '["Other"]'})
+                return '/api/studio/batches/' + batch.json()['id']
+
+            first, second = await create(), await create()
+            async def upload(route, name, content):
+                return await client.post(route+'/inputs', params={'filename': name}, content=content)
+
+            slow = asyncio.create_task(upload(first, 'slow.wav', body_stream()))
+            await asyncio.wait_for(upload_held.wait(), timeout=2)
+            same = asyncio.create_task(upload(first, 'same.wav', b'third'))
+            try:
+                other = await asyncio.wait_for(upload(second, 'fast.wav', b'other'), timeout=2)
+                assert other.status_code == 201
+                start = await asyncio.wait_for(client.post(second+'/start'), timeout=2)
+                assert start.status_code == 202
+                await asyncio.sleep(0)
+                assert processed == [other.json()['jobs'][0]['id']]
+                assert not slow.done() and not same.done()
+            finally:
+                release_upload.set()
+                completed = await asyncio.gather(slow, same)
+            assert [r.status_code for r in completed] == [201, 201]
+            batch = (await client.get(first)).json()
+            assert len(batch['jobs']) == 2
+            assert batch['uploaded_bytes'] == len(b'firstsecondthird')
+
+    asyncio.run(exercise())

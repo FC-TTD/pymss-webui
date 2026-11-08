@@ -40,3 +40,12 @@ process runs at a time and shares the ordinary application admission limit.
 Long audio reuses the existing windowed render with 60-second windows,
 context, and crossfades. Outputs are 48 kHz PCM24 WAV and follow the source
 mono/stereo layout. Existing multichannel downmix rules still apply.
+
+## Concurrent uploads
+
+Independent workbench batches can upload, reuse an asset, or start processing
+while a slow client is still uploading to a different batch. State updates
+within a batch remain ordered. Video audio preparation is scoped to the source
+media so unrelated media can be prepared independently. Keep one ASGI worker
+for the shared file-backed state. GPU admission and Deshimmer CPU scheduling
+are separate from upload concurrency.

@@ -1,6 +1,7 @@
 """Disk streamed film ingest. Originals immutable; selected audio cached per stream."""
 import asyncio, hashlib, json, math, shutil, uuid
 from pathlib import Path
+from weakref import WeakValueDictionary
 from fastapi import HTTPException, Request
 
 MAX_FILE = 16 * 1024**3
@@ -88,7 +89,7 @@ async def extract(source,target,index):
 
 def install_media(app,data,write):
     root=data.parent/'media';root.mkdir(exist_ok=True)
-    lock=asyncio.Lock()
+    media_locks: WeakValueDictionary[str, asyncio.Lock] = WeakValueDictionary()
     def load(identity):
         if len(identity)!=32 or any(c not in '0123456789abcdef' for c in identity):raise HTTPException(404)
         path=root/identity/'media.json'
@@ -108,7 +109,7 @@ def install_media(app,data,write):
         return {k:v for k,v in state.items() if k!='assets'}
     @app.post('/api/studio/media/{identity}/prepare',status_code=201)
     async def prepare(identity:str,index:int):
-        async with lock:
+        async with media_locks.setdefault(identity, asyncio.Lock()):
             path,state=load(identity)
             stream=next((s for s in state['streams'] if s['index']==index),None)
             if stream is None: raise HTTPException(400,'音轨不存在。')

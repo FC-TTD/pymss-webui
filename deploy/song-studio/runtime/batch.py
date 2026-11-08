@@ -7,6 +7,7 @@ import shutil
 import uuid
 import zipfile
 from pathlib import Path
+from weakref import WeakValueDictionary
 
 from fastapi import HTTPException, Request
 from fastapi.responses import FileResponse
@@ -37,7 +38,8 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
     exports = root / 'exports'
     batches.mkdir(exist_ok=True)
     exports.mkdir(exist_ok=True)
-    upload_lock = asyncio.Lock()
+    # Keep state changes ordered within one batch without blocking other clients.
+    batch_locks: WeakValueDictionary[str, asyncio.Lock] = WeakValueDictionary()
     export_lock = asyncio.Lock()
 
     def load(batch_id):
@@ -90,7 +92,7 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
 
     @app.post('/api/studio/batches/{batch_id}/inputs', status_code=201)
     async def add(batch_id: str, request: Request, filename: str):
-        async with upload_lock:
+        async with batch_locks.setdefault(batch_id, asyncio.Lock()):
             path, state = load(batch_id)
             if state['status'] != 'preparing':
                 raise HTTPException(409, '该批次已开始，请新建批次添加音频。')
@@ -117,7 +119,7 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
 
     @app.post('/api/studio/batches/{batch_id}/start', status_code=202)
     async def start(batch_id: str):
-        async with upload_lock:
+        async with batch_locks.setdefault(batch_id, asyncio.Lock()):
             path, state = load(batch_id)
             if state['status'] in {'running', 'succeeded'}:
                 return describe(state)  # Repeated starts never repeat successful inference.
@@ -137,7 +139,7 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
 
     @app.post('/api/studio/batches/{batch_id}/reuse', status_code=201)
     async def reuse(batch_id: str, asset_id: str):
-        async with upload_lock:
+        async with batch_locks.setdefault(batch_id, asyncio.Lock()):
             path, state = load(batch_id)
             if state['status'] != 'preparing':
                 raise HTTPException(409, '该批次已开始，请新建批次。')
