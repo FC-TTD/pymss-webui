@@ -12,6 +12,7 @@ from weakref import WeakValueDictionary
 from fastapi import HTTPException, Request
 from fastapi.responses import FileResponse
 from .worker import write
+from . import gateway_v2
 
 MAX_FILES = 20
 MAX_INPUT_BYTES = 64 * 1024**3
@@ -54,13 +55,13 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
         jobs = [public_job(item) for item in state['jobs']]
         return state | {'jobs': jobs, 'completed': sum(j['status'] == 'succeeded' for j in jobs)}
 
-    async def run(path):
+    async def run(path,model):
         try:
             state = json.loads(path.read_text())
             for job_id in state['jobs']:
                 job_path = data / job_id / 'job.json'
                 job = load_job(job_id)
-                if job['status']=='unknown':
+                if job['status']=='unknown' and not (gateway_v2.enabled(job.get('model')) and job.get('gatewayV2Key')):
                     state.update(status='interrupted',error='上游执行状态待核对，不能重复执行。');write(path,state);return
                 if job['status'] == 'succeeded':
                     continue
@@ -78,7 +79,7 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
             state.update(status='partial' if failed else 'succeeded', error='部分文件未完成，可继续重试。' if failed else '')
             write(path, state)
         finally:
-            release()
+            release(model)
 
     @app.post('/api/studio/batches', status_code=201)
     def create(model: str, stems: str, purpose: str = 'duo'):
@@ -126,14 +127,14 @@ def install_batch_routes(app, data, validate, store_input, load_job, public_job,
             if not state['jobs']:
                 raise HTTPException(400, '请先上传音频。')
             validate(state['model'], json.dumps(state['stems']))
-            if any(load_job(item)['status']=='unknown' for item in state['jobs']):raise HTTPException(409,'上游执行状态待核对，不能重复提交。')
-            claim()
+            if any((job['status']=='unknown' and not (gateway_v2.enabled(job.get('model')) and job.get('gatewayV2Key'))) for job in (load_job(item) for item in state['jobs'])):raise HTTPException(409,'上游执行状态待核对，不能重复提交。')
+            claim(state['model'])
             try:
                 state.update(status='running', error='')
                 write(path, state)
-                asyncio.create_task(run(path))
+                asyncio.create_task(run(path,state['model']))
             except BaseException:
-                release()
+                release(state['model'])
                 raise
             return describe(state)
 

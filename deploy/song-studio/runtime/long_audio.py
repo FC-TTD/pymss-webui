@@ -21,9 +21,13 @@ def shared_segment_input(path,job,source,number,left,right,rate):
         raise ValueError('长音频来源与 canonical asset 不一致')
     if not stat.S_ISDIR(root.lstat().st_mode):
         raise ValueError('canonical asset 目录无效')
-    cache=root/'segment-inputs'/str(number)
-    cache.mkdir(parents=True,exist_ok=True)
-    if not stat.S_ISDIR(cache.parent.lstat().st_mode) or not stat.S_ISDIR(cache.lstat().st_mode):
+    cache_root=root/'segment-inputs'
+    cache_root.mkdir(exist_ok=True)
+    if not stat.S_ISDIR(cache_root.lstat().st_mode):
+        raise ValueError('canonical 分段目录无效')
+    cache=cache_root/str(number)
+    cache.mkdir(exist_ok=True)
+    if not stat.S_ISDIR(cache.lstat().st_mode):
         raise ValueError('canonical 分段目录无效')
     target=cache/'input.flac'
     with (root/'.segment-inputs.lock').open('a+') as lock:
@@ -60,9 +64,15 @@ def run_long(path,execute,step=STEP):
                 child_path=folder/'job.json'
                 if child_path.exists():
                     previous=json.loads(child_path.read_text())
-                    if previous.get('status')!='succeeded' or previous.get('model')!=job['model'] or previous.get('stems')!=job['stems']:
+                    if previous.get('model')!=job['model'] or previous.get('stems')!=job['stems']:
                         job.update(status='unknown')
                         raise RuntimeError('已有未完成的分段执行记录，需先核对，未自动重跑。')
+                    if previous.get('status')!='succeeded':
+                        from .gateway_v2 import enabled
+                        if not (enabled(job['model']) and previous.get('gatewayV2Key')):
+                            job.update(status='unknown')
+                            raise RuntimeError('已有未完成的分段执行记录，需先核对，未自动重跑。')
+                        execute(child_path)  # Gateway reuses the durable key or task ID.
                 else:
                     shared=shared_segment_input(path,job,source,number,left,right,rate)
                     if shared is None:

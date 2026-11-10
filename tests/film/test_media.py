@@ -257,7 +257,7 @@ def test_slow_upload_only_blocks_its_own_batch(tmp_path):
         yield b'second'
 
     install_batch_routes(app, data, lambda *_: ['Other'], store_input, jobs.__getitem__,
-                         jobs.__getitem__, execute, lambda: None, lambda: None)
+                         jobs.__getitem__, execute, lambda *_: None, lambda *_: None)
 
     async def exercise():
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app),

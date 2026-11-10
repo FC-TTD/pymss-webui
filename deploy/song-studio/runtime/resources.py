@@ -10,6 +10,7 @@ import uuid
 from pathlib import Path
 from .worker import write
 from .managed_song import SONG_MODELS
+from . import gateway_v2
 from . import deshimmer_audio
 
 MIB = 1024**2
@@ -92,6 +93,14 @@ async def execute_with_capacity(path, probe=free_memory, launch=run_worker, wait
             current = json.loads(path.read_text())
             if code and current['status'] != 'failed':
                 write(path, dict(current, status='failed', error='音乐修复进程中断，音频已保留。', outputs=[]))
+        return
+    if gateway_v2.enabled(state['model']):
+        for retry in range(3):
+            log_path=path.with_name('gateway-v2-'+uuid.uuid4().hex+'.log')
+            await launch(path,log_path)
+            current=json.loads(path.read_text())
+            if current.get('status')!='unknown' or not current.get('gatewayV2Key'):return
+            if retry<2:await asyncio.sleep(2*(retry+1))
         return
     if state['model'] in SONG_MODELS:
         # Capacity, queue and unload belong to the managed provider; no Stage
