@@ -92,7 +92,7 @@ async def resume_gateway_job(job_id:str):
  return {'id':job_id,'status':'queued'}
 
 @app.get('/healthz')
-def health():return {'status':'ok','busy':active>=MAX_ACTIVE,'active':active,'capacity':MAX_ACTIVE}
+def health():return {'status':'ok','busy':active>=MAX_ACTIVE,'active':active,'capacity':MAX_ACTIVE,'gateway_v2_active':v2_active,'gateway_v2_capacity':MAX_V2_ACTIVE}
 @app.get('/api/studio/models')
 def models():return {'models':registry()}
 
