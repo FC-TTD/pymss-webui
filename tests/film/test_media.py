@@ -69,6 +69,29 @@ def test_uncertain_segment_is_not_replayed(tmp_path):
     assert not called and json.loads(path.read_text())['status']=='unknown'
 
 
+def test_long_audio_windows_reuse_canonical_asset_across_models(tmp_path):
+    asset='a'*32
+    canonical=tmp_path/asset;canonical.mkdir()
+    source=canonical/'input.audio'
+    sf.write(source,np.ones((9*48000,2))*.01,48000,format='FLAC',subtype='PCM_24')
+    write(canonical/'job.json',dict(id=asset,model='first',input=str(source),input_asset_id=asset,stems=['Other'],status='queued',outputs=[]))
+    def identity(child):
+        state=json.loads(child.read_text());audio,rate=sf.read(state['input'],always_2d=True)
+        sf.write(child.parent/'other.wav',audio,rate,subtype='PCM_24')
+        state.update(status='succeeded',outputs=[dict(stem='Other',file='other.wav',sample_rate=rate,channels=2)]);write(child,state)
+    run_long(canonical/'job.json',identity,step=4)
+    second=tmp_path/('b'*32);second.mkdir()
+    child_job=second/'job.json'
+    write(child_job,dict(id='b'*32,model='second',input=str(source),input_asset_id=asset,stems=['Other'],status='queued',outputs=[]))
+    run_long(child_job,identity,step=4)
+    for number in range(3):
+        shared=canonical/'segment-inputs'/str(number)/'input.flac'
+        assert shared.is_file()
+        assert shared.samefile(canonical/'segments'/str(number)/'input.flac')
+        assert shared.samefile(second/'segments'/str(number)/'input.flac')
+    assert json.loads(child_job.read_text())['status']=='succeeded'
+
+
 def test_existing_ten_minute_inputs_keep_original_execution(tmp_path,monkeypatch):
     from film_runtime import worker,long_audio
     calls=[]

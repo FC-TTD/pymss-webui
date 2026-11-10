@@ -1,6 +1,7 @@
 """Bounded audio windows, original execution paths, context and crossfaded joins."""
-import hashlib,json,time
+import fcntl,hashlib,json,os,stat,time
 from pathlib import Path
+from uuid import uuid4
 import numpy as np
 import soundfile as sf
 from .native_worker import write
@@ -8,6 +9,41 @@ from .native_worker import write
 STEP=240
 CONTEXT=2
 FADE=.5
+
+def shared_segment_input(path,job,source,number,left,right,rate):
+    """Create a single immutable CPU window per canonical asset and hard-link it to this job."""
+    asset=job.get('input_asset_id')
+    if asset is None:return None  # Historical jobs retain their original window layout.
+    if not isinstance(asset,str) or len(asset)!=32 or any(c not in '0123456789abcdef' for c in asset):
+        raise ValueError('长音频缺少合法的 canonical asset ID')
+    root=path.parent.parent/asset
+    if Path(job['input']).resolve()!= (root/'input.audio').resolve():
+        raise ValueError('长音频来源与 canonical asset 不一致')
+    if not stat.S_ISDIR(root.lstat().st_mode):
+        raise ValueError('canonical asset 目录无效')
+    cache=root/'segment-inputs'/str(number)
+    cache.mkdir(parents=True,exist_ok=True)
+    if not stat.S_ISDIR(cache.parent.lstat().st_mode) or not stat.S_ISDIR(cache.lstat().st_mode):
+        raise ValueError('canonical 分段目录无效')
+    target=cache/'input.flac'
+    with (root/'.segment-inputs.lock').open('a+') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX)
+        if not target.exists():
+            temporary=cache/('input-'+uuid4().hex+'.tmp.flac')
+            try:
+                source.seek(left)
+                audio=source.read(right-left,dtype='float32',always_2d=True)
+                sf.write(temporary,audio,rate,format='FLAC',subtype='PCM_24')
+                try:os.link(temporary,target)
+                except FileExistsError:pass
+            finally:
+                temporary.unlink(missing_ok=True)
+        if not stat.S_ISREG(target.lstat().st_mode):
+            raise ValueError('canonical 分段输入不是普通文件')
+        info=sf.info(target)
+        if info.frames!=right-left or info.samplerate!=rate or info.channels!=source.channels:
+            raise ValueError('canonical 分段输入与原音频不一致')
+    return target
 
 def run_long(path,execute,step=STEP):
     path=Path(path);job=json.loads(path.read_text());started=time.time()
@@ -28,10 +64,16 @@ def run_long(path,execute,step=STEP):
                         job.update(status='unknown')
                         raise RuntimeError('已有未完成的分段执行记录，需先核对，未自动重跑。')
                 else:
-                    source.seek(left);audio=source.read(right-left,dtype='float32',always_2d=True)
-                    sf.write(folder/'input.flac',audio,rate,format='FLAC',subtype='PCM_24');del audio
+                    shared=shared_segment_input(path,job,source,number,left,right,rate)
+                    if shared is None:
+                        source.seek(left);audio=source.read(right-left,dtype='float32',always_2d=True)
+                        sf.write(folder/'input.flac',audio,rate,format='FLAC',subtype='PCM_24');del audio
+                    elif not (folder/'input.flac').exists():os.link(shared,folder/'input.flac')
+                    elif not os.path.samefile(shared,folder/'input.flac'):
+                        raise ValueError('任务分段输入与 canonical 缓存不一致')
                     child=dict(job,input=str(folder/'input.flac'),status='queued',outputs=[])
                     child.pop('managedAttempt',None)
+                    child['segment_index']=number
                     write(child_path,child)
                     execute(child_path)
                 job.update(message=f'已处理第 {number+1} 段（共 {count} 段）',segment=number+1,segments=count);write(path,job)
