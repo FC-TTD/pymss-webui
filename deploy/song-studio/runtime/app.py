@@ -7,14 +7,17 @@ from .worker import write, verification_key
 from .waveform import audio_peaks
 from .batch import install_batch_routes, recover_batches
 from .resources import execute_with_capacity
-from . import deshimmer_audio
+from . import deshimmer_audio, gateway_v2
 
 DATA=Path(os.getenv('STUDIO_JOBS','/data/jobs'));DATA.mkdir(parents=True,exist_ok=True)
 MANIFEST=Path('/model-cache/download-manifest.json')
 VERIFIED=Path('/data/verified-models.json')
 active=0
+v2_active=0
 MAX_ACTIVE=int(os.getenv('STUDIO_MAX_ACTIVE_JOBS','1'))
+MAX_V2_ACTIVE=int(os.getenv('STUDIO_GATEWAY_V2_MAX_ACTIVE_JOBS','4'))
 if not 1<=MAX_ACTIVE<=4:raise ValueError('STUDIO_MAX_ACTIVE_JOBS must be between 1 and 4')
+if not 1<=MAX_V2_ACTIVE<=8:raise ValueError('STUDIO_GATEWAY_V2_MAX_ACTIVE_JOBS must be between 1 and 8')
 app=FastAPI(title='PYMSS Stage Preview')
 
 DUO_IDS={'becruily_deux.ckpt','bs_leap_xe_voc.ckpt','bs_leap_xe_inst.ckpt','bs_roformer_voc_hyperacev2.ckpt','bs_roformer_inst_hyperacev2.ckpt','BS-Roformer-Resurrection.ckpt','BS-Roformer-Resurrection-Inst.ckpt','mel_band_roformer_vocals_becruily.ckpt','mel_band_roformer_instrumental_becruily.ckpt','Kim_MelBandRoformer.ckpt','kimmel_unwa_ft2_bleedless.ckpt','model_bs_roformer_ep_368_sdr_12.9628.ckpt','melband_roformer_instvox_duality_v2.ckpt','mel_band_roformer_instrumental_bleedless_v2_gabox.ckpt','bs_roformer_vocals_gabox.ckpt'}
@@ -43,32 +46,70 @@ def registry():
 @app.on_event('startup')
 def recover_interrupted():
  if os.getenv('STUDIO_SKIP_RECOVERY')=='1':return
+ batch_jobs=set()
+ for batch_path in (DATA.parent/'batches').glob('*/batch.json'):
+  try:
+   batch=json.loads(batch_path.read_text())
+   batch_jobs.update(batch.get('jobs',[]))
+  except (OSError,ValueError):pass
+ recover_batches(DATA.parent)
+ resumable=[]
  for path in DATA.glob('*/job.json'):
   try:
    state=json.loads(path.read_text())
-   if state.get('status') in {'queued','running','waiting'}:
-    state.update(status='unknown' if state.get('managedSong') else 'failed',error='服务重启，原任务与输入保留；受管执行状态需核对，未自动重跑。');write(path,state)
+   if state.get('status') in {'queued','running','waiting','unknown'}:
+    safe_key=bool(state.get('gatewayV2Key'))
+    if not safe_key and gateway_v2.enabled(state.get('model')):
+     for child_path in (path.parent/'segments').glob('*/job.json'):
+      try:
+       if json.loads(child_path.read_text()).get('gatewayV2Key'):safe_key=True;break
+      except (OSError,ValueError):pass
+    if safe_key and gateway_v2.enabled(state.get('model')):
+     state.update(status='queued',message='正在按原 Gateway 任务号恢复',error='');write(path,state)
+     if state.get('id') not in batch_jobs:resumable.append(path)
+    elif state.get('status')!='unknown':
+     state.update(status='unknown' if state.get('managedSong') else 'failed',error='服务重启，原任务与输入保留；受管执行状态需核对，未自动重跑。');write(path,state)
   except (OSError,ValueError):pass
- recover_batches(DATA.parent)
+ for path in resumable:asyncio.create_task(resume_v2(path))
+
+async def resume_v2(path):
+ model=json.loads(path.read_text())['model']
+ while True:
+  try:claim_slot(model);break
+  except HTTPException:await asyncio.sleep(1)
+ await execute(path)
+
+@app.post('/api/studio/jobs/{job_id}/resume',status_code=202)
+async def resume_gateway_job(job_id:str):
+ state=load_job(job_id)
+ if not gateway_v2.enabled(state.get('model')) or not state.get('gatewayV2Key') or state.get('status')!='unknown':
+  raise HTTPException(409,'该任务没有可恢复的 Gateway 提交键。')
+ claim_slot(state['model'])
+ try:
+  path=DATA/job_id/'job.json';state.update(status='queued',error='',message='按原 Gateway 提交键恢复');write(path,state)
+  asyncio.create_task(execute(path))
+ except BaseException:release_job_slot(state['model']);raise
+ return {'id':job_id,'status':'queued'}
 
 @app.get('/healthz')
-def health():return {'status':'ok','busy':active>=MAX_ACTIVE,'active':active,'capacity':MAX_ACTIVE}
+def health():return {'status':'ok','busy':active>=MAX_ACTIVE,'active':active,'capacity':MAX_ACTIVE,'gateway_v2_active':v2_active,'gateway_v2_capacity':MAX_V2_ACTIVE}
 @app.get('/api/studio/models')
 def models():return {'models':registry()}
 
 async def execute(path,release_slot=True):
+ model=json.loads(Path(path).read_text())['model']
  try:
   await execute_with_capacity(path)
  finally:
-  if release_slot:release_job_slot()
+  if release_slot:release_job_slot(model)
 @app.post('/api/studio/jobs',status_code=202)
 async def submit(request:Request,model:str,filename:str,stems:str,purpose:str="duo"):
  validate_selection(model,stems)
- claim_slot()
+ claim_slot(model)
  try:
   job_id=await store_input(request,model,filename,stems,purpose)
   asyncio.create_task(execute(DATA/job_id/'job.json'));return {'id':job_id}
- except BaseException:release_job_slot();raise
+ except BaseException:release_job_slot(model);raise
 
 def validate_selection(model,stems):
  row=next((m for m in registry() if m['id']==model),None)
@@ -154,13 +195,18 @@ def waveform(job_id:str,name:str,bins:int=Query(900,ge=128,le=4096)):
  if state['status']!='succeeded' or name not in [o['file'] for o in state['outputs']]:raise HTTPException(404,'文件不存在。')
  return audio_peaks(DATA/job_id/name,bins)
 
-def claim_slot():
- global active
- if active>=MAX_ACTIVE:raise HTTPException(429,'处理名额已满，请稍后开始。')
- active+=1
-def release_job_slot():
- global active
- active-=1
+def claim_slot(model=None):
+ global active,v2_active
+ if gateway_v2.enabled(model):
+  if v2_active>=MAX_V2_ACTIVE:raise HTTPException(429,'受管任务名额已满，请稍后开始。')
+  v2_active+=1
+ else:
+  if active>=MAX_ACTIVE:raise HTTPException(429,'处理名额已满，请稍后开始。')
+  active+=1
+def release_job_slot(model=None):
+ global active,v2_active
+ if gateway_v2.enabled(model):v2_active-=1
+ else:active-=1
 
 install_batch_routes(app,DATA,validate_selection,store_input,load_job,job,execute,claim_slot,release_job_slot,reuse_input)
 
