@@ -11,8 +11,8 @@ import time
 NAME = 'pymss-preview-runtime'
 BASE_IMAGE = 'registry.ttd/pymss-webui/runtime@sha256:38fcad0bdf834a1d2ad22a34e9c87bb6e7bf00f75aa46c744527f23f7d7914e8'
 BASE_SOURCE = '2005a0a50f9bfee9be1662addaaeffa4f891fa54'
-CANDIDATE_IMAGE = 'registry.ttd/pymss-webui/runtime@sha256:9f4a545f89f243fbbec5cbed040b7ca05e761532553a6d3d2569f0f6be04b9b2'
-CANDIDATE_SOURCE = 'b4b784108c433be6b30d9b8f68209858489e56ab'
+CANDIDATE_IMAGE = 'registry.ttd/pymss-webui/runtime@sha256:c78258500751a9d185f5a6811686b5013e098e3a80d8f3e2ffd7f79a7cc0d34e'
+CANDIDATE_SOURCE = 'aba174d90318b8267ce642f4ded99592e21768ac'
 NETWORK = 'pymss-ui-preview_default'
 
 

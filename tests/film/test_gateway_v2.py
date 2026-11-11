@@ -83,7 +83,8 @@ def test_gateway_v2_busy_retries_same_key_without_losing_job(tmp_path,monkeypatc
     audio=folder/'artifact.wav';sf.write(audio,np.ones((48000,2))*.02,48000,subtype='PCM_24')
     content=audio.read_bytes();digest=hashlib.sha256(content).hexdigest()
     artifacts=[dict(id=role+'-id',role=role,size_bytes=len(content),sha256=digest,sample_rate=48000,bits_per_sample=24) for role in ('dialogue','background')]
-    task=dict(id='task-busy',profile_id='film-dialogue-deux',profile_version=gateway_v2.VERSION,state='succeeded',inputs=[dict(state='succeeded',artifacts=artifacts)])
+    rejected=dict(id='task-rejected',profile_id='film-dialogue-deux',profile_version=gateway_v2.VERSION,state='failed',error='separation execution failed')
+    task=dict(id='task-busy-retry',profile_id='film-dialogue-deux',profile_version=gateway_v2.VERSION,state='succeeded',inputs=[dict(state='succeeded',artifacts=artifacts)])
     class Session:
         keys=[]
         def __init__(self):self.headers={};self.trust_env=True
@@ -93,7 +94,12 @@ def test_gateway_v2_busy_retries_same_key_without_losing_job(tmp_path,monkeypatc
             self.__class__.keys.append(kwargs['headers']['Idempotency-Key'])
             if len(self.keys)==1:return Response(429,headers={'Retry-After':'1'})
             waiting=json.loads(job.read_text())
-            assert waiting['status']=='waiting' and waiting['gatewayV2Retries']==1
+            if len(self.keys)==2:
+                assert waiting['status']=='waiting' and waiting['gatewayV2Retries']==1
+                return Response(202,rejected)
+            assert waiting['status']=='waiting' and waiting['gatewayV2Attempt']==1
+            assert waiting['gatewayV2ResumeFrom']=='task-rejected'
+            assert kwargs['json']['resume_from']=='task-rejected'
             return Response(202,task)
         def get(self,url,**kwargs):
             return Response(200,content=content) if '/artifacts/' in url else Response(200,task)
@@ -101,9 +107,9 @@ def test_gateway_v2_busy_retries_same_key_without_losing_job(tmp_path,monkeypatc
     monkeypatch.setattr(gateway_v2.requests,'Session',Session)
     gateway_v2.run(job)
     restored=json.loads(job.read_text())
-    assert restored['status']=='succeeded' and restored['gatewayV2Task']=='task-busy'
+    assert restored['status']=='succeeded' and restored['gatewayV2Task']=='task-busy-retry'
     assert len(restored['outputs'])==2 and restored['gatewayV2Retries']==1
-    assert Session.keys==['stage-'+asset+'-whole']*2
+    assert Session.keys==['stage-'+asset+'-whole']*2+['stage-'+asset+'-whole-retry-1']
 
 def test_v2_transport_retry_keeps_persisted_key_and_skips_stage_gpu(tmp_path,monkeypatch):
     monkeypatch.setenv('STUDIO_GATEWAY_V2_SEPARATION','1')

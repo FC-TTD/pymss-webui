@@ -58,7 +58,13 @@ def run(path):
     index=job.get('segment_index')
     if index is not None and (not isinstance(index,int) or index<0):
         job.update(status='failed',error='分段编号无效');write(path,job);return
-    expected_key=f'stage-{job["id"]}-{index if index is not None else "whole"}'
+    base_key=f'stage-{job["id"]}-{index if index is not None else "whole"}'
+    attempt=job.get('gatewayV2Attempt',0)
+    if not isinstance(attempt,int) or attempt<0 or attempt>1000:
+        job.update(status='unknown',error='Gateway 尝试编号无效，停止执行');write(path,job);return
+    if attempt and not job.get('gatewayV2ResumeFrom'):
+        job.update(status='unknown',error='Gateway 前次任务号缺失，停止执行');write(path,job);return
+    expected_key=base_key+(f'-retry-{attempt}' if attempt else '')
     key=job.get('gatewayV2Key') or expected_key
     if key!=expected_key:
         job.update(status='unknown',error='Gateway 提交键不一致，停止执行');write(path,job);return
@@ -71,25 +77,41 @@ def run(path):
             imported=_payload(http.post(base+'/v2/audio/separations/inputs/stage',json={'asset_id':asset,**({'segment':index} if index is not None else {})},timeout=(10,120),allow_redirects=False),(200,201))
             # Repeated canonical imports return 200 with the same authority record.
             input_row={name:imported[name] for name in ('id','file_ref','input_hash')}
-            body={'profile_id':profile,'profile_version':VERSION,'inputs':[input_row],
-                  'options':{'audio_params':{'channels':'source','sample_rate':48000,'wav_bit_depth':'PCM_24'}}}
+            base_body={'profile_id':profile,'profile_version':VERSION,'inputs':[input_row],
+                       'options':{'audio_params':{'channels':'source','sample_rate':48000,'wav_bit_depth':'PCM_24'}}}
             admission_deadline=time.monotonic()+4*3600
             while True:
+                body=base_body|({'resume_from':job['gatewayV2ResumeFrom']} if attempt else {})
                 response=http.post(base+'/v2/audio/separations',json=body,headers={'Idempotency-Key':key},timeout=(10,120),allow_redirects=False)
-                if response.status_code!=429:break
-                # A definite 429 has no accepted task; retain the same durable key
-                # while Gateway/Hub admission clears, even across a Stage restart.
-                retry_after=response.headers.get('Retry-After','')
-                delay=int(retry_after) if retry_after.isdecimal() and 1<=int(retry_after)<=30 else 5
-                job.update(status='waiting',message='Gateway 资源忙，等待受管空位',gatewayV2Retries=job.get('gatewayV2Retries',0)+1)
-                write(path,job)
-                if time.monotonic()+delay>admission_deadline:
-                    raise TimeoutError('Gateway 持续繁忙，原提交键已保留')
-                time.sleep(delay)
-            task=_payload(response,202)
-            if task.get('profile_id')!=profile or task.get('profile_version')!=VERSION or not task.get('id'):
-                raise ValueError('Gateway 返回的任务身份不一致')
-            job['gatewayV2Task']=task['id'];write(path,job)
+                if response.status_code==429:
+                    # Gateway persists a failed task before reporting a definite
+                    # Provider rejection. Resolve that task by this same key first.
+                    retry_after=response.headers.get('Retry-After','')
+                    delay=int(retry_after) if retry_after.isdecimal() and 1<=int(retry_after)<=30 else 5
+                    job.update(status='waiting',message='Gateway 资源忙，等待受管空位',
+                               gatewayV2RejectedKey=key,gatewayV2Retries=job.get('gatewayV2Retries',0)+1)
+                    write(path,job)
+                    if time.monotonic()+delay>admission_deadline:raise TimeoutError('Gateway 持续繁忙，原提交键已保留')
+                    time.sleep(delay)
+                    continue
+                task=_payload(response,202)
+                if task.get('profile_id')!=profile or task.get('profile_version')!=VERSION or not task.get('id'):
+                    raise ValueError('Gateway 返回的任务身份不一致')
+                if job.get('gatewayV2RejectedKey')==key and task.get('state')=='failed':
+                    # The preceding 429 proves no Provider execution was accepted.
+                    # A fresh persisted key with resume_from can now request capacity.
+                    attempt+=1
+                    if attempt>1000:raise TimeoutError('Gateway 繁忙重试次数超限')
+                    key=base_key+f'-retry-{attempt}'
+                    job.update(gatewayV2Attempt=attempt,gatewayV2ResumeFrom=task['id'],
+                               gatewayV2Key=key,gatewayV2RejectedKey='',status='waiting',
+                               message='Gateway 已拒绝前次任务，等待重新受理')
+                    write(path,job)
+                    if time.monotonic()+5>admission_deadline:raise TimeoutError('Gateway 持续繁忙，新提交键已保留')
+                    time.sleep(5)
+                    continue
+                job['gatewayV2Task']=task['id'];write(path,job)
+                break
         task_id=job['gatewayV2Task']
         deadline=time.monotonic()+4*3600
         while True:
