@@ -11,6 +11,8 @@ import time
 NAME = 'pymss-preview-runtime'
 BASE_IMAGE = 'registry.ttd/pymss-webui/runtime@sha256:38fcad0bdf834a1d2ad22a34e9c87bb6e7bf00f75aa46c744527f23f7d7914e8'
 BASE_SOURCE = '2005a0a50f9bfee9be1662addaaeffa4f891fa54'
+CANDIDATE_IMAGE = 'registry.ttd/pymss-webui/runtime@sha256:9f4a545f89f243fbbec5cbed040b7ca05e761532553a6d3d2569f0f6be04b9b2'
+CANDIDATE_SOURCE = 'b4b784108c433be6b30d9b8f68209858489e56ab'
 NETWORK = 'pymss-ui-preview_default'
 
 
@@ -76,16 +78,20 @@ def main():
     if args.phase == 'prepare':
         directory.mkdir(mode=0o700, parents=True, exist_ok=False)
         old = inspect(NAME)
-        assert old['State']['Running'] and old['Config']['Image'] == BASE_IMAGE
-        assert run('docker', 'exec', NAME, 'cat', '/opt/song-studio-source-commit').strip() == BASE_SOURCE
+        assert old['State']['Running']
+        source = run('docker', 'exec', NAME, 'cat', '/opt/song-studio-source-commit').strip()
+        assert (old['Config']['Image'], source) in {(BASE_IMAGE, BASE_SOURCE), (CANDIDATE_IMAGE, CANDIDATE_SOURCE)}
         labels = old['Config']['Labels']
         assert labels['com.docker.compose.project'] == 'pymss-ui-preview'
         current = json.loads(run(*compose_command(labels), 'config', '--format', 'json'))
         runtime = current['services']['runtime']
-        assert runtime['image'] == BASE_IMAGE
+        assert runtime['image'] == old['Config']['Image']
         actual_env = dict(item.split('=', 1) for item in old['Config']['Env'])
         assert all(actual_env.get(k) == str(v) for k, v in runtime['environment'].items())
-        assert actual_env.get('STUDIO_GATEWAY_V2_SEPARATION') != '1'
+        if source == CANDIDATE_SOURCE:
+            assert actual_env.get('STUDIO_GATEWAY_V2_SEPARATION') == '1'
+        else:
+            assert actual_env.get('STUDIO_GATEWAY_V2_SEPARATION') != '1'
         siblings = run('docker', 'ps', '--filter', 'label=com.docker.compose.project=pymss-ui-preview',
                        '--format', '{{.Names}}').splitlines()
         sibling_ids = {name: inspect(name)['Id'] for name in siblings if name != NAME}
