@@ -73,7 +73,19 @@ def run(path):
             input_row={name:imported[name] for name in ('id','file_ref','input_hash')}
             body={'profile_id':profile,'profile_version':VERSION,'inputs':[input_row],
                   'options':{'audio_params':{'channels':'source','sample_rate':48000,'wav_bit_depth':'PCM_24'}}}
-            response=http.post(base+'/v2/audio/separations',json=body,headers={'Idempotency-Key':key},timeout=(10,120),allow_redirects=False)
+            admission_deadline=time.monotonic()+4*3600
+            while True:
+                response=http.post(base+'/v2/audio/separations',json=body,headers={'Idempotency-Key':key},timeout=(10,120),allow_redirects=False)
+                if response.status_code!=429:break
+                # A definite 429 has no accepted task; retain the same durable key
+                # while Gateway/Hub admission clears, even across a Stage restart.
+                retry_after=response.headers.get('Retry-After','')
+                delay=int(retry_after) if retry_after.isdecimal() and 1<=int(retry_after)<=30 else 5
+                job.update(status='waiting',message='Gateway 资源忙，等待受管空位',gatewayV2Retries=job.get('gatewayV2Retries',0)+1)
+                write(path,job)
+                if time.monotonic()+delay>admission_deadline:
+                    raise TimeoutError('Gateway 持续繁忙，原提交键已保留')
+                time.sleep(delay)
             task=_payload(response,202)
             if task.get('profile_id')!=profile or task.get('profile_version')!=VERSION or not task.get('id'):
                 raise ValueError('Gateway 返回的任务身份不一致')
